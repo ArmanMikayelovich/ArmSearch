@@ -1,4 +1,4 @@
-package Start.controller;
+package project.controllers;
 
 public class homePageController {
 

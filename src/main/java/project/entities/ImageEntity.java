@@ -1,10 +1,10 @@
-package Start.entity;
+package project.entities;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "image")
-public class Image {
+public class ImageEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
