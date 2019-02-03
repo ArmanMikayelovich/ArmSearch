@@ -1,6 +1,6 @@
 package project.dao;
 
-public class UserDao {
+public interface UserDao {
 
     //TODO ARO ALL DAO OBJECTS!!!
 
