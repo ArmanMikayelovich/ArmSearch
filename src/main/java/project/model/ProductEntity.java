@@ -2,14 +2,13 @@
  * This is the announcement
  */
 
-package project.entities;
+package project.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import lombok.Data;
-
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.ManyToOne;
 import javax.persistence.ManyToMany;
@@ -17,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
@@ -29,14 +29,13 @@ import javax.persistence.TemporalType;
 import java.sql.Date;
 
 import java.util.List;
-import java.util.ArrayList;
 
 @JsonIgnoreProperties(
         value = {"createdAt", "updatedAt"},
         allowGetters = true
 )                                                  //TODO jshtel Vaheic sra kariq@ ka te voch
-@Data
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "products")
 public class ProductEntity {
 
@@ -76,6 +75,80 @@ public class ProductEntity {
     private List<ImageEntity> imageList;
     //TODO ARO user ջնջելու հետ նաև ջնջել բոլոր նկարները fileSYstemից
 
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setCategoryEntity(CategoryEntity categoryEntity) {
+        this.categoryEntity = categoryEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
+    public void setImageList(List<ImageEntity> imageList) {
+        this.imageList = imageList;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public CategoryEntity getCategoryEntity() {
+        return categoryEntity;
+    }
+
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public List<ImageEntity> getImageList() {
+        return imageList;
+    }
+
+    public ProductEntity() {}
 
     public ProductEntity(String title, String description, Double price, Date createdAt,
                          Date updatedAt, CategoryEntity categoryEntity,

@@ -2,7 +2,7 @@
  * This class describes in which
  * groups are divided categories
  */
-package project.entities;
+package project.model;
 
 import lombok.Data;
 
@@ -17,7 +17,6 @@ import javax.persistence.FetchType;
 import javax.persistence.CascadeType;
 
 import java.util.List;
-import java.util.ArrayList;
 
 
 @Entity

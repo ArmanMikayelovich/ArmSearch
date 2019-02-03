@@ -3,7 +3,7 @@
  * of each announcement
  */
 
-package project.entities;
+package project.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

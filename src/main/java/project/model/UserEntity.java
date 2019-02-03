@@ -2,9 +2,7 @@
  * User is the creator
  * of announcement
  */
-package project.entities;
-
-import lombok.Data;
+package project.model;
 
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
@@ -17,11 +15,9 @@ import javax.persistence.Column;
 import javax.persistence.FetchType;
 
 import java.util.List;
-import java.util.ArrayList;
 
 @Entity
 @Table(name = "users")
-@Data
 public class UserEntity {
 
     @Id
@@ -46,6 +42,64 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "users", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true) //TODO Check with Vahe's help OneToOne
     private List<ProductEntity> productList;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public List<ProductEntity> getProductList() {
+        return productList;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setProductList(List<ProductEntity> productList) {
+        this.productList = productList;
+    }
+
+    public UserEntity() { }
 
     public UserEntity(String firstName, String lastName, String email, String phoneNumber, String password, List<ProductEntity> productList) {
         this.firstName = firstName;

@@ -2,7 +2,7 @@
  * This class describes which
  * categories can be the announcements
  */
-package project.entities;
+package project.model;
 
 import lombok.Data;
 
@@ -19,7 +19,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 
 import java.util.List;
-import java.util.ArrayList;
 
 @Entity
 @Table(name = "categories")
