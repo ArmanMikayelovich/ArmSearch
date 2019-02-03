@@ -14,6 +14,7 @@ import org.springframework.data.annotation.CreatedDate;
 import javax.persistence.ManyToOne;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -28,6 +29,7 @@ import javax.persistence.TemporalType;
 import java.sql.Date;
 
 import java.util.List;
+import java.util.ArrayList;
 
 @JsonIgnoreProperties(
         value = {"createdAt", "updatedAt"},
@@ -41,7 +43,7 @@ public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -62,15 +64,15 @@ public class ProductEntity {
     @LastModifiedDate
     private Date updatedAt;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private CategoryEntity categoryEntity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
-    @OneToMany(mappedBy = "productEntity",fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "products",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ImageEntity> imageList;
     //TODO ARO user ջնջելու հետ նաև ջնջել բոլոր նկարները fileSYstemից
 

@@ -6,7 +6,8 @@ package project.entities;
 
 import lombok.Data;
 
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
@@ -16,6 +17,7 @@ import javax.persistence.Column;
 import javax.persistence.FetchType;
 
 import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "users")
@@ -25,7 +27,7 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "first_name",nullable = false)
     private String firstName;
@@ -42,7 +44,7 @@ public class UserEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToOne(mappedBy = "userEntity", fetch = FetchType.LAZY, orphanRemoval = true) //TODO Check with Vahe's help OneToOne
+    @OneToMany(mappedBy = "users", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true) //TODO Check with Vahe's help OneToOne
     private List<ProductEntity> productList;
 
     public UserEntity(String firstName, String lastName, String email, String phoneNumber, String password, List<ProductEntity> productList) {
