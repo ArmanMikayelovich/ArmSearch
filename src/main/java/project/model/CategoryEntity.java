@@ -4,22 +4,11 @@
  */
 package project.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.FetchType;
-import javax.persistence.CascadeType;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 
 import java.util.List;
 
 @Entity
-@Table(name = "categories")
 public class CategoryEntity {
 
     @Id
@@ -29,11 +18,10 @@ public class CategoryEntity {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER, cascade = CascadeType.ALL) //TODO Check with Vahe's help ManyToMany
+    @OneToMany(mappedBy = "categoryEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL) //TODO Check with Vahe's help ManyToMany
     private List<ProductEntity> productList;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_group_id")
+    @ManyToOne
     private CategoryGroupEntity categoryGroupEntity;
 
     public Integer getId() {

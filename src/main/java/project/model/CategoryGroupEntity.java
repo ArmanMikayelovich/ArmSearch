@@ -20,7 +20,6 @@ import java.util.List;
 
 
 @Entity
-@Table(name = "category_groups")
 @Data
 public class CategoryGroupEntity {           // TODO jshtel Vaheic grupneri bazhanel@ lav gaxapara te iharke voch
 
@@ -31,7 +30,7 @@ public class CategoryGroupEntity {           // TODO jshtel Vaheic grupneri bazh
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "categoryGroups", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "categoryGroupEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL,orphanRemoval = false)
     private List<CategoryEntity> categories;
 
     public CategoryGroupEntity(String name, List<CategoryEntity> categories) {
