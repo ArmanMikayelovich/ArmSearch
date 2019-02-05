@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="94b7fd7d-f808-4e2b-84a4-5b037fcfa5cc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/model/CategoryEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/model/CategoryEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/model/CategoryGroupEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/model/CategoryGroupEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/project/model/ImageEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/project/model/ImageEntity.java" afterDir="false" />
-    </list>
+    <list default="true" id="94b7fd7d-f808-4e2b-84a4-5b037fcfa5cc" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -346,7 +341,7 @@
     <property name="DatabaseDriversLRU" value="mysql&#10;mariadb" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549230920402" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549231326439" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -386,16 +381,15 @@
       <workItem from="1549122992855" duration="4337000" />
       <workItem from="1549128219598" duration="7915000" />
       <workItem from="1549181662438" duration="19324000" />
-      <workItem from="1549227863598" duration="1919000" />
+      <workItem from="1549227863598" duration="2341000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33495000" />
+    <option name="totallyTimeSpent" value="33917000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19393939" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
