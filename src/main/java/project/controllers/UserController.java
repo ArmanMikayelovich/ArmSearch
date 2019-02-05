@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
+import org.springframework.web.servlet.ModelAndView;
 import project.exception.ResourceNotFoundException;
 import project.model.UserEntity;
 import project.repository.UserRepository;
@@ -25,15 +26,20 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
+   
+
     // Get All Users
     @GetMapping("/users")
-    public List<UserEntity> getAllUsers() {
-        return userRepository.findAll();
+    public ModelAndView getAllUsers() {
+        ModelAndView modelAndView = new ModelAndView("post");
+
+        return modelAndView;
     }
 
     // Create a new User
     @PostMapping("/users")
-    public UserEntity createUser(@Valid @RequestBody UserEntity userEntity) {
+    public UserEntity createUser(@Valid @RequestBody UserEntity userEntity)
+    {
         return userRepository.save(userEntity);
     }
 

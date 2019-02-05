@@ -40,7 +40,7 @@ public class UserEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "users", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true) //TODO Check with Vahe's help OneToOne
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true) //TODO Check with Vahe's help OneToOne
     private List<ProductEntity> productList;
 
     public Integer getId() {

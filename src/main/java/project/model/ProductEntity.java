@@ -6,6 +6,7 @@ package project.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.Setter;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -26,7 +27,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import java.sql.Date;
+import java.util.Date;
 
 import java.util.List;
 
@@ -36,6 +37,7 @@ import java.util.List;
 )                                                  //TODO jshtel Vaheic sra kariq@ ka te voch
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@Setter
 @Table(name = "products")
 public class ProductEntity {
 
@@ -63,15 +65,13 @@ public class ProductEntity {
     @LastModifiedDate
     private Date updatedAt;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_id")
+    @ManyToOne
     private CategoryEntity categoryEntity;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
-    @OneToMany(mappedBy = "products",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "productEntity",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ImageEntity> imageList;
     //TODO ARO user ջնջելու հետ նաև ջնջել բոլոր նկարները fileSYstemից
 

@@ -15,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 @Entity
-@Table(name = "images")
 public class ImageEntity {
 
     @Id
@@ -25,8 +24,7 @@ public class ImageEntity {
     @Column(name = "file_path", nullable = false, unique = true) //TODO jshtel unique petq te che, xosqi ete jnjenq heto et nuyn tex@ noric
     private String filePath;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_id")
+    @ManyToOne
     private ProductEntity productEntity;
 
     public ImageEntity() {  }
