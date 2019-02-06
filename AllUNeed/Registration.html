@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Forms Exemple</title>
+<script>
+function checkpassword(){
+    p1=document.getElementById("pass1").value;
+	p2=document.getElementById("pass2").value;
+	//document.getElementById("lastname").value=p2;
+	if(p1==p2){
+		document.getElementById("msg").innerHTML="OK";
+	}
+	else {
+		document.getElementById("msg").innerHTML="<span style='color:red; font-size:12px; ' >Please enter right password</span>";
+	}
+}
+
+</script>
+   <style>
+   		.text { color: #003;
+				text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+			text-shadow: #8A7BA8 0 0 10px;
+		}
+		.rot {-moz-transform: scaleX(-1);
+            -o-transform: scaleX(-1);
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+            filter: FlipV;
+            -ms-filter: 'FlipV'
+		}
+
+	</style>
+</head>
+
+<body>
+<form action="save.html" method="get">
+<p width="37%" height="69" align="left"><a href="Home.html"><img src="Images/all.jpg" width="13%" height=20%></a><img src="images/cm.gif" class="rot" width="82" height="71" alt="A" /></p>
+<table width="509" height="414" border="0" align="center" cellpadding="3" cellspacing="3" bgcolor="#FF9900"  class="text">
+      <tr>
+        <td width="126" >&nbsp;</td>
+        <td width="232" >&nbsp;</td>
+        <td width="121" >&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><h1>Registration</h1></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>  </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>Name</td>
+        <td><input id="firstname" name="firstname" type="text" value=""/></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td><input id="lastname" name="lastname" type="text" value=""/></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>Password</td>
+        <td><input id="pass1" name="pass1" type="password" value=""/></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>Repeat Password</td>
+        <td><input id="pass2" name="pass2" type="password" value=""/></td>
+        <td>
+        <input type="button" value="chek" onclick="checkpassword()"></td>
+      </tr>
+        <td>Chek is</td>
+        <td><div id="msg" name="msg">
+        ---
+        </div></td>
+        <td>&nbsp;</td>
+                    <tr>
+        <td>Phone</td>
+        <td><input id="pass1" name="pass1" type="password" value=""/></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>Male
+          <input id="gender2" name="gender" type="radio"  value="1"/>
+          Female
+          <input id="gender" name="gender" type="radio"  value="0"/></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>Country</td>
+        <td>
+        <script>
+	   countryArray=["Armenia","Russia","USA"];       
+	   </script>
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><input type="hidden" id="hd" name="hd" value="HD Input" /></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><input type="submit" id="save" name="save" value="Save"/></td>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+</form>
+</body>
+</html>

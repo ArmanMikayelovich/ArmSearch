@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Forms Exemple</title>
+<script>
+function checkpassword(){
+    p1=document.getElementById("pass1").value;
+	p2=document.getElementById("pass2").value;
+	//document.getElementById("lastname").value=p2;
+	if(p1==p2){
+		document.getElementById("msg").innerHTML="OK";
+	}
+	else {
+		document.getElementById("msg").innerHTML="<span style='color:red; font-size:12px; ' >Please enter right password</span>";
+	}
+}
+
+
+
+</script>
+</head>
+
+<body>
+<form action="" method="get">
+<p width="37%" height="69" align="left"><a href="Home.html"><img src="Images/all.jpg" width="15%" height=27%></a></p>
+<table width="558" border="0" cellspacing="3" cellpadding="3" align="center" bgcolor="#FF6600">
+      <tr>
+        <td width="81" >&nbsp;</td>
+        <td width="389" >&nbsp;</td>
+        <td width="50" >&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><h2>Post to Classifieds</h2></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>  </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>Title</td>
+        <td><textarea id="textarea3" name="textarea3"placeholder="Text area"></textarea></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>Category</td>
+        <td>
+            <select id="country" name="country" >
+        <option value="Electronics">Electronics</option>
+        <option value="Real Estate">Real Estate</option>
+        <option value="Vehicles">Vehicles</option>
+        <option value="Services">Services</option>
+        <option value="Jobs">Jobs</option>
+        <option value="Fashion">Fashion</option>
+        <option value="Tools and Materials">Tools and Materials</option>
+        <option value="Hausehold">Hausehold</option>
+        <option value="For Kids">For Kids</option>
+        <option value="Culture and Hobby">Culture and Hobby</option>       
+        <option value="Appliances">Appliances</option>
+        <option value="Everythink Else">Everythink Else</option>    
+        </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td><textarea id="textarea" name="textarea" rows="5" cols="60" placeholder="Detailed description of your item or offering..."></textarea></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>Password</td>
+        <td>
+        <input type="button" value="Add Photo" onclick="checkpassword()"></td>
+      </tr>
+      <tr>
+        <td>Price</td>
+        <td><input id="lastname" type="text" value=""/></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><input type="submit" id="add" name="add" value="Post"/></td>
+        <td>&nbsp;</td>
+      </tr>
+    </table>
+</form>
+</body>
+</html>
