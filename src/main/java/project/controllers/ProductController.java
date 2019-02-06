@@ -29,19 +29,22 @@ public class ProductController {
     public List<ProductEntity> getAllProducts() {
         return productRepository.findAll();
     }
+    //TODO testavorumic heto jnjel
 
     // Create a new Product
     @PostMapping("/products")
     public ProductEntity createProduct(@Valid @RequestBody ProductEntity productEntity) {
         return productRepository.save(productEntity);
     }
+    //
 
     // Get a Single Product
     @GetMapping("/products/{id}")
     public ProductEntity getProductById(@PathVariable(value = "id") Long productId) {
         return productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product", "id", productId));
-    }
+    }//TODO ANI ItemDto - um avelacnel price... sarqel AnnouncementView.html shablon@
+
 
     // Update a Product
     @PutMapping("/products/{id}")
