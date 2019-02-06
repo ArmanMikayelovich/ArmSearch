@@ -6,18 +6,21 @@
     <title>Title</title>
 </head>
 <body>
-<form  method="post" action="/api/users">
+<form  method="post" action="
+" name = "createUser">
     First name: <input type="text" name="firstName"><br>
     Last name: <input type="text" name="lastName"><br>
     EMail address: <input type="text" name="email"><br>
         Phone number: <input type="text" name="phoneNumber"><br>
         Password: <input type="text" name="password"><br>
-    <input type="submit" value="Submit">
+    <input type="submit"/>
 </form>
 <tr th:each ="person : ${users}">
     <td th:utext="${person.firstName}">...</td>
-    <td th:utext="${person.lastName}">...</td>
-</tr>
 
+    <br/>
+    <td th:utext="${person.lastName}">...</td>
+    <br/>
+</tr>
 </body>
 </html>
