@@ -6,6 +6,7 @@ package project.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.Setter;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -36,6 +37,7 @@ import java.util.List;
 )                                                  //TODO jshtel Vaheic sra kariq@ ka te voch
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@Setter
 @Table(name = "products")
 public class ProductEntity {
 
