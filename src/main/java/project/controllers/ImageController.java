@@ -30,6 +30,7 @@ public class ImageController {
     }
 
     // Get a Single Product // TODO ete mez petq lini mek producti bolor imagener@ berel apa es metod@ miqani angam kkanchvi
+    //                          TODO CHKA TENC BAN...
     @GetMapping("/images/{id}")
     public ImageEntity getImageById(@PathVariable(value = "id") Long imageId) {
         return imageRepository.findById(imageId)

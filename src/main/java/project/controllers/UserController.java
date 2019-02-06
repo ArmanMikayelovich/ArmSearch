@@ -1,6 +1,9 @@
 package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +19,7 @@ import project.exception.ResourceNotFoundException;
 import project.model.UserEntity;
 import project.repository.UserRepository;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -32,15 +36,19 @@ public class UserController {
     @GetMapping("/users")
     public ModelAndView getAllUsers() {
         ModelAndView modelAndView = new ModelAndView("post");
-
+            modelAndView.addObject("users",userRepository.findAll());
         return modelAndView;
     }
+    /////////
 
     // Create a new User
-    @PostMapping("/users")
-    public UserEntity createUser(@Valid @RequestBody UserEntity userEntity)
-    {
-        return userRepository.save(userEntity);
+    @PostMapping(value = "/users", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+            headers = "application/x-www-form-urlencoded;charset=UTF-8",
+            produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public String createUser(@Valid @RequestBody UserEntity userEntity, HttpServletResponse response) throws Exception {
+
+        userRepository.save(userEntity);
+        return "post";
     }
 
     // Get a Single User
@@ -48,7 +56,9 @@ public class UserController {
     public UserEntity getUserById(@PathVariable(value = "id") Integer userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
-    }
+    }//TODO ANI|||erb bacvi mardu ej@ piti haytararutyunner@ irar takic sharvac gan
+    //  nkar@ dzax koxqic, ajic title,title -ic mi qich aj apranqi gin@,
+    //  //title-i tak@ grvac lini Category, Category-i takic vejin tarmacman amsativ@
 
     // Update a User
     @PutMapping("/users/{id}")
