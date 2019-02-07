@@ -21,7 +21,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class CategoryGroupEntity {           // TODO jshtel Vaheic grupneri bazhanel@ lav gaxapara te iharke voch
+public class CategoryGroupEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

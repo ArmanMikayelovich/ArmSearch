@@ -34,7 +34,7 @@ import java.util.List;
 @JsonIgnoreProperties(
         value = {"createdAt", "updatedAt"},
         allowGetters = true
-)                                                  //TODO jshtel Vaheic sra kariq@ ka te voch
+)
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Setter

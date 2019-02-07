@@ -69,13 +69,14 @@ public class UserController {
         user.setEmail(userDetails.getEmail());
         user.setPhoneNumber(userDetails.getPhoneNumber());
         user.setPassword(userDetails.getPassword());
-        user.setProductList(userDetails.getProductList());
+        user.setProductList(userDetails.getProductList());//TODO ARO bacatri front ic productlist vonc es vercnelu...
+
 
         UserEntity updatedUser = userRepository.save(user);
         return updatedUser;
     }
 
-    // Delete a User
+    // Delete a Useridempotent
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Integer userId) {
         UserEntity user = userRepository.findById(userId)
