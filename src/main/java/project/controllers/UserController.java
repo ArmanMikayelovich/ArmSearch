@@ -32,7 +32,7 @@ public class UserController {
     // Get All Users
     @GetMapping("/users")
     public ModelAndView getAllUsers() {
-        ModelAndView modelAndView = new ModelAndView("post");
+        ModelAndView modelAndView = new ModelAndView("registerUser");
             modelAndView.addObject("users",userRepository.findAll());
         return modelAndView;
     }

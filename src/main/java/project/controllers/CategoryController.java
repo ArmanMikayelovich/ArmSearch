@@ -43,7 +43,8 @@ public class CategoryController {
     public CategoryEntity getCategoryById(@PathVariable(value = "id") Integer categoryId) {
         return categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));
-    }
+    }//TODO ARO category veradarcnelu poxaren piti front uxarkes dra miji bor Item ner@
+
 
        // Delete a Category
     @DeleteMapping("/categories/{id}")
