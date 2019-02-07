@@ -2,19 +2,17 @@ package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.multipart.MultipartFile;
 import project.exception.ResourceNotFoundException;
 import project.model.ImageEntity;
 import project.repository.ImageRepository;
 
 import javax.validation.Valid;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 
 @RestController
 @RequestMapping("/api")
@@ -27,6 +25,24 @@ public class ImageController {
     @PostMapping("/images")
     public ImageEntity createImage(@Valid @RequestBody ImageEntity imageEntity) {
         return imageRepository.save(imageEntity);
+    }
+    @RequestMapping(value="/upload", method=RequestMethod.POST)
+    public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file){
+        System.out.println(file.getOriginalFilename());
+        if (!file.isEmpty()) {
+            try {
+                byte[] bytes = file.getBytes();
+                BufferedOutputStream stream =
+                        new BufferedOutputStream(new FileOutputStream(new File(file.getOriginalFilename())));
+                stream.write(bytes);
+                stream.close();
+                return file.getOriginalFilename();
+            } catch (Exception e) {
+                return "Вам не удалось загрузить " + file.getName() + " => " + e.getMessage();
+            }
+        } else {
+            return "Вам не удалось загрузить " + file.getName() + " потому что файл пустой.";
+        }
     }
 
     // Get a Single Product // TODO ete mez petq lini mek producti bolor imagener@ berel apa es metod@ miqani angam kkanchvi

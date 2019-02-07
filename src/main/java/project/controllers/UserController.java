@@ -76,7 +76,7 @@ public class UserController {
         return updatedUser;
     }
 
-    // Delete a Useridempotent
+    // Delete a User
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Integer userId) {
         UserEntity user = userRepository.findById(userId)
