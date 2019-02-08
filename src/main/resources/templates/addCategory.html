@@ -9,12 +9,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add new categoryGroup</title>
+    <title>Add new category</title>
 </head>
 <body>
 <form method="post" name="postNewCategoryGroup">
-    Add category group <input name="name" type="text">
-    <select name = "categoryGroupEntity">
+    Add category  <input name="name" type="text">
+    <select name = "group">
         <tr th:each ="group : ${groups}">
             <option th:value="${group.name}">
                     <td th:utext="${group.name}">...</td>
