@@ -14,13 +14,16 @@
 <body>
 <form method="post" name="postNewCategoryGroup">
     Add category group <input name="name" type="text">
+    <select name = "categoryGroupEntity">
+        <tr th:each ="group : ${groups}">
+            <option th:value="${group.name}">
+                    <td th:utext="${group.name}">...</td>
+            </option>
+            <br/>
+        </tr>
+    </select>
     <input type="submit">
 </form>
-<tr th:each ="group : ${groups}">
-    <td th:utext="${group.name}">...</td>
-
-    <br/>
-</tr>
 </body>
 </html>
 
