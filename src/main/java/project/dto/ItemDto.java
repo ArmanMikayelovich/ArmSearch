@@ -11,6 +11,8 @@ public class ItemDto {
     private String category;
     private String description;
     private List<ImageEntity> imageList;
+    //TODO Ani AYSTEX PETQ E LINI NAYEV ITEM-IN KPAC USER@
+
 
     public ItemDto(int id, String category, String title, String description, List<ImageEntity> images) {
         this.id = id;
@@ -19,7 +21,7 @@ public class ItemDto {
         this.description = description;
 //        for (ImageEntity images : imageList) {
 //        }
-//Nkarneri IDner@ hamnknum en anvan het?
+//Nkarneri IDner@ hamnknum en anvan het? //TODO,  AYO, HAM@!!
 
     }
 

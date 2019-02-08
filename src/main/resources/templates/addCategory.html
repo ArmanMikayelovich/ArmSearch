@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new categoryGroup</title>
+</head>
+<body>
+<form method="post" name="postNewCategoryGroup">
+    Add category group <input name="name" type="text">
+    <select name = "categoryGroupEntity">
+        <tr th:each ="group : ${groups}">
+            <option th:value="${group.name}">
+                    <td th:utext="${group.name}">...</td>
+            </option>
+            <br/>
+        </tr>
+    </select>
+    <input type="submit">
+</form>
+</body>
+</html>
+
+</body>
+</html>

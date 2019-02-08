@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
+import org.springframework.web.servlet.ModelAndView;
 import project.exception.ResourceNotFoundException;
 import project.model.CategoryEntity;
 import project.model.ProductEntity;
+import project.repository.CategoryGroupRepository;
 import project.repository.CategoryRepository;
 
 import javax.validation.Valid;
@@ -24,17 +26,21 @@ import java.util.List;
 public class CategoryController {
     @Autowired
     CategoryRepository categoryRepository;
+    @Autowired
+    CategoryGroupRepository categoryGroupRepository;
 
     // Get All Categories
     @GetMapping("/categories")
-    public List<CategoryEntity> getAllCategories() {
+    public ModelAndView getAllCategories() {
+        ModelAndView modelAndView = new ModelAndView("addCategory");
+        modelAndView.addObject("groups", categoryGroupRepository.findAll());
 
-        return categoryRepository.findAll();
+        return modelAndView;
     }
 
     // Create a new Category //TODO this must be accesible only for admins and delete
-    @PostMapping("/categories")
-    public CategoryEntity createCategory(@Valid @RequestBody CategoryEntity categoryEntity) {
+    @PostMapping("/categories") //TODO ARMAN try to do true...
+    public CategoryEntity createCategory( CategoryEntity categoryEntity) {
         return categoryRepository.save(categoryEntity);
     }
 
@@ -43,7 +49,8 @@ public class CategoryController {
     public CategoryEntity getCategoryById(@PathVariable(value = "id") Integer categoryId) {
         return categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));
-    }
+    }//TODO ARO category veradarcnelu poxaren piti front uxarkes dra miji bor Item ner@
+
 
        // Delete a Category
     @DeleteMapping("/categories/{id}")
