@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new categoryGroup</title>
+</head>
+<body>
+<form method="post" name="postNewCategoryGroup">
+    Add category group <input name="name" type="text">
+    <input type="submit">
+</form>
+<div>
+    <tr th:each ="group : ${groups}">
+        <br/>
+        <td th:utext="${group.name}">...</td>
+
+        <br/>
+    </tr>
+</div>
+
+</body>
+</html>
