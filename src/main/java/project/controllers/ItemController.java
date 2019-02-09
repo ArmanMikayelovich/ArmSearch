@@ -15,31 +15,33 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import project.dto.ItemDto;
 import project.exception.ResourceNotFoundException;
-import project.model.ProductEntity;
-import project.repository.ProductRepository;
+import project.model.Item;
+import project.repository.ItemRepository;
 
 import javax.validation.Valid;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
-public class ProductController {
+public class ItemController {
     @Autowired
-    ProductRepository productRepository;
+    ItemRepository itemRepository;
 
-    // Get All Products
-    @GetMapping("/products")
+    /**
+     * this method is only for testing
+     * @return
+     */
+    @GetMapping("/items")
     public ModelAndView getAllProducts() {
         ModelAndView modelAndView = new ModelAndView("addItem");
-        List items = productRepository.findAll().stream()
+        List items = itemRepository.findAll().stream()
                 .map(p -> new ItemDto(
-                        p.getUserEntity().getEmail(),
-                        p.getCategoryEntity().getName(),
+                        p.getUser().getEmail(),
+                        p.getCategory().getName(),
                         p.getTitle(),
                         p.getDescription(),
                         null)).
@@ -51,9 +53,9 @@ public class ProductController {
     }
     //TODO testavorumic heto jnjel
 
-    // CreatgetOriginalFilenamee a new Product
-    @PostMapping(value = "/products", consumes = "multipart/form-data")
-    public ModelAndView createProduct(ItemDto itemDto,MultipartFile[] filesToUpload) {
+    // CreatgetOriginalFilenaee a new Product
+    @PostMapping(value = "/items", consumes = "multipart/form-data")
+    public ModelAndView createItem(ItemDto itemDto, MultipartFile[] filesToUpload) {
         System.out.println(itemDto.toString());
         for (MultipartFile file: filesToUpload ) {
             if (!file.isEmpty()) {
@@ -77,38 +79,38 @@ public class ProductController {
 
 
     // Get a Single Product
-    @GetMapping("/products/{id}")
-    public ProductEntity getProductById(@PathVariable(value = "id") Long productId) {
-        return productRepository.findById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException("Product", "id", productId));
+    @GetMapping("/items/{id}")
+    public Item getItemById(@PathVariable(value = "id") Long itemId) {
+        return itemRepository.findById(itemId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product", "id", itemId));
     }//TODO ANI ItemDto - um avelacnel price... sarqel AnnouncementView.html shablon@
 
 
     // Update a Product
-    @PutMapping("/products/{id}")
-    public ProductEntity updateProduct(@PathVariable(value = "id") Long productId,
-                                 @Valid @RequestBody ProductEntity productDetails) {
+    @PutMapping("/items/{id}")
+    public Item updateItem(@PathVariable(value = "id") Long itemId,
+                              @Valid @RequestBody Item itemDetails) {
 
-        ProductEntity product = productRepository.findById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException("Product", "id", productId));
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new ResourceNotFoundException("Item", "id", itemId));
 
-        product.setTitle(productDetails.getTitle());
-        product.setDescription(productDetails.getDescription());
-        product.setPrice(productDetails.getPrice());
-        product.setCategoryEntity(productDetails.getCategoryEntity());
-        product.setUserEntity(productDetails.getUserEntity());
-        product.setImageList(productDetails.getImageList());
+        item.setTitle(itemDetails.getTitle());
+        item.setDescription(itemDetails.getDescription());
+        item.setPrice(itemDetails.getPrice());
+        item.setCategory(itemDetails.getCategory());
+        item.setUser(itemDetails.getUser());
+        item.setImageList(itemDetails.getImageList());
 
-        ProductEntity updatedProduct = productRepository.save(product);
-        return updatedProduct;
+        Item updatedItem = itemRepository.save(item);
+        return updatedItem;
     }
 
     // Delete a Product
-    @DeleteMapping("/products/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable(value = "id") Long productId) {
-        ProductEntity product = productRepository.findById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException("Product", "id", productId));
-        productRepository.delete(product);
+    @DeleteMapping("/items/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable(value = "id") Long itemId) {
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new ResourceNotFoundException("Item", "id", itemId));
+        itemRepository.delete(item);
 
         return ResponseEntity.ok().build();
     }

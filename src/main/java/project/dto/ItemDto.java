@@ -1,47 +1,44 @@
 package project.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import project.model.ImageEntity;
+import project.model.Image;
+import project.model.Item;
 
+import java.util.ArrayList;
 import java.util.List;
-@Getter
-@Setter
-@NoArgsConstructor
+
 public class ItemDto {
+
     private int id;
-    private String userEmail;
     private String title;
     private String category;
     private String description;
-    private String price;
-
-    private List<ImageEntity> imageList;
-    //TODO Ani AYSTEX PETQ E LINI NAYEV ITEM-IN KPAC USER@
-
-
-    public ItemDto(String userEmail, String category, String title, String description, List<ImageEntity> images) {
-        this.id = id;
+    private Integer price;
+    private List<Image> imageList;
+    private ArrayList<String> imagepath;
+    public ItemDto(String email, String name, String title, String description, Item productEntity) {
+        this.title = this.title;
         this.category = category;
-        this.title = title;
-        this.description = description;
-//        for (ImageEntity images : imageList) {
-//        }
-//Nkarneri IDner@ hamnknum en anvan het? //TODO,  AYO, HAM@!!
-
+        this.description = this.description;
+        this.price = price;
+        for (Image images : imageList) {
+            imagepath.add(images.getFilePath());
+        }
     }
 
-    @Override
-    public String toString() {
-        return "ItemDto{" +
-                "id=" + id +
-                ", userEmail='" + userEmail + '\'' +
-                ", title='" + title + '\'' +
-                ", category='" + category + '\'' +
-                ", description='" + description + '\'' +
-                ", price='" + price + '\'' +
-                ", imageList=" + imageList +
-                '}';
+    public String getCategory() {
+        return category;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
 }

@@ -2,11 +2,11 @@ package project.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import project.model.CategoryGroupEntity;
+import project.model.CategoryGroup;
 
 import java.util.List;
 
 @Repository
-public interface CategoryGroupRepository extends JpaRepository<CategoryGroupEntity, Integer> {
-    List<CategoryGroupEntity> findByName(String name);
+public interface CategoryGroupRepository extends JpaRepository<CategoryGroup, Integer> {
+    List<CategoryGroup> findByName(String name);
 }
