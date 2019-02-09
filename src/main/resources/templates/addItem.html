@@ -5,7 +5,43 @@
     <title>Add new item</title>
 </head>
 <body>
+        <tr th:each ="item : ${items}">
+            <td th:utext="${item.userEmail}">...</td>
+            <td th:utext="${item.category}">...</td>
+            <td th:utext="${item.price}">...</td>
+            <td th:utext="${item.title}">...</td>
+            <td th:utext="${item.description}">...</td>
+            <br/>
+        </tr>
+                <!--SHOW ALL ITEMS-->
+        <form  method="post" enctype="multipart/form-data" >
+            <br/>
+            User's email<input type="text" name = "userEmail" id="userEmail">
+            <br/>
 
+            Title<input type = "text" name = "title" id = "title">
+            <br/>
+            description<input type="text" name = "description" it = "description">
+            <br/>
+          price  <input type = "text" name = "price" id = "price">
+            <br/>
+            category<input type="text" name="category" id="category">
+            <br/>
+            Select image to upload:
+            <input type="file" name="filesToUpload" id="filesToUpload" accept="image/*" multiple>
+
+            <input type="submit" value="Upload Image" name="submit">
+        </form>
+
+        <button onclick="createFileInput()">click me for test</button>
 
 </body>
+<script>
+    function createFileInput() {
+        var input = document.createElement("input");
+        input.type = "text";
+        input.name = "file";
+        input.id = "file";
+    }
+</script>
 </html>

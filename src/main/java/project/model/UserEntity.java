@@ -111,14 +111,6 @@ public class UserEntity {
 
     @Override
     public String toString() {
-        return "UserEntity{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", password='" + password + '\'' +
-                ", itemList=" + productList +
-                '}';
+        return firstName + " " + lastName;
     }
 }

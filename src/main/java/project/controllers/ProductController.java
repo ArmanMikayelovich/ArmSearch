@@ -11,12 +11,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import project.dto.ItemDto;
 import project.exception.ResourceNotFoundException;
 import project.model.ProductEntity;
 import project.repository.ProductRepository;
 
 import javax.validation.Valid;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -26,17 +34,47 @@ public class ProductController {
 
     // Get All Products
     @GetMapping("/products")
-    public List<ProductEntity> getAllProducts() {
-        return productRepository.findAll();
+    public ModelAndView getAllProducts() {
+        ModelAndView modelAndView = new ModelAndView("addItem");
+        List items = productRepository.findAll().stream()
+                .map(p -> new ItemDto(
+                        p.getUserEntity().getEmail(),
+                        p.getCategoryEntity().getName(),
+                        p.getTitle(),
+                        p.getDescription(),
+                        null)).
+                        collect(Collectors.toList());
+
+        modelAndView.addObject("items", items);
+
+        return modelAndView;
     }
     //TODO testavorumic heto jnjel
 
-    // Create a new Product
-    @PostMapping("/products")
-    public ProductEntity createProduct(@Valid @RequestBody ProductEntity productEntity) {
-        return productRepository.save(productEntity);
+    // CreatgetOriginalFilenamee a new Product
+    @PostMapping(value = "/products", consumes = "multipart/form-data")
+    public ModelAndView createProduct(ItemDto itemDto,MultipartFile[] filesToUpload) {
+        System.out.println(itemDto.toString());
+        for (MultipartFile file: filesToUpload ) {
+            if (!file.isEmpty()) {
+                try {
+                    //not finished
+                    byte[] bytes = file.getBytes();
+                    BufferedOutputStream stream =
+                            new BufferedOutputStream(new FileOutputStream(new File(file.getOriginalFilename())));
+                    stream.write(bytes);
+                    stream.close();
+                } catch (Exception e) {
+
+                }
+            } else {
+            }
+        }
+        ModelAndView modelAndView = new ModelAndView("addItem");
+
+        return modelAndView;
     }
-    //
+
 
     // Get a Single Product
     @GetMapping("/products/{id}")
