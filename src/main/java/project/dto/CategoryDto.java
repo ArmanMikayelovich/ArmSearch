@@ -19,4 +19,12 @@ public class CategoryDto {
         this.name = name;
         this.group = group;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getGroup() {
+        return group;
+    }
 }
