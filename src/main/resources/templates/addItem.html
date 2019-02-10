@@ -25,7 +25,16 @@
             <br/>
           price  <input type = "text" name = "price" id = "price">
             <br/>
-            category<input type="text" name="category" id="category">
+
+            <select name = "category">
+                <tr th:each ="group : ${groups}">
+                    <option th:value="${group.id}">
+                        <td th:utext="${group.name}">...</td>
+                    </option>
+                    <br/>
+                </tr>
+            </select>
+
             <br/>
             Select image to upload:
             <input type="file" name="filesToUpload" id="filesToUpload" accept="image/*" multiple>

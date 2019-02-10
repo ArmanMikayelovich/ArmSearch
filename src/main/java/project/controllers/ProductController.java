@@ -1,4 +1,5 @@
 package project.controllers;
+import org.apache.commons.io.FilenameUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,13 +11,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
-
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import project.dto.ItemDto;
 import project.exception.ResourceNotFoundException;
+import project.model.CategoryEntity;
+import project.model.ImageEntity;
 import project.model.ProductEntity;
+import project.model.UserEntity;
+import project.repository.CategoryRepository;
+import project.repository.ImageRepository;
 import project.repository.ProductRepository;
+import project.repository.UserRepository;
 
 import javax.validation.Valid;
 import java.io.BufferedOutputStream;
@@ -31,6 +37,13 @@ import java.util.stream.Collectors;
 public class ProductController {
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    CategoryRepository categoryRepository;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    ImageRepository imageRepository;
+
 
     // Get All Products
     @GetMapping("/products")
@@ -39,13 +52,14 @@ public class ProductController {
         List items = productRepository.findAll().stream()
                 .map(p -> new ItemDto(
                         p.getUserEntity().getEmail(),
-                        p.getCategoryEntity().getName(),
+                        p.getCategoryEntity().getId(),
                         p.getTitle(),
                         p.getDescription(),
                         null)).
                         collect(Collectors.toList());
 
         modelAndView.addObject("items", items);
+        modelAndView.addObject("groups", categoryRepository.findAll());
 
         return modelAndView;
     }
@@ -53,23 +67,49 @@ public class ProductController {
 
     // CreatgetOriginalFilenamee a new Product
     @PostMapping(value = "/products", consumes = "multipart/form-data")
-    public ModelAndView createProduct(ItemDto itemDto,MultipartFile[] filesToUpload) {
+    public ModelAndView createProduct(ItemDto itemDto,List<MultipartFile> filesToUpload) {
         System.out.println(itemDto.toString());
+        ProductEntity productEntity = new ProductEntity();
+        //SET fields
+        productEntity.setTitle(itemDto.getTitle());
+        productEntity.setDescription(itemDto.getDescription());
+        productEntity.setPrice(Double.valueOf( itemDto.getPrice() ) );//TODO ANI MUST BE ACCEPT ONLY NUMBERS
+        CategoryEntity categoryEntity = categoryRepository.findById(itemDto.getCategory()).get();
+        productEntity.setCategoryEntity(categoryEntity);
+        //todo set category ok
+        UserEntity userEntity = userRepository.findByEmail(itemDto.getUserEmail()).get(0);
+        productEntity.setUserEntity(userEntity);
+        //todo set user ok
+        int count = 0;
         for (MultipartFile file: filesToUpload ) {
+            ImageEntity imageEntity = new ImageEntity();
+            imageEntity.setProductEntity(productEntity);
+
+            String fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
+            productRepository.save(productEntity);
+            String fileName = "img/" + productEntity.getId() + "_" + count + "." + fileExtension;
+
             if (!file.isEmpty()) {
                 try {
-                    //not finished
                     byte[] bytes = file.getBytes();
+                    System.out.println(System.getProperties());
+                    File img = new File(fileName);
+                    img.createNewFile();
                     BufferedOutputStream stream =
-                            new BufferedOutputStream(new FileOutputStream(new File(file.getOriginalFilename())));
+                            new BufferedOutputStream(new FileOutputStream(img));
                     stream.write(bytes);
                     stream.close();
                 } catch (Exception e) {
-
+                    e.printStackTrace();
                 }
+                imageEntity.setFilePath(fileName);
+                imageRepository.save(imageEntity);
+                productEntity.getImageList().add(imageEntity);
             } else {
             }
         }
+        productRepository.save(productEntity);
+
         ModelAndView modelAndView = new ModelAndView("addItem");
 
         return modelAndView;

@@ -27,6 +27,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import java.util.List;
@@ -148,7 +149,10 @@ public class ProductEntity {
         return imageList;
     }
 
-    public ProductEntity() {}
+    public ProductEntity() {
+        this.imageList = new ArrayList<ImageEntity>();
+
+    }
 
     public ProductEntity(String title, String description, Double price, Date createdAt,
                          Date updatedAt, CategoryEntity categoryEntity,

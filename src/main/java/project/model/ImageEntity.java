@@ -21,7 +21,7 @@ public class ImageEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "file_path", nullable = false, unique = true) //TODO jshtel unique petq te che, xosqi ete jnjenq heto et nuyn tex@ noric
+    @Column(name = "file_path", unique = true) //TODO jshtel unique petq te che, xosqi ete jnjenq heto et nuyn tex@ noric
     private String filePath;
 
     @ManyToOne

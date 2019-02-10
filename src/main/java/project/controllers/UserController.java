@@ -43,8 +43,10 @@ public class UserController {
     @PostMapping("/users")
     UserEntity newUser( UserEntity userEntity) {
         System.out.println(userEntity);
+
         return userRepository.save(userEntity);
     }
+
 
 
     // Get a Single User

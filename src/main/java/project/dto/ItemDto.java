@@ -13,7 +13,7 @@ public class ItemDto {
     private int id;
     private String userEmail;
     private String title;
-    private String category;
+    private Integer category;
     private String description;
     private String price;
 
@@ -21,7 +21,7 @@ public class ItemDto {
     //TODO Ani AYSTEX PETQ E LINI NAYEV ITEM-IN KPAC USER@
 
 
-    public ItemDto(String userEmail, String category, String title, String description, List<ImageEntity> images) {
+    public ItemDto(String userEmail, Integer category, String title, String description, List<ImageEntity> images) {
         this.id = id;
         this.category = category;
         this.title = title;
