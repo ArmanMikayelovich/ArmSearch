@@ -7,6 +7,7 @@ package project.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Setter;
+
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -27,7 +28,9 @@ import javax.persistence.FetchType;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+
 import java.util.ArrayList;
+
 import java.util.Date;
 
 import java.util.List;
@@ -35,10 +38,12 @@ import java.util.List;
 @JsonIgnoreProperties(
         value = {"createdAt", "updatedAt"},
         allowGetters = true
+
 )
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Setter
+
 @Table(name = "products")
 public class ProductEntity {
 
@@ -149,10 +154,12 @@ public class ProductEntity {
         return imageList;
     }
 
+
     public ProductEntity() {
         this.imageList = new ArrayList<ImageEntity>();
 
     }
+
 
     public ProductEntity(String title, String description, Double price, Date createdAt,
                          Date updatedAt, CategoryEntity categoryEntity,

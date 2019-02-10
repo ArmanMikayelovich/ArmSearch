@@ -40,7 +40,9 @@ public class UserEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
+
     @OneToMany(mappedBy = "userEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+
     private List<ProductEntity> productList;
 
     public Integer getId() {
@@ -101,16 +103,21 @@ public class UserEntity {
 
     public UserEntity() { }
 
+
     public UserEntity(String firstName, String lastName, String email, String phoneNumber, String password) {
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
+
     }
 
     @Override
     public String toString() {
+
         return firstName + " " + lastName;
+
     }
 }

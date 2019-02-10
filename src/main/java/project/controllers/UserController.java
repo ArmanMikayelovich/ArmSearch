@@ -1,7 +1,9 @@
 package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.MediaType;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,12 +15,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 import org.springframework.web.servlet.ModelAndView;
+
 import project.exception.ResourceNotFoundException;
 import project.model.UserEntity;
 import project.repository.UserRepository;
 
 import javax.validation.Valid;
 
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -26,6 +30,7 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
+
 
    
 
@@ -49,6 +54,7 @@ public class UserController {
 
 
 
+
     // Get a Single User
     @GetMapping("/users/{id}")
     public UserEntity getUserById(@PathVariable(value = "id") Integer userId) {
@@ -57,6 +63,7 @@ public class UserController {
     }//TODO ANI|||erb bacvi mardu ej@ piti haytararutyunner@ irar takic sharvac gan
     //  nkar@ dzax koxqic, ajic title,title -ic mi qich aj apranqi gin@,
     //  //title-i tak@ grvac lini Category, Category-i takic vejin tarmacman amsativ@
+
 
     // Update a User
     @PutMapping("/users/{id}")
@@ -71,8 +78,8 @@ public class UserController {
         user.setEmail(userDetails.getEmail());
         user.setPhoneNumber(userDetails.getPhoneNumber());
         user.setPassword(userDetails.getPassword());
-        user.setProductList(userDetails.getProductList());//TODO ARO bacatri front ic productlist vonc es vercnelu...
 
+        user.setProductList(userDetails.getProductList());
 
         UserEntity updatedUser = userRepository.save(user);
         return updatedUser;

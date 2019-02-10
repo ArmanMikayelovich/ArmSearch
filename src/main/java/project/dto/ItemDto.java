@@ -1,47 +1,68 @@
 package project.dto;
 
+
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.model.ImageEntity;
+import project.model.ProductEntity;
 
+
+import project.model.ImageEntity;
+import project.model.ProductEntity;
+
+import java.util.ArrayList;
 import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@Data
 public class ItemDto {
     private int id;
     private String userEmail;
     private String title;
-    private Integer category;
+    private String category;
+    private Integer categoryId;
     private String description;
-    private String price;
-
+    private Integer price;
     private List<ImageEntity> imageList;
-    //TODO Ani AYSTEX PETQ E LINI NAYEV ITEM-IN KPAC USER@
-
-
-    public ItemDto(String userEmail, Integer category, String title, String description, List<ImageEntity> images) {
-        this.id = id;
-        this.category = category;
+    private ArrayList<String> imagepath;
+    public ItemDto(ProductEntity productEntity) {
         this.title = title;
+        this.category = category;
         this.description = description;
-//        for (ImageEntity images : imageList) {
-//        }
-//Nkarneri IDner@ hamnknum en anvan het? //TODO,  AYO, HAM@!!
+        this.price = price;
+        for (ImageEntity images : imageList) {
+            imagepath.add(images.getFilePath());
+        }
+
 
     }
 
-    @Override
-    public String toString() {
-        return "ItemDto{" +
-                "id=" + id +
-                ", userEmail='" + userEmail + '\'' +
-                ", title='" + title + '\'' +
-                ", category='" + category + '\'' +
-                ", description='" + description + '\'' +
-                ", price='" + price + '\'' +
-                ", imageList=" + imageList +
-                '}';
+    public ItemDto(String title, Integer categoryId, String description, Integer price, List<ImageEntity> imageList) {
+        this.title = title;
+        this.categoryId = categoryId;
+        this.description = description;
+        this.price = price;
+        this.imageList = imageList;
     }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+
 }

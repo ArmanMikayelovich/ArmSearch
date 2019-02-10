@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import project.dto.ItemDto;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @RestController
 @RequestMapping("/api")
 public class ProductController {
@@ -50,13 +52,7 @@ public class ProductController {
     public ModelAndView getAllProducts() {
         ModelAndView modelAndView = new ModelAndView("addItem");
         List items = productRepository.findAll().stream()
-                .map(p -> new ItemDto(
-                        p.getUserEntity().getEmail(),
-                        p.getCategoryEntity().getId(),
-                        p.getTitle(),
-                        p.getDescription(),
-                        null)).
-                        collect(Collectors.toList());
+                .map(p -> new ItemDto(p)).collect(Collectors.toList());
 
         modelAndView.addObject("items", items);
         modelAndView.addObject("groups", categoryRepository.findAll());
@@ -74,7 +70,7 @@ public class ProductController {
         productEntity.setTitle(itemDto.getTitle());
         productEntity.setDescription(itemDto.getDescription());
         productEntity.setPrice(Double.valueOf( itemDto.getPrice() ) );//TODO ANI MUST BE ACCEPT ONLY NUMBERS
-        CategoryEntity categoryEntity = categoryRepository.findById(itemDto.getCategory()).get();
+        CategoryEntity categoryEntity = categoryRepository.findById(itemDto.getCategoryId()).get();
         productEntity.setCategoryEntity(categoryEntity);
         //todo set category ok
         UserEntity userEntity = userRepository.findByEmail(itemDto.getUserEmail()).get(0);
@@ -116,12 +112,14 @@ public class ProductController {
     }
 
 
+
     // Get a Single Product
     @GetMapping("/products/{id}")
     public ProductEntity getProductById(@PathVariable(value = "id") Long productId) {
         return productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product", "id", productId));
     }//TODO ANI ItemDto - um avelacnel price... sarqel AnnouncementView.html shablon@
+
 
 
     // Update a Product

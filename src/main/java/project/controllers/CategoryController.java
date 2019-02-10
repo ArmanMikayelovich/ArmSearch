@@ -1,9 +1,8 @@
 package project.controllers;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +18,8 @@ import project.dto.CategoryDto;
 import project.exception.ResourceNotFoundException;
 import project.model.CategoryEntity;
 import project.model.CategoryGroupEntity;
-import project.model.ProductEntity;
 import project.repository.CategoryGroupRepository;
+
 import project.repository.CategoryRepository;
 
 import javax.validation.Valid;
@@ -52,6 +51,7 @@ public class CategoryController {
         List<CategoryGroupEntity> list = categoryGroupRepository.findByName(categoryDto.getGroup());
         CategoryGroupEntity categoryGroupEntity = list.get(0);
         CategoryEntity categoryEntity = new CategoryEntity(categoryDto.getName(), categoryGroupEntity);
+
         return categoryRepository.save(categoryEntity);
     }
 
@@ -61,6 +61,7 @@ public class CategoryController {
         return categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));
     }//TODO ARO category veradarcnelu poxaren piti front uxarkes dra miji bor Item ner@
+
 
 
        // Delete a Category

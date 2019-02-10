@@ -2,9 +2,11 @@ package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+
 import project.exception.ResourceNotFoundException;
 import project.model.ImageEntity;
 import project.repository.ImageRepository;
@@ -13,6 +15,7 @@ import javax.validation.Valid;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+
 
 @RestController
 @RequestMapping("/api")
@@ -26,7 +29,7 @@ public class ImageController {
     public ImageEntity createImage(@Valid @RequestBody ImageEntity imageEntity) {
         return imageRepository.save(imageEntity);
     }
-    @RequestMapping(value="/upload", method=RequestMethod.POST)
+    @RequestMapping(value="/upload", method= RequestMethod.POST)
     public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file){
         System.out.println(file.getOriginalFilename());
         if (!file.isEmpty()) {
@@ -47,6 +50,8 @@ public class ImageController {
 
     // Get a Single Product // TODO ete mez petq lini mek producti bolor imagener@ berel apa es metod@ miqani angam kkanchvi
     //                          TODO CHKA TENC BAN...
+
+    // Get a Single Product // TODO ete mez petq lini mek producti bolor imagener@ berel apa es metod@ miqani angam kkanchvi
     @GetMapping("/images/{id}")
     public ImageEntity getImageById(@PathVariable(value = "id") Long imageId) {
         return imageRepository.findById(imageId)
