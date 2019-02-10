@@ -15,12 +15,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
+import javax.persistence.Index;
 
 import java.util.List;
 
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", indexes = { @Index(
+        name = "fullName",
+        columnList = "full_name") })
 @Data
 public class User {
 
@@ -34,6 +37,9 @@ public class User {
 
     @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "full_name")
+    private String fullName;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;

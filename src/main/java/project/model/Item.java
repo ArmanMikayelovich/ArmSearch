@@ -39,8 +39,9 @@ import java.util.List;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Data
-@Table(name = "items")
-
+@Table(name = "items", indexes = { @Index(
+        name = "searchTag",
+        columnList = "searchTag") })
 public class Item {
 
     @Id
