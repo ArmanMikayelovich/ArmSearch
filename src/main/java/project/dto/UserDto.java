@@ -1,22 +1,29 @@
 package project.dto;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class UserDto {
+
     private int id;
-    private String fullName;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private String email;
 
-    //TODO ANI  UserDto um petqa lini nayev heraxosahamar@  yev email@
-
-
-    public UserDto(int id, String firstName, String lastName) {
+    public UserDto(Integer id, String firstName,
+                   String lastName, String phoneNumber, String email) {
         this.id = id;
-        this.fullName = firstName + " " + lastName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+
     }
 
-    public int getId() {
-        return id;
-    }
+ }
 
-    public String getFullName() {
-        return fullName;
-    }
-}

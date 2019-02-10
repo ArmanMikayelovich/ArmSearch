@@ -31,14 +31,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
         <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>2.0.1.Final</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -59,7 +57,6 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
-
         <!--https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf-->
 
         <dependency>
@@ -71,6 +68,16 @@
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-security</artifactId>-->
+        <!--</dependency>-->
+        <!-- https://mvnrepository.com/artifact/org.mindrot/jbcrypt -->
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.3m</version>
+        </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -78,6 +85,7 @@
         </dependency>
 
     </dependencies>
+
 
 
     <dependencyManagement>

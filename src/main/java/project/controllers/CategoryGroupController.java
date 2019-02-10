@@ -14,11 +14,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 
 
 import project.exception.ResourceNotFoundException;
-import project.model.CategoryGroupEntity;
+import project.model.CategoryGroup;
 import project.repository.CategoryGroupRepository;
-
-import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -32,24 +29,22 @@ public class CategoryGroupController {
         ModelAndView modelAndView = new ModelAndView("addCategoryGroup");
              modelAndView.addObject("groups", categoryGroupRepository.findAll());
         return modelAndView;
-
     }
 
     // Create a new CategoryGroup //TODO this must be accesible only for admins and delete
     @PostMapping("/categoryGroups")
-    public CategoryGroupEntity createCategoryGroup( CategoryGroupEntity categoryGroupEntity) {
+    public CategoryGroup createCategoryGroup(CategoryGroup categoryGroup) {
         //NON CASE SENSITIVE
-//        categoryGroupEntity.setName(categoryGroupEntity.getName().toLowerCase());
+//        categoryGroup.setName(categoryGroup.getName().toLowerCase());
 
-        System.out.println(categoryGroupEntity.toString());//
+        System.out.println(categoryGroup.toString());//
 
-
-        return categoryGroupRepository.save(categoryGroupEntity);
+        return categoryGroupRepository.save(categoryGroup);
     }
 
     // Get a Single categoryGroup
     @GetMapping("/categoryGroups/{id}")
-    public CategoryGroupEntity getCategoryGroupById(@PathVariable(value = "id") Integer categoryGroupId) {
+    public CategoryGroup getCategoryGroupById(@PathVariable(value = "id") Integer categoryGroupId) {
         return categoryGroupRepository.findById(categoryGroupId)
                 .orElseThrow(() -> new ResourceNotFoundException("CategoryGroup", "id", categoryGroupId));
     }
@@ -57,7 +52,7 @@ public class CategoryGroupController {
     // Delete a CategoryGroup
     @DeleteMapping("/categoryGroups/{id}")
     public ResponseEntity<?> deleteCategoryGroup(@PathVariable(value = "id") Integer categoryGroupId) {
-        CategoryGroupEntity categoryGroup = categoryGroupRepository.findById(categoryGroupId)
+        CategoryGroup categoryGroup = categoryGroupRepository.findById(categoryGroupId)
                 .orElseThrow(() -> new ResourceNotFoundException("CategoryGroup", "id", categoryGroupId));
         categoryGroupRepository.delete(categoryGroup);
 

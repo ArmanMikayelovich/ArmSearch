@@ -10,10 +10,24 @@
 " name = "createUser">
     First name: <input type="text" name="firstName"><br>
     Last name: <input type="text" name="lastName"><br>
-    EMail address: <input type="text" name="email"><br>
-        Phone number: <input type="text" name="phoneNumber"><br>
-        Password: <input type="text" name="password"><br>
-    <input type="submit"/>
+    EMail address: <input type="email" name="email"><br>
+    Phone number: <input type="text" name="phoneNumber"><br>
+    <p>Password:</p>
+    <input name="password" required="required" type="password" id="password" />
+    <p>Confirm Password:</p>
+    <input name="password_confirm" required="required" type="password" id="password_confirm" oninput="check(this)" />
+    <script language='javascript' type='text/javascript'>
+        function check(input) {
+            if (input.value != document.getElementById('password').value) {
+                input.setCustomValidity('Password Must be Matching.');
+            } else {
+                // input is valid -- reset the error message
+                input.setCustomValidity('');
+            }
+        }
+    </script>
+    <br /><br />
+    <input type="submit" />
 </form>
 <tr th:each ="person : ${users}">
     <td th:utext="${person.firstName}">...</td>

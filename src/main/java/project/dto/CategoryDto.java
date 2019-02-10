@@ -1,16 +1,13 @@
 package project.dto;
 
-import lombok.*;
+import lombok.Data;
 
 
 /**
  * օգտագործվում է ֆռոնտից նոր կատեգորիա ստանալու համար
  * և վերափոխվում է CategoryEntity օբյեկտի
  */
-@Getter
-@Setter
-@ToString
-@NoArgsConstructor
+@Data
 public class CategoryDto {
     private String id;
 

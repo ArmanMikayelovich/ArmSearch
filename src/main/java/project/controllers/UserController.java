@@ -1,9 +1,7 @@
 package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.MediaType;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +15,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import project.exception.ResourceNotFoundException;
-import project.model.UserEntity;
+import project.model.User;
 import project.repository.UserRepository;
+import project.service.PasswordEncrypter;
 
 import javax.validation.Valid;
 
@@ -32,7 +31,7 @@ public class UserController {
     UserRepository userRepository;
 
 
-   
+
 
     // Get All Users
     @GetMapping("/users")
@@ -46,10 +45,10 @@ public class UserController {
 //            headers = "application/x-www-form-urlencoded;charset=UTF-8",
 //            produces = "application/json")
     @PostMapping("/users")
-    UserEntity newUser( UserEntity userEntity) {
-        System.out.println(userEntity);
-
-        return userRepository.save(userEntity);
+    User newUser(User user) {
+        user.setPassword(PasswordEncrypter.encrypt(user.getPassword()));
+        System.out.println(user);
+        return userRepository.save(user);
     }
 
 
@@ -57,7 +56,7 @@ public class UserController {
 
     // Get a Single User
     @GetMapping("/users/{id}")
-    public UserEntity getUserById(@PathVariable(value = "id") Integer userId) {
+    public User getUserById(@PathVariable(value = "id") Integer userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
     }//TODO ANI|||erb bacvi mardu ej@ piti haytararutyunner@ irar takic sharvac gan
@@ -67,28 +66,29 @@ public class UserController {
 
     // Update a User
     @PutMapping("/users/{id}")
-    public UserEntity updateUser(@PathVariable(value = "id") Integer userId,
-                           @Valid @RequestBody UserEntity userDetails) {
+    public User updateUser(@PathVariable(value = "id") Integer userId,
+                           @Valid @RequestBody User userDetails) {
 
-        UserEntity user = userRepository.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
 
         user.setFirstName(userDetails.getFirstName());
         user.setLastName(userDetails.getLastName());
         user.setEmail(userDetails.getEmail());
         user.setPhoneNumber(userDetails.getPhoneNumber());
-        user.setPassword(userDetails.getPassword());
+        user.setPassword(PasswordEncrypter.encrypt(userDetails.getPassword()));
+        user.setItemList(userDetails.getItemList());//TODO ARO bacatri front ic productlist vonc es vercnelu...
 
-        user.setProductList(userDetails.getProductList());
+        user.setItemList(userDetails.getItemList());
 
-        UserEntity updatedUser = userRepository.save(user);
+        User updatedUser = userRepository.save(user);
         return updatedUser;
     }
 
     // Delete a User
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Integer userId) {
-        UserEntity user = userRepository.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
         userRepository.delete(user);
 

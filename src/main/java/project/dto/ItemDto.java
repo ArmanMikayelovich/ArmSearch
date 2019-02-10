@@ -1,46 +1,42 @@
 package project.dto;
 
+import project.model.Image;
+import project.model.Item;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import project.model.ImageEntity;
-import project.model.ProductEntity;
 
 
-import project.model.ImageEntity;
-import project.model.ProductEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
-@Data
-public class ItemDto {
+public class    ItemDto {
+
     private int id;
     private String userEmail;
     private String title;
     private String category;
     private Integer categoryId;
     private String description;
-    private Integer price;
-    private List<ImageEntity> imageList;
+    private Double price;
+    private List<Image> imageList;
     private ArrayList<String> imagepath;
-    public ItemDto(ProductEntity productEntity) {
-        this.title = title;
+    public ItemDto(String email, String name, String title, String description, Item productEntity) {
+        this.title = this.title;
         this.category = category;
-        this.description = description;
+        this.description = this.description;
         this.price = price;
-        for (ImageEntity images : imageList) {
+        for (Image images : imageList) {
             imagepath.add(images.getFilePath());
         }
-
-
     }
 
-    public ItemDto(String title, Integer categoryId, String description, Integer price, List<ImageEntity> imageList) {
+    public ItemDto(String title, Integer categoryId, String description, Double price, List<Image> imageList) {
         this.title = title;
         this.categoryId = categoryId;
         this.description = description;
@@ -48,21 +44,20 @@ public class ItemDto {
         this.imageList = imageList;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Integer getPrice() {
-        return price;
+    public ItemDto(Item item) {
+        this.id = (Integer.valueOf(item.getId().toString()));
+        this.title = item.getTitle();
+        this.category = item.getCategory().getName();
+        this.categoryId = item.getCategory().getId();
+        this.description = item.getDescription();
+        this.price = item.getPrice();
+        for (Image images : item.getImageList()) {
+            imagepath.add(images.getFilePath());
+        }
     }
 
 
 }
+
+
+
