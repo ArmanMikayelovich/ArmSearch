@@ -55,6 +55,7 @@ public class Item {
     @Column(name = "description", nullable = false)
     private String description;
 
+    @Column(name = "searchTag", nullable = false)
     private String searchTag = this.title + " " + this.description;
 
     @Column(name = "price", nullable = false)
@@ -71,11 +72,11 @@ public class Item {
     private Date updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @OneToMany(mappedBy = "item",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
