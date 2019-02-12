@@ -1,6 +1,7 @@
 package project.service;
 
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import project.model.Image;
 import project.model.Item;
@@ -10,7 +11,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
+@Service
 public class ImageService {
     private final ImageRepository imageRepository;
 

@@ -1,5 +1,6 @@
 package project.service;
 
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import project.dto.ItemDto;
 import project.exception.ResourceNotFoundException;
@@ -11,7 +12,7 @@ import project.repository.ItemRepository;
 
 import java.io.IOException;
 import java.util.List;
-
+@Service
 public class ItemService {
     private final ItemRepository itemRepository;
     private final CategoryService categoryService;
@@ -39,7 +40,7 @@ public class ItemService {
         item.setDescription(itemDto.getDescription());
         item.setPrice(Double.valueOf( itemDto.getPrice() ) );//TODO ANI MUST BE ACCEPT ONLY NUMBERS
 
-        Category category = categoryService.findById(itemDto.getCategoryId()).get();
+        Category category = categoryService.findById(itemDto.getCategoryId());
         item.setCategory(category);
 
         User user = userService.findByEmail(itemDto.getUserEmail());
@@ -68,7 +69,7 @@ public class ItemService {
         item.setTitle(itemDetails.getTitle());
         item.setDescription(itemDetails.getDescription());
         item.setPrice(itemDetails.getPrice());
-        item.setCategory(categoryService.findById(itemDetails.getCategoryId()).get());
+        item.setCategory(categoryService.findById(itemDetails.getCategoryId()));
 
 //        item.setUser(itemDetails.getUser());//TODO ARMAN get user with security....
         //todo item's image delete method

@@ -19,6 +19,7 @@ import project.model.CategoryGroup;
 import project.repository.CategoryGroupRepository;
 
 import project.repository.CategoryRepository;
+import project.service.CategoryService;
 
 import java.util.List;
 
@@ -31,8 +32,12 @@ public class CategoryController {
     CategoryRepository categoryRepository;
     @Autowired
     CategoryGroupRepository categoryGroupRepository;
-//    @Autowired
-//    SessionFactory sessionFactory;
+
+    private final CategoryService categoryService;
+
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     // Get All Categories
     @GetMapping("/categories")
@@ -47,7 +52,8 @@ public class CategoryController {
     @PostMapping("/categories") //TODO ARMAN try to do true...
     public Category createCategory(CategoryDto categoryDto) {
 
-
+        Category category;
+        category = categoryService.createCategory(categoryDto);
 
         return categoryRepository.save(category);
     }
@@ -55,19 +61,18 @@ public class CategoryController {
     // Get a Single category
     @GetMapping("/categories/{id}")
     public Category getCategoryById(@PathVariable(value = "id") Integer categoryId) {
-        return categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));
-    }//TODO ARO category veradarcnelu poxaren piti front uxarkes dra miji bor Item ner@
+        return categoryService.findById(categoryId);
+        //TODO ARO category veradarcnelu poxaren piti front uxarkes dra miji bor Item ner@
+//        return categoryService.findById(categoryId).getItemList(  );
+    }
 
 
 
        // Delete a Category
     @DeleteMapping("/categories/{id}")
     public ResponseEntity<?> deleteCategory(@PathVariable(value = "id") Integer categoryId) {
-        Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));
-        categoryRepository.delete(category);
 
+        categoryService.deleteCategory(categoryId);
         return ResponseEntity.ok().build();
     }
 }
