@@ -1,7 +1,6 @@
 package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,18 +17,19 @@ import project.exception.ResourceNotFoundException;
 import project.model.User;
 import project.repository.UserRepository;
 import project.service.PasswordEncrypter;
+import project.service.UserService;
 
 import javax.validation.Valid;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class UserController {
 
-    @Autowired
-    UserRepository userRepository;
+    private final UserService userService;
 
+    public UserController( UserService userService) {
+        this.userService = userService;
+    }
 
 
 
@@ -37,7 +37,7 @@ public class UserController {
     @GetMapping("/users")
     public ModelAndView getAllUsers() {
         ModelAndView modelAndView = new ModelAndView("registerUser");
-            modelAndView.addObject("users",userRepository.findAll());
+            modelAndView.addObject("users",userService.findAll());
         return modelAndView;
     }
     /////////
@@ -46,9 +46,8 @@ public class UserController {
 //            produces = "application/json")
     @PostMapping("/users")
     User newUser(User user) {
-        user.setPassword(PasswordEncrypter.encrypt(user.getPassword()));
-        System.out.println(user);
-        return userRepository.save(user);
+        userService.saveUser(user);
+       return  user;
     }
 
 
@@ -57,41 +56,25 @@ public class UserController {
     // Get a Single User
     @GetMapping("/users/{id}")
     public User getUserById(@PathVariable(value = "id") Integer userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+        return userService.getUserById(userId);
     }//TODO ANI|||erb bacvi mardu ej@ piti haytararutyunner@ irar takic sharvac gan
     //  nkar@ dzax koxqic, ajic title,title -ic mi qich aj apranqi gin@,
     //  //title-i tak@ grvac lini Category, Category-i takic vejin tarmacman amsativ@
 
 
     // Update a User
-    @PutMapping("/users/{id}")
+    @PostMapping("/users/{id}")
     public User updateUser(@PathVariable(value = "id") Integer userId,
-                           @Valid @RequestBody User userDetails) {
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
-
-        user.setFirstName(userDetails.getFirstName());
-        user.setLastName(userDetails.getLastName());
-        user.setEmail(userDetails.getEmail());
-        user.setPhoneNumber(userDetails.getPhoneNumber());
-        user.setPassword(PasswordEncrypter.encrypt(userDetails.getPassword()));
-        user.setItemList(userDetails.getItemList());//TODO ARO bacatri front ic productlist vonc es vercnelu...
-
-        user.setItemList(userDetails.getItemList());
-
-        User updatedUser = userRepository.save(user);
-        return updatedUser;
+                           @Valid User user) {
+        userService.updateUser(user);
+        return user;
     }
 
     // Delete a User
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Integer userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
-        userRepository.delete(user);
-
+        User user = userService.findById(userId).
+                    orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
         return ResponseEntity.ok().build();
     }
 

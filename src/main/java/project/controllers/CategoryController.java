@@ -47,9 +47,7 @@ public class CategoryController {
     @PostMapping("/categories") //TODO ARMAN try to do true...
     public Category createCategory(CategoryDto categoryDto) {
 
-        List<CategoryGroup> list = categoryGroupRepository.findByName(categoryDto.getGroup());
-        CategoryGroup categoryGroup = list.get(0);
-        Category category = new Category(categoryDto.getName(), categoryGroup);
+
 
         return categoryRepository.save(category);
     }

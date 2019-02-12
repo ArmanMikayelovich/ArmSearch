@@ -24,12 +24,12 @@ import project.repository.CategoryRepository;
 import project.repository.ImageRepository;
 import project.repository.ItemRepository;
 import project.repository.UserRepository;
+import project.service.ItemService;
 
 import javax.validation.Valid;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,6 +44,12 @@ public class ItemController {
     UserRepository userRepository;
     @Autowired
     ImageRepository imageRepository;
+    private final ItemService itemService;
+
+    public ItemController(ItemService itemService) {
+        this.itemService = itemService;
+    }
+
 
     /**
      * this method is only for testing
@@ -52,11 +58,11 @@ public class ItemController {
     @GetMapping("/items")
     public ModelAndView getAllProducts() {
         ModelAndView modelAndView = new ModelAndView("addItem");
-        List items = itemRepository.findAll().stream()
+        List items = itemService.findAll().stream()
                 .map(p -> new ItemDto(p)).collect(Collectors.toList());
 
         modelAndView.addObject("items", items);
-        modelAndView.addObject("groups", itemRepository.findAll());
+        modelAndView.addObject("groups", itemService.findAll());
 
         return modelAndView;
     }
@@ -65,41 +71,7 @@ public class ItemController {
     // CreatgetOriginalFilenaee a new Product
     @PostMapping(value = "/items", consumes = "multipart/form-data")
     public ModelAndView createItem(ItemDto itemDto, MultipartFile[] filesToUpload) {
-        System.out.println(itemDto.toString());
-        Item item = new Item();
-        //SET fields
-        item.setTitle(itemDto.getTitle());
-        item.setDescription(itemDto.getDescription());
-        item.setPrice(Double.valueOf( itemDto.getPrice() ) );//TODO ANI MUST BE ACCEPT ONLY NUMBERS
-        Category category = categoryRepository.findById(itemDto.getCategoryId()).get();
-        item.setCategory(category);
-        //todo set category ok
-        User user = userRepository.findByEmail(itemDto.getUserEmail()).get(0);
-        item.setUser(user);
-        //todo set user ok
-        int count = 0;
-        for (MultipartFile file: filesToUpload ) {
-            Image image = new Image();
-            image.setItem(item);
-
-            String fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
-            itemRepository.save(item);
-            String fileName = "img/" + item.getId() + "_" + count + "." + fileExtension;
-
-            if (!file.isEmpty()) {
-                try {
-                    //not finished
-                    byte[] bytes = file.getBytes();
-                    BufferedOutputStream stream =
-                            new BufferedOutputStream(new FileOutputStream(new File(file.getOriginalFilename())));
-                    stream.write(bytes);
-                    stream.close();
-                } catch (Exception e) {
-
-                }
-            } else {
-            }
-        }
+     itemService.addItem(itemDto,filesToUpload);
         ModelAndView modelAndView = new ModelAndView("addItem");
 
         return modelAndView;
@@ -117,29 +89,15 @@ public class ItemController {
     // Update a Product
     @PutMapping("/items/{id}")
     public Item updateItem(@PathVariable(value = "id") Long itemId,
-                              @Valid @RequestBody Item itemDetails) {
+                              @Valid  ItemDto itemDetails) {
 
-        Item item = itemRepository.findById(itemId)
-                .orElseThrow(() -> new ResourceNotFoundException("Item", "id", itemId));
-
-        item.setTitle(itemDetails.getTitle());
-        item.setDescription(itemDetails.getDescription());
-        item.setPrice(itemDetails.getPrice());
-        item.setCategory(itemDetails.getCategory());
-        item.setUser(itemDetails.getUser());
-        item.setImageList(itemDetails.getImageList());
-
-        Item updatedItem = itemRepository.save(item);
-        return updatedItem;
+       return itemService.changeItem(itemId, itemDetails);
     }
 
     // Delete a Product
     @DeleteMapping("/items/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable(value = "id") Long itemId) {
-        Item item = itemRepository.findById(itemId)
-                .orElseThrow(() -> new ResourceNotFoundException("Item", "id", itemId));
-        itemRepository.delete(item);
-
+        itemService.deleteItem(itemId);
         return ResponseEntity.ok().build();
     }
 }

@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface CategoryGroupRepository extends JpaRepository<CategoryGroup, Integer> {
-    List<CategoryGroup> findByName(String name);
+    CategoryGroup findByName(String name);
 }
