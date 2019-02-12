@@ -1,12 +1,8 @@
 package project.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class UserDto {
 
     private int id;
@@ -14,16 +10,6 @@ public class UserDto {
     private String lastName;
     private String phoneNumber;
     private String email;
-
-    public UserDto(Integer id, String firstName,
-                   String lastName, String phoneNumber, String email) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-
-    }
 
  }
 

@@ -1,20 +1,13 @@
 package project.dto;
 
+import lombok.Data;
+
 import project.model.Image;
 import project.model.Item;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-
-
-import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class    ItemDto {
 
     private int id;
@@ -24,9 +17,13 @@ public class    ItemDto {
     private Integer categoryId;
     private String description;
     private Double price;
-    private List<Image> imageList;
-    private ArrayList<String> imagepath;
-    public ItemDto(String email, String name, String title, String description, Item productEntity) {
+
+    private List<Image> imageList; // TODO Arman jshtel esi petqa te che?
+    private List<String> imagepath;
+
+    //TODO Ani u Arman sranic nerqev bacatrel anhrajeshtutyun@
+
+    public ItemDto(String email, String name, String title, String description, Item item) {
         this.title = this.title;
         this.category = category;
         this.description = this.description;

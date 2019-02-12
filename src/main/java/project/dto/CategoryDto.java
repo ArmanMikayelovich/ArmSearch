@@ -9,13 +9,9 @@ import lombok.Data;
  */
 @Data
 public class CategoryDto {
-    private String id;
 
+    private String id;
     private String name;
     private String group;
-
-    public CategoryDto(String name, String group) {
-        this.name = name;
-        this.group = group;
-    }
 }
+

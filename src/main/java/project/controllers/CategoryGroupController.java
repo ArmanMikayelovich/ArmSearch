@@ -17,6 +17,8 @@ import project.exception.ResourceNotFoundException;
 import project.model.CategoryGroup;
 import project.repository.CategoryGroupRepository;
 
+// TODO tes CategoryController classi TODO-n
+
 @RestController
 @RequestMapping("/api")
 public class CategoryGroupController {
