@@ -2,6 +2,7 @@ package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +20,11 @@ import project.repository.UserRepository;
 import project.service.PasswordEncrypter;
 import project.service.UserService;
 
+import javax.persistence.GeneratedValue;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping
 public class UserController {
 
     private final UserService userService;
@@ -33,7 +35,7 @@ public class UserController {
 
 
 
-    // Get All Users
+    // Get All Users//todo only for admin...
     @GetMapping("/users")
     public ModelAndView getAllUsers() {
         ModelAndView modelAndView = new ModelAndView("registerUser");
@@ -44,8 +46,17 @@ public class UserController {
 //    @PostMapping(path = "/users",  consumes = { MediaType.APPLICATION_JSON_VALUE },
 //            headers = "application/x-www-form-urlencoded;charset=UTF-8",
 //            produces = "application/json")
-    @PostMapping("/users")
-    User newUser(User user) {
+    @GetMapping("/registration")
+    public ModelAndView getRegistrationPage(){
+        ModelAndView modelAndView = new ModelAndView("registration");
+        return modelAndView;
+    }
+
+
+
+
+    @PostMapping("/registration")
+    User addNewUser(User user) {
         userService.saveUser(user);
        return  user;
     }

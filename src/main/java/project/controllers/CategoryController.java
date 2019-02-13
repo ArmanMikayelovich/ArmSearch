@@ -26,7 +26,7 @@ import java.util.List;
 //TODO Arman u Ani es class@ dzevapoxel hamadzayn telegrami meji im grac 12.02.2019 00:34 /amboxjutyamb/
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping
 public class CategoryController {
     @Autowired
     CategoryRepository categoryRepository;
@@ -38,18 +38,18 @@ public class CategoryController {
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
-
-    // Get All Categories
-    @GetMapping("/categories")
-    public ModelAndView getAllCategories() {
-        ModelAndView modelAndView = new ModelAndView("addCategory");
-        modelAndView.addObject("groups", categoryGroupRepository.findAll());
-
-        return modelAndView;
-    }
+//
+//    // Get All Categories
+//    @GetMapping("/categories")
+//    public ModelAndView getAllCategories() {
+//        ModelAndView modelAndView = new ModelAndView("addCategory");
+//        modelAndView.addObject("groups", categoryGroupRepository.findAll());
+//
+//        return modelAndView;
+//    }
 
     // Create a new Category //TODO this must be accesible only for admins and delete
-    @PostMapping("/categories") //TODO ARMAN try to do true...
+    @PostMapping("/categories/add") //TODO ARMAN try to do true...
     public Category createCategory(CategoryDto categoryDto) {
 
         Category category;
@@ -69,7 +69,7 @@ public class CategoryController {
 
 
        // Delete a Category
-    @DeleteMapping("/categories/{id}")
+    @DeleteMapping("/categories/delete/{id}")
     public ResponseEntity<?> deleteCategory(@PathVariable(value = "id") Integer categoryId) {
 
         categoryService.deleteCategory(categoryId);

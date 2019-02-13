@@ -19,7 +19,7 @@ import project.service.CategoryGroupService;
 // TODO tes CategoryController classi TODO-n
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping
 public class CategoryGroupController {
 
    private final CategoryGroupRepository categoryGroupRepository;
@@ -40,22 +40,22 @@ public class CategoryGroupController {
     }
 
     // Create a new CategoryGroup //TODO this must be accesible only for admins and delete
-    @PostMapping("/categoryGroups")
+    @PostMapping("/categoryGroups/add")
     public CategoryGroup createCategoryGroup(CategoryGroup categoryGroup) {
         categoryGroupService.createCategoryGroup(categoryGroup);
 
         return categoryGroupRepository.save(categoryGroup);
     }
 
-    // Get a Single categoryGroup//TODO or get all categories of this group
-    @GetMapping("/categoryGroups/{id}")
-    public CategoryGroup getCategoryGroupById(@PathVariable(value = "id") Integer categoryGroupId) {
-        return categoryGroupService.findById(categoryGroupId);
-
-    }
+//    // Get a Single categoryGroup//TODO or get all categories of this group
+//    @GetMapping("/categoryGroups/{id}")
+//    public CategoryGroup getCategoryGroupById(@PathVariable(value = "id") Integer categoryGroupId) {
+//        return categoryGroupService.findById(categoryGroupId);
+//
+//    }
 
     // Delete a CategoryGroup
-    @DeleteMapping("/categoryGroups/{id}")
+    @DeleteMapping("/categoryGroups/delete/{id}")
     public ResponseEntity<?> deleteCategoryGroup(@PathVariable(value = "id") Integer categoryGroupId) {
        categoryGroupService.deleteCategoryGroup(categoryGroupId);
         return ResponseEntity.ok().build();

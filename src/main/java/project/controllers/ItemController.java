@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping
 public class ItemController {
     @Autowired
     ItemRepository itemRepository;
@@ -55,21 +55,21 @@ public class ItemController {
      * this method is only for testing
      * @return
      */
-    @GetMapping("/items")
-    public ModelAndView getAllProducts() {
-        ModelAndView modelAndView = new ModelAndView("addItem");
-        List items = itemService.findAll().stream()
-                .map(p -> new ItemDto(p)).collect(Collectors.toList());
-
-        modelAndView.addObject("items", items);
-        modelAndView.addObject("groups", itemService.findAll());
-
-        return modelAndView;
-    }
+//    @GetMapping("/items")
+//    public ModelAndView getAllProducts() {
+//        ModelAndView modelAndView = new ModelAndView("addItem");
+//        List items = itemService.findAll().stream()
+//                .map(p -> new ItemDto(p)).collect(Collectors.toList());
+//
+//        modelAndView.addObject("items", items);
+//        modelAndView.addObject("groups", itemService.findAll());
+//
+//        return modelAndView;
+//    }
     //TODO testavorumic heto jnjel
 
     // CreatgetOriginalFilenaee a new Product
-    @PostMapping(value = "/items", consumes = "multipart/form-data")
+    @PostMapping(value = "/items/add", consumes = "multipart/form-data")
     public ModelAndView createItem(ItemDto itemDto, MultipartFile[] filesToUpload) {
      itemService.addItem(itemDto,filesToUpload);
         ModelAndView modelAndView = new ModelAndView("addItem");
@@ -87,7 +87,7 @@ public class ItemController {
 
 
     // Update a Product
-    @PutMapping("/items/{id}")
+    @PostMapping("/items/update")
     public Item updateItem(@PathVariable(value = "id") Long itemId,
                               @Valid  ItemDto itemDetails) {
 
@@ -95,7 +95,7 @@ public class ItemController {
     }
 
     // Delete a Product
-    @DeleteMapping("/items/{id}")
+    @DeleteMapping("/items/delete/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable(value = "id") Long itemId) {
         itemService.deleteItem(itemId);
         return ResponseEntity.ok().build();

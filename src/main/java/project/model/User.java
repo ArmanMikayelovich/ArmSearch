@@ -5,6 +5,7 @@
 package project.model;
 
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
@@ -17,15 +18,37 @@ import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.Index;
 
+import java.util.Collection;
 import java.util.List;
 
 
 @Entity
-@Table(name = "users", indexes = { @Index(
-        name = "fullName",
-        columnList = "full_name") })
+@Table(name = "users")
 @Data
-public class User {
+public class User extends org.springframework.security.core.userdetails.User {
+    public User(String username, String password, Collection<? extends GrantedAuthority> authorities, String firstName, String lastName, String fullName, String email, String phoneNumber, String password1, List<Item> itemList, String roleName) {
+        super(username, password, authorities);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.fullName = fullName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.password = password1;
+        this.itemList = itemList;
+        this.roleName = roleName;
+    }
+
+    public User(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, String firstName, String lastName, String fullName, String email, String phoneNumber, String password1, List<Item> itemList, String roleName) {
+        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.fullName = fullName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.password = password1;
+        this.itemList = itemList;
+        this.roleName = roleName;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,22 +73,11 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "has_role_admin", nullable = false)
-    private boolean hasRoleAdmin;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Item> itemList;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", hasRoleAdmin=" + hasRoleAdmin +
-                ", itemList=" + itemList +
-                '}';
-    }
+    @Column(nullable = false,length = 32)
+    private String roleName = "ROLE_USER";
+
 }
