@@ -9,6 +9,8 @@ import project.model.User;
 public interface UserRepository extends JpaRepository<User, Integer> {
   User findByEmail(String email);
 
-  org.springframework.security.core.userdetails.User findByUsername(String username);
+  default User findByUsername(String username) {
+    return findByEmail(username);
+  }
 
 }

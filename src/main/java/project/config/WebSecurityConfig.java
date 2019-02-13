@@ -10,7 +10,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import project.service.PasswordEncrypter;
+import project.service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -34,10 +36,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login", "/", "home",
+                //give acces for home, login, categories/{ID}, items{ID}, registration to ALL
+                .antMatchers("/login", "/", "/home",
                         "/categories/*","/items/*","/registration").permitAll()
 
-
+                .and().authorizeRequests()
                 .antMatchers("/categories/add","/categoryGroups/add",
                "/categories/delete/**","/categoryGroups/delete/**","/users" ).access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/**").access("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
@@ -55,7 +58,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(userService);
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         return daoAuthenticationProvider;
+    }
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
