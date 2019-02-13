@@ -12,6 +12,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.stereotype.Indexed;
+import project.dto.ItemDto;
+import project.service.CategoryService;
 
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -43,6 +45,10 @@ import java.util.List;
         name = "searchTag",
         columnList = "searchTag") })
 public class Item {
+
+
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

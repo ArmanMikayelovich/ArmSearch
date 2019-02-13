@@ -7,11 +7,25 @@
 package project.service;
 
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-public class PasswordEncrypter {
+@Service
+public class PasswordEncrypter implements PasswordEncoder {
 
-   public static String encrypt (String password){
+   public  String encode (CharSequence var1){
+      String password = var1.toString();
         password = BCrypt.hashpw(password, BCrypt.gensalt());
         return password;
+    }
+
+  public   boolean matches(CharSequence var1, String var2) {
+       String str = var1.toString();
+        return str.equals(var2);
+    }
+
+    @Override
+    public boolean upgradeEncoding(String encodedPassword) {
+        return false;
     }
 }
