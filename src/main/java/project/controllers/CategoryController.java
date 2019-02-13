@@ -68,7 +68,7 @@ public class CategoryController {
 
 
 
-       // Delete a Category
+       // Delete a Category //TODO @PostMapping or @GetMapping for easy deleting from front-end...
     @DeleteMapping("/categories/delete/{id}")
     public ResponseEntity<?> deleteCategory(@PathVariable(value = "id") Integer categoryId) {
 
