@@ -1,6 +1,8 @@
 package project.controllers;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,54 +17,62 @@ import project.exception.ResourceNotFoundException;
 import project.model.Category;
 import project.model.CategoryGroup;
 import project.repository.CategoryGroupRepository;
+
 import project.repository.CategoryRepository;
+import project.service.CategoryService;
 
 import java.util.List;
 
+//TODO Arman u Ani es class@ dzevapoxel hamadzayn telegrami meji im grac 12.02.2019 00:34 /amboxjutyamb/
+
 @RestController
-@RequestMapping("/api")
+@RequestMapping
 public class CategoryController {
     @Autowired
     CategoryRepository categoryRepository;
     @Autowired
     CategoryGroupRepository categoryGroupRepository;
-//    @Autowired
-//    SessionFactory sessionFactory;
 
-    // Get All Categories
-    @GetMapping("/categories")
-    public ModelAndView getAllCategories() {
-        ModelAndView modelAndView = new ModelAndView("addCategory");
-        modelAndView.addObject("groups", categoryGroupRepository.findAll());
+    private final CategoryService categoryService;
 
-        return modelAndView;
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
     }
+//
+//    // Get All Categories
+//    @GetMapping("/categories")
+//    public ModelAndView getAllCategories() {
+//        ModelAndView modelAndView = new ModelAndView("addCategory");
+//        modelAndView.addObject("groups", categoryGroupRepository.findAll());
+//
+//        return modelAndView;
+//    }
 
     // Create a new Category //TODO this must be accesible only for admins and delete
-    @PostMapping("/categories") //TODO ARMAN try to do true...
+    @PostMapping("/categories/add") //TODO ARMAN try to do true...
     public Category createCategory(CategoryDto categoryDto) {
 
-        List<CategoryGroup> list = categoryGroupRepository.findByName(categoryDto.getGroup());
-        CategoryGroup categoryGroup = list.get(0);
-        Category category = new Category(categoryDto.getName(), categoryGroup);
+        Category category;
+        category = categoryService.createCategory(categoryDto);
+
         return categoryRepository.save(category);
     }
 
     // Get a Single category
     @GetMapping("/categories/{id}")
     public Category getCategoryById(@PathVariable(value = "id") Integer categoryId) {
-        return categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));
-    }//TODO ARO category veradarcnelu poxaren piti front uxarkes dra miji bor Item ner@
+        return categoryService.findById(categoryId);
+        //TODO ARO category veradarcnelu poxaren piti front uxarkes dra miji bor Item ner@
+//        return categoryService.findById(categoryId).getItemList(  );
+    }
+
 
 
        // Delete a Category
-    @DeleteMapping("/categories/{id}")
+    @DeleteMapping("/categories/delete/{id}")
     public ResponseEntity<?> deleteCategory(@PathVariable(value = "id") Integer categoryId) {
-        Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));
-        categoryRepository.delete(category);
 
+        categoryService.deleteCategory(categoryId);
         return ResponseEntity.ok().build();
     }
 }

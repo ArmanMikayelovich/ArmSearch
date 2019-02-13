@@ -7,5 +7,8 @@ import project.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+  User findByEmail(String email);
+
+  org.springframework.security.core.userdetails.User findByUsername(String username);
 
 }

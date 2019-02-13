@@ -12,6 +12,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.stereotype.Indexed;
+import project.dto.ItemDto;
+import project.service.CategoryService;
 
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -39,9 +41,14 @@ import java.util.List;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Data
-@Table(name = "items")
-
+@Table(name = "items", indexes = { @Index(
+        name = "searchTag",
+        columnList = "searchTag") })
 public class Item {
+
+
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,6 +61,7 @@ public class Item {
     @Column(name = "description", nullable = false)
     private String description;
 
+    @Column(name = "searchTag", nullable = false)
     private String searchTag = this.title + " " + this.description;
 
     @Column(name = "price", nullable = false)
@@ -70,11 +78,11 @@ public class Item {
     private Date updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @OneToMany(mappedBy = "item",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)

@@ -20,9 +20,6 @@ public class Application {
     }
 
 
-    /**
-     * տալիս է մեզ SessionFactory
-     * @return
-     */
+
 
 }
