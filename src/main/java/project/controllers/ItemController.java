@@ -51,9 +51,6 @@ public class ItemController {
     }
 
 
-    List<Item> items = ItemRepository.findBySearchTag("esiminch"); //TODO ay es Listn el petq e veradarcvi
-    // zapros anoxin: web, isk esiminch@ pti zaprosov ga hasni back
-
     /**
      * this method is only for testing
      * @return
