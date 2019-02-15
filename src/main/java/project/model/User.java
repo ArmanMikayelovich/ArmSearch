@@ -25,30 +25,30 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Data
-public class User extends org.springframework.security.core.userdetails.User {
-    public User(String username, String password, Collection<? extends GrantedAuthority> authorities, String firstName, String lastName, String fullName, String email, String phoneNumber, String password1, List<Item> itemList, String roleName) {
-        super(username, password, authorities);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.fullName = fullName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.password = password1;
-        this.itemList = itemList;
-        this.roleName = roleName;
-    }
-
-    public User(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, String firstName, String lastName, String fullName, String email, String phoneNumber, String password1, List<Item> itemList, String roleName) {
-        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.fullName = fullName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.password = password1;
-        this.itemList = itemList;
-        this.roleName = roleName;
-    }
+public class User  {
+//    public User(String username, String password, Collection<? extends GrantedAuthority> authorities, String firstName, String lastName, String fullName, String email, String phoneNumber, String password1, List<Item> itemList, String roleName) {
+//        super(username, password, authorities);
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.fullName = fullName;
+//        this.email = email;
+//        this.phoneNumber = phoneNumber;
+//        this.password = password1;
+//        this.itemList = itemList;
+//        this.roleName = roleName;
+//    }
+//
+//    public User(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, String firstName, String lastName, String fullName, String email, String phoneNumber, String password1, List<Item> itemList, String roleName) {
+//        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.fullName = fullName;
+//        this.email = email;
+//        this.phoneNumber = phoneNumber;
+//        this.password = password1;
+//        this.itemList = itemList;
+//        this.roleName = roleName;
+//    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,8 +61,7 @@ public class User extends org.springframework.security.core.userdetails.User {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "full_name", nullable = false)
-    private String fullName = this.firstName + " " + this.lastName;
+
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -78,6 +77,6 @@ public class User extends org.springframework.security.core.userdetails.User {
     private List<Item> itemList;
 
     @Column(nullable = false,length = 32)
-    private String roleName = "ROLE_USER";
+    private String roleName = "USER";
 
 }
