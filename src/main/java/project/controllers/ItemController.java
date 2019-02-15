@@ -24,6 +24,7 @@ import project.repository.CategoryRepository;
 import project.repository.ImageRepository;
 import project.repository.ItemRepository;
 import project.repository.UserRepository;
+import project.service.ImageService;
 import project.service.ItemService;
 
 import javax.validation.Valid;
@@ -44,7 +45,10 @@ public class ItemController {
     UserRepository userRepository;
     @Autowired
     ImageRepository imageRepository;
+    @Autowired
     private final ItemService itemService;
+    @Autowired
+    ImageService imageService;
 
     public ItemController(ItemService itemService) {
         this.itemService = itemService;
@@ -98,6 +102,13 @@ public class ItemController {
     @DeleteMapping("/items/delete/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable(value = "id") Long itemId) {
         itemService.deleteItem(itemId);
+        return ResponseEntity.ok().build();
+    }
+
+    // Delete an Image
+    @DeleteMapping("/images/{id}")
+    public ResponseEntity<?> deleteImage(@PathVariable(value = "id") Long imageId) {
+        imageService.deleteImage(imageId);
         return ResponseEntity.ok().build();
     }
 }
