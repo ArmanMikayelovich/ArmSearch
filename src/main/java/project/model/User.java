@@ -5,7 +5,7 @@
 package project.model;
 
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.GrantedAuthority; //
 
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
