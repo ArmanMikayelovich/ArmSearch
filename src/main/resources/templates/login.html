@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Sign in</title>
@@ -16,3 +17,55 @@
 </div>
 </body>
 </html>
+=======
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>LOG IN</title>
+
+   <style>
+		.rot {-moz-transform: scaleX(-1);
+            -o-transform: scaleX(-1);
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+            filter: FlipV;
+            -ms-filter: 'FlipV'
+		}
+
+	</style>
+
+</head>
+
+<body>
+<form method="post" ><table width="24%" height="209" border="0" align="center" bgcolor="#ff8300" style="text-align:center" >
+  <tr>
+    <td colspan="2"><strong><em>LOG IN</em></strong></td>
+  </tr>
+  <tr>
+    <td width="50%" height="38">Username</td>
+    <td width="50%" ><input bgcolor="#FFFF99" id="username" name="username" th:placeholder="username" type="text" value=""/></td>
+  </tr>
+  <tr>
+    <td width="50%" height="50">Password</td>
+    <td width="50%"><input bgcolor="#FFFF99" id="password" name="password" th:placeholder="password" type="text" value=""/></td>
+  </tr>
+  <tr>
+    <!--<td height="46"> <h6>-->
+    <!--<input bgcolor="#FFFF99" id="ch1" name="ch1" type="checkbox"  value=""/>-->
+    <!--Remember me</h6></td>-->
+    <td>
+      <input bgcolor="#FFFF99" type="submit" class="btn btn-lg btn-primary btn-block" name="Sign in" /></td>
+    <td align="center"><h5><a th:href="@{registration.html}">Registration</a></h5></td>
+  </tr>
+
+</table></form>
+
+
+
+
+
+
+
+</body>
+</html>
+>>>>>>> bcf4ce7729d18028ee035af0f6c412a7ffa18ba5
