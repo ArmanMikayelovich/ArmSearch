@@ -3,6 +3,7 @@ package project.service;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import project.exception.ResourceNotFoundException;
 import project.model.Image;
 import project.model.Item;
 import project.repository.ImageRepository;
@@ -11,6 +12,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 @Service
 public class ImageService {
     private final ImageRepository imageRepository;
@@ -37,5 +39,13 @@ public class ImageService {
         }
         imageRepository.save(image);
         return image;
+    }
+
+    public void deleteImage (Long imageId){
+        Image image = imageRepository.findById(imageId)
+                .orElseThrow(() -> new ResourceNotFoundException("Image", "id", imageId));
+        File file = new File(image.getFilePath());
+        imageRepository.delete(image);
+        file.delete();
     }
 }
