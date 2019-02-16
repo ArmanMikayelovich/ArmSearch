@@ -1,34 +1,54 @@
 package project.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.exception.ResourceNotFoundException;
 import project.model.User;
 import project.repository.UserRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserService  {
 
     private final UserRepository userRepository;
-    private final PasswordEncrypter passwordEncrypter;
 
-    public UserService(UserRepository userRepository, PasswordEncrypter passwordEncrypter) {
+    private PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+
+    }
+    public UserService(UserRepository userRepository) {
 
         this.userRepository = userRepository;
-        this.passwordEncrypter = passwordEncrypter;
     }
 
     public void saveUser(User user) {
 
-        user.setPassword(passwordEncrypter.encode(user.getPassword()));
+        user.setPassword(passwordEncoder().encode(user.getPassword()));
+        System.out.println(user.getPassword());
         user.setItemList(new ArrayList<>());
         userRepository.save(user);
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(
+                        user.getEmail(),
+                       user.getPassword(),
+                        new HashSet<GrantedAuthority>() {
+                            {
+                                new SimpleGrantedAuthority(user.getRoleName());
+                            }
+                        }
+                ));
+
     }
 
     public void updateUser(User userDetails) {
@@ -40,7 +60,7 @@ public class UserService  {
         user.setLastName(userDetails.getLastName());
         user.setEmail(userDetails.getEmail());
         user.setPhoneNumber(userDetails.getPhoneNumber());
-        user.setPassword(passwordEncrypter.encode(userDetails.getPassword()));
+        user.setPassword(passwordEncoder().encode(userDetails.getPassword()));
         userRepository.save(user);
     }
 
@@ -66,4 +86,5 @@ public class UserService  {
         return userRepository.findByEmail(email);
 
     }
+
 }

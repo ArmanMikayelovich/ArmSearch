@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Forms Exemple</title>
@@ -104,38 +103,46 @@
             filter: FlipV;
             -ms-filter: 'FlipV'
 		}
-
+body {
+  background-color: #fff;
+}
+.wrapper {
+  height: 220px;
+  width: 654px;
+  margin: 50px auto;
+  border-radius: 7px 7px 7px 7px;
+  /* VIA CSS MATIC https://goo.gl/cIbnS */
+  -webkit-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 14px 32px 0px rgba(0, 0, 0, 0.15);
+}
 	</style>
 </head>
 
 <body class="container">
-<p width="37%" height="69" align="left"><a href="Home.html"><img src="Images/all.jpg" width="13%" height=20%></a><img src="images/cm.gif" class="rot" width="82" height="71" alt="A" /></p>
-<table width="509" height="414" border="0" align="center" cellpadding="3" cellspacing="3" bgcolor="#FF9900"  class="text">
-        <td>&nbsp;</td>
-        <td><h1>Registration</h1></td>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <td>  </td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
+<a href="Home.html"><img src="https://st.depositphotos.com/1364916/4294/v/950/depositphotos_42942807-stock-illustration-house-and-waves-logo-vector.jpg" height="70" width="70"></a>
+<table width="716" height="414" border="0" align="center" cellpadding="3" cellspacing="3" bgcolor="#fdf1ec" class="wrapper">
+		<tr>
+        <td width="147">&nbsp;</td>
+        <td width="461"><h1>Edit Informatrion</h1></td>
+        <td width="35">&nbsp;</td>
       </tr>
       <tr>
         <td>&nbsp;</td>
         <td>
-        <form  th:action="@{/registration}" method="post" >
+        <form role="form" action="" class=" form-horizontal container jumbotron" name="regForm">
             <div class="form-group">
                 <label for="name" class="control-label col-sm-2">Full Name:</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" name="firstName" maxlength="10" placeholder="Enter name">
+                  <input type="text" class="form-control" name="fullName" maxlength="10" placeholder="Enter name" />
                 </div>
-                <span class="col-sm-6" ><p id="errFName" ></p></span>
+                <span class="col-sm-4" ><p id="errFName" ></p></span>
              </div>    
            
             <div class="form-group">
                 <label for="userName" class="control-label col-sm-2">User Name:</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" name="LastName" maxlength="7" placeholder="Enter user name">
+                    <input type="text" class="form-control" name="userName" maxlength="7" placeholder="Enter user name">
                 </div>
                  <span class="col-sm-6"><p id="errUName"> </p></span>
             </div>
@@ -150,15 +157,27 @@
             <div class="form-group">
                 <label for="phone" class="control-label col-sm-2">Phone No.:</label>
                 <div class="col-sm-4">
-                     <input type="tel" class="form-control" name="phoneNumber" placeholder="+91xxxxxxxxxx">
+                     <input type="tel" class="form-control" name="phone" placeholder="+91xxxxxxxxxx">
                 </div>
                 <span class="col-sm-6" ><p id="errPhone"> </p></span>
             </div>
-           
+            <div class="col-sm-6">
+                <input type="submit" id="update_user" name="update_user" value="Update" class="btn btn-primary btn-lg" Click="validator()"></input>
+            </div>
+            
+      <div><h2>Change Password</h2></div>
+      
             <div class="form-group">
-                <label for="pwd" class="control-label col-sm-2">Password:</label>
+                <label for="pwd" class="control-label col-sm-2">Old Password:</label>
                 <div class="col-sm-4">
                     <input type="password" class="form-control" name="password" maxlength="6" placeholder="Enter password">
+                </div>
+                 <span class="col-sm-6" ><p id="errPwd"> </p></span>
+            </div>
+            <div class="form-group">
+                <label for="pwd" class="control-label col-sm-2">New Password:</label>
+                <div class="col-sm-4">
+                    <input type="password" class="form-control" id="new_password" name="new_password" maxlength="6" placeholder="Enter password">
                 </div>
                  <span class="col-sm-6" ><p id="errPwd"> </p></span>
             </div>
@@ -171,14 +190,11 @@
                  <span class="col-sm-6" ><p id="errConfirmPwd"> </p></span>
             </div>
             
-
-            
             <div class="col-sm-6">
-                <input type="submit" value="Submit" class="btn btn-primary btn-lg" >
+                <input type="submit" id="change_pass" name="change_pass" value="Change" class="btn btn-primary btn-lg" Click="validator()"></input>
             </div>
         </form>
         </td>
-        <td>&nbsp;</td>
         <td>&nbsp;</td>
         </tr>
       
