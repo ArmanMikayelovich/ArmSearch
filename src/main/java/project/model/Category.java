@@ -5,6 +5,7 @@
 package project.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -21,6 +22,7 @@ import java.util.List;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Category {
     public Category(String name, CategoryGroup categoryGroup) {
         this.name = name;

@@ -34,20 +34,6 @@ public class LoginController {
         return modelAndView;
     }
 
-//    @PostMapping("/login")
-//    public void login(UserAuth auth) {
-//        User user = userService.findByEmail(auth.getUsername());
-//
-//        provider.authenticate( new UsernamePasswordAuthenticationToken(
-//                user.getEmail(),
-//                user.getPassword(),
-//                new HashSet<GrantedAuthority>() {
-//                    {
-//                        new SimpleGrantedAuthority(user.getRoleName());
-//                    }
-//                }
-//        ));
-//    }
 
     @GetMapping("/valod")//only for test... this is only for Authenticated users XD
     public ModelAndView valod() {
