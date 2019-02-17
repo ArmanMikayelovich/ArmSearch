@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 
 <head>
   <title>Harvest vase</title>
@@ -175,19 +176,38 @@ span {
 <a href="Home.html"><img src="https://st.depositphotos.com/1364916/4294/v/950/depositphotos_42942807-stock-illustration-house-and-waves-logo-vector.jpg" height="70" width="70"></a>
   <div class="wrapper">
     <div class="product-img">
-      <img src="https://hotline.ua/img/tx/156/156678207_s265.jpg" height="420" width="327">
+      <label th:utext="${dir}"> User's phone number</label>
+
+      <tr th:each ="image : ${item.getImageList()}">
+        <img
+             th:src="${image.getFilePath()}" height="420" width="327"/>
+      </tr>
+
     </div>
     <div class="product-info">
       <div class="product-text">
-        <h1>HP Spectre x360 Laptop</h1>
-        <h2>New</h2>
-        <p>Accomplish more and do it faster when you’re on-the-go with the HP Spectre x360 13t. Its striking combination of next-level performance, stylish design, compact size, and stunning display won’t disappoint when it’s time to tackle your next project.<br> Free shipping </p>
+        <h1 th:utext ="${item.title}">Item's title</h1>
+        <!--<h2>New</h2> ANI JAN QEZ INCH VATUTYUN EINQ AREL)))) new te ogtagorcac, inch kap uni)))-->
+        <p th:utext="${item.description}">Item's description</p>
       </div>
       <div class="product-price-btn">
-        <p><span>256.000</span>$</p>
+        <p><span th:utext="${#numbers.formatDecimal(item.price,1,2)}">Items'price</span>֏</p>
       </div>
       <div class="product-text">
-        <p> Contacts </br>E-mail: armanmikayelovich@gmail.com</br>Phone No.: +37477846848 </p>
+         Contacts
+          </br>
+                <a
+                  th:href="@{'/users/'+ ${item.getUser().getId()}}"
+                th:utext="${item.getUser().getFirstName()} + ' ' + ${item.getUser().getLastName()}" >
+               </a>
+            <br/>
+          <!--E-mail: <label th:utext="${item.getUser().getEmail()}">User's email</label>-->
+        <!--<a th:href="mailto:+''+${item.getUser().getEmail()}(Subject=${item.title})" target="_top">Send Mail</a>-->
+        <!--<a th:href="mailto:someone@example.com?Subject=Hello%20again" target="_top">Send Mail</a>-->
+        E-mail:<a th:href="'mailto:' + ${item.getUser().getEmail()}+'?Subject='+${item.title}"
+                  th:utext="${item.getUser().getEmail()}" >Send email </a></td>
+          </br>
+        Phone No.: <label th:utext="${item.getUser().getPhoneNumber()}"> User's phone number</label>
       </div>
     </div>
   </div>

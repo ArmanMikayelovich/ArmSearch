@@ -27,7 +27,10 @@ public class ItemService {
         this.userService = userService;
         this.imageService = imageService;
     }
-
+    public Item findById(Long id) {
+       return itemRepository.findById(id)
+               .orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
+    }
     public List<Item> findAll() {
        return itemRepository.findAll();
     }
