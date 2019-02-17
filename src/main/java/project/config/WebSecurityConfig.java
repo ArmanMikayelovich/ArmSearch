@@ -40,6 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
+                .successForwardUrl("/")
                 .and()
                 .authorizeRequests()
                 //give acces for home, login, categories/{ID}, items{ID}, registration to ALL

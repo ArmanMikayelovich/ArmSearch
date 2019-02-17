@@ -1,6 +1,7 @@
 package project.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import project.dto.ItemDto;
 import project.exception.ResourceNotFoundException;
@@ -31,6 +32,7 @@ public class ItemService {
        return itemRepository.findAll();
     }
 
+    @Transactional
     public void addItem(ItemDto itemDto, MultipartFile[] images) {
         System.out.println(itemDto.toString());
         Item item = new Item();
@@ -43,7 +45,7 @@ public class ItemService {
         Category category = categoryService.findById(itemDto.getCategoryId());
         item.setCategory(category);
 
-        User user = userService.findByEmail(itemDto.getUserEmail());
+        User user = userService.getAuthenticatedUser();
         item.setUser(user);
         itemRepository.save(item);
         int images_count = 0;
@@ -61,7 +63,7 @@ public class ItemService {
         itemRepository.save(item);
 
     }
-
+    @Transactional
     public Item changeItem(Long itemId,ItemDto itemDetails) {
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new ResourceNotFoundException("Item", "id", itemId));

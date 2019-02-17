@@ -59,26 +59,25 @@ public class ItemController {
      * this method is only for testing
      * @return
      */
-//    @GetMapping("/items")
-//    public ModelAndView getAllProducts() {
-//        ModelAndView modelAndView = new ModelAndView("addItem");
-//        List items = itemService.findAll().stream()
-//                .map(p -> new ItemDto(p)).collect(Collectors.toList());
-//
-//        modelAndView.addObject("items", items);
-//        modelAndView.addObject("groups", itemService.findAll());
-//
-//        return modelAndView;
-//    }
+    @GetMapping("/items")
+    public ModelAndView getAllProducts() {
+        ModelAndView modelAndView = new ModelAndView("addItem");
+        modelAndView.addObject("categories", categoryRepository.findAll());
+        modelAndView.addObject("groups", itemService.findAll());
+
+        return modelAndView;
+    }
     //TODO testavorumic heto jnjel
 
     // CreatgetOriginalFilenaee a new Product
+
     @PostMapping(value = "/items/add", consumes = "multipart/form-data")
     public ModelAndView createItem(ItemDto itemDto, MultipartFile[] filesToUpload) {
      itemService.addItem(itemDto,filesToUpload);
         ModelAndView modelAndView = new ModelAndView("addItem");
 
         return modelAndView;
+        //TODO REDIRECT TO CREATED ITEM'S PAGE, OK???
     }
 
 

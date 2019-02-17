@@ -45,7 +45,8 @@ public class CategoryController {
     }
 
     // Create a new Category //TODO this must be accesible only for admins and delete
-    @PostMapping(value = "/categories/add") 
+    @PostMapping(value = "/categories/add")
+
     public Category createCategory( CategoryDto categoryDto) {
 
         Category category;

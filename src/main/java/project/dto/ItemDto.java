@@ -2,16 +2,17 @@ package project.dto;
 
 import lombok.Data;
 
+import lombok.NoArgsConstructor;
 import project.model.Image;
 import project.model.Item;
 
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 public class    ItemDto {
 
     private int id;
-    private String userEmail;
     private String title;
     private String category;
     private Integer categoryId;
