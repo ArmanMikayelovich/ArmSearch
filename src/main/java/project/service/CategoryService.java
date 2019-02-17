@@ -1,6 +1,7 @@
 package project.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import project.dto.CategoryDto;
 import project.exception.ResourceNotFoundException;
 import project.model.Category;
@@ -22,7 +23,7 @@ public class CategoryService {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "id", id));
     }
-
+    @Transactional
     public Category createCategory(CategoryDto categoryDto) {
         CategoryGroup categoryGroup = categoryGroupService.findById(categoryDto.getGroupId());
         //TODO ANi get category group id from web
@@ -30,7 +31,7 @@ public class CategoryService {
         Category category = new Category(categoryDto.getName(), categoryGroup);
         return category;
     }
-
+    @Transactional
     public void deleteCategory(Integer categoryId) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));

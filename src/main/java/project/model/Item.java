@@ -31,6 +31,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Index;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -45,10 +46,6 @@ import java.util.List;
         name = "searchTag",
         columnList = "searchTag") })
 public class Item {
-
-
-
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -86,6 +83,6 @@ public class Item {
     private User user;
 
     @OneToMany(mappedBy = "item",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Image> imageList;
+    private List<Image> imageList = new ArrayList<>();
     //TODO ARO user ջնջելու հետ նաև ջնջել բոլոր նկարները fileSYstemի
 }

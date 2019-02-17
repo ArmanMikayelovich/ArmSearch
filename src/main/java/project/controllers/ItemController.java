@@ -1,16 +1,11 @@
 package project.controllers;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,9 +23,7 @@ import project.service.ImageService;
 import project.service.ItemService;
 
 import javax.validation.Valid;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,34 +52,35 @@ public class ItemController {
      * this method is only for testing
      * @return
      */
-//    @GetMapping("/items")
-//    public ModelAndView getAllProducts() {
-//        ModelAndView modelAndView = new ModelAndView("addItem");
-//        List items = itemService.findAll().stream()
-//                .map(p -> new ItemDto(p)).collect(Collectors.toList());
-//
-//        modelAndView.addObject("items", items);
-//        modelAndView.addObject("groups", itemService.findAll());
-//
-//        return modelAndView;
-//    }
+    @GetMapping("/items")
+    public ModelAndView getAllProducts() {
+        ModelAndView modelAndView = new ModelAndView("addItem");
+        modelAndView.addObject("categories", categoryRepository.findAll());
+        modelAndView.addObject("groups", itemService.findAll());
+
+        return modelAndView;
+    }
     //TODO testavorumic heto jnjel
 
     // CreatgetOriginalFilenaee a new Product
+
     @PostMapping(value = "/items/add", consumes = "multipart/form-data")
     public ModelAndView createItem(ItemDto itemDto, MultipartFile[] filesToUpload) {
      itemService.addItem(itemDto,filesToUpload);
         ModelAndView modelAndView = new ModelAndView("addItem");
 
         return modelAndView;
+        //TODO REDIRECT TO CREATED ITEM'S PAGE, OK???
     }
 
 
     // Get a Single Product
     @GetMapping("/items/{id}")
-    public Item getItemById(@PathVariable(value = "id") Long itemId) {
-        return itemRepository.findById(itemId)
-                .orElseThrow(() -> new ResourceNotFoundException("Product", "id", itemId));
+    public ModelAndView getItemById(@PathVariable(value = "id") Long itemId) {
+        ModelAndView modelAndView = new ModelAndView("item");
+        modelAndView.addObject("item", itemService.findById(itemId));
+        modelAndView.addObject("dir", System.getProperty("user.dir"));
+        return modelAndView;
     }//TODO ANI ItemDto - um avelacnel price... sarqel AnnouncementView.html shablon@
 
 
@@ -104,6 +98,8 @@ public class ItemController {
         itemService.deleteItem(itemId);
         return ResponseEntity.ok().build();
     }
+
+
 
     // Delete an Image
     @DeleteMapping("/images/{id}")
