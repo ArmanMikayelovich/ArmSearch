@@ -19,6 +19,7 @@ public class ItemService {
     private final CategoryService categoryService;
     private final UserService userService;
     private final ImageService imageService;
+    private  DeletedImagesPathService DIPService;
 
     public ItemService(ItemRepository itemRepository, CategoryService categoryService,
                                 UserService userService, ImageService imageService) {
@@ -85,6 +86,7 @@ public class ItemService {
     public void deleteItem(Long id) {
         Item item = itemRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
+        DIPService.deletedImagesPathsaver(item.getImageList());
         itemRepository.delete(item);
     }
 }

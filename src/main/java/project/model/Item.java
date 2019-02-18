@@ -35,16 +35,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@JsonIgnoreProperties(
-        value = {"createdAt", "updatedAt"},
-        allowGetters = true
-)
+
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Data
 @Table(name = "items", indexes = { @Index(
-        name = "searchTag",
-        columnList = "searchTag") })
+        name = "IDX_search_tag",
+        columnList = "title, description") })
 public class Item {
 
     @Id
@@ -57,9 +54,6 @@ public class Item {
 
     @Column(name = "description", nullable = false)
     private String description;
-
-    @Column(name = "searchTag", nullable = false)
-    private String searchTag = this.title + " " + this.description;
 
     @Column(name = "price", nullable = false)
     private Double price;

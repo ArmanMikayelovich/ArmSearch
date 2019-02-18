@@ -15,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.exception.ResourceNotFoundException;
+import project.model.Image;
+import project.model.Item;
 import project.model.User;
 import project.repository.UserRepository;
 
@@ -24,6 +26,7 @@ import java.util.*;
 public class UserService  {
 
     private final UserRepository userRepository;
+    private DeletedImagesPathService DIPService;
 
     private PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -74,6 +77,11 @@ public class UserService  {
     }
     @Transactional
     public void deleteUser(User user) {
+        List<Item> items = user.getItemList();
+        for (Item itm: items) {
+            List<Image> images = itm.getImageList();
+            DIPService.deletedImagesPathsaver(images);
+        }
         userRepository.delete(user);
     }
 

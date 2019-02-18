@@ -37,7 +37,13 @@
             <artifactId>validation-api</artifactId>
             <version>2.0.1.Final</version>
         </dependency>
-                <!--  SPRINT BOOT STARTER SECURITY-->
+        <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-commons-core -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons-core</artifactId>
+        </dependency>
+
+        <!--  SPRINT BOOT STARTER SECURITY-->
       <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
