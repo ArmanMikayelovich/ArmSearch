@@ -22,7 +22,7 @@ public class Scheduler {
 
     @Scheduled(fixedRate = 24 * 60 * 60 * 1000)
     public void startScheduler() {
-       new Thread(new ScheduleThread()).start();
+        new Thread(new ScheduleThread()).start();
     }
 }
 
@@ -34,7 +34,7 @@ class ScheduleThread implements Runnable {
     @Override
     public void run(){
 
-        if(deletedImagesPathService.findAllDeletedImagesPathsWithCriteriaQuery() != null) {
+        if(!(deletedImagesPathService.findAllDeletedImagesPathsWithCriteriaQuery().isEmpty())) {
             List<DeletedImagesPath> dIPs = deletedImagesPathService.findAllDeletedImagesPathsWithCriteriaQuery();
 
             for (DeletedImagesPath dPs : dIPs) {

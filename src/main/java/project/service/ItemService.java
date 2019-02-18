@@ -19,10 +19,10 @@ public class ItemService {
     private final CategoryService categoryService;
     private final UserService userService;
     private final ImageService imageService;
-    private  DeletedImagesPathService DIPService;
+    private DeletedImagesPathService DIPService;
 
     public ItemService(ItemRepository itemRepository, CategoryService categoryService,
-                                UserService userService, ImageService imageService) {
+                       UserService userService, ImageService imageService) {
         this.itemRepository = itemRepository;
         this.categoryService = categoryService;
         this.userService = userService;

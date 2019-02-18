@@ -1,20 +1,17 @@
 package project.controllers;
 
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import project.dto.ItemDto;
-import project.exception.ResourceNotFoundException;
-import project.model.Category;
-import project.model.Image;
 import project.model.Item;
-import project.model.User;
 import project.repository.CategoryRepository;
 import project.repository.ImageRepository;
 import project.repository.ItemRepository;
@@ -25,8 +22,7 @@ import project.service.ItemService;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.*;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @RestController
 @RequestMapping
@@ -48,6 +44,14 @@ public class ItemController {
         this.itemService = itemService;
     }
 
+
+    @GetMapping("/items")
+    public Page<Item> findAll(@RequestParam Optional<String> text,
+                              @RequestParam Optional<Integer> page,
+                              @RequestParam Optional<String> sortBy){
+        return itemRepository.findByTitleOrByDescription(text.orElse("_"),
+                PageRequest.of(1, 12, Sort.by("price"))); // TODO Arman dzel es cantroller@ u tal Aniin
+    }
 
     /**
      * this method is only for testing
