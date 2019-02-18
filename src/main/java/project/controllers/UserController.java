@@ -60,8 +60,10 @@ public class UserController {
 
     // Get a Single User
     @GetMapping("/users/{id}")
-    public User getUserById(@PathVariable(value = "id") Integer userId) {
-        return userService.getUserById(userId);
+    public ModelAndView getUserById(@PathVariable(value = "id") Integer userId) {
+        ModelAndView modelAndView = new ModelAndView("userPage");
+        modelAndView.addObject("user", userService.getAuthenticatedUser());
+        return modelAndView;
     }//TODO ANI|||erb bacvi mardu ej@ piti haytararutyunner@ irar takic sharvac gan
     //  nkar@ dzax koxqic, ajic title,title -ic mi qich aj apranqi gin@,
     //  //title-i tak@ grvac lini Category, Category-i takic vejin tarmacman amsativ@
