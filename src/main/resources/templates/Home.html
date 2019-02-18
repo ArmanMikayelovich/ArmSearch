@@ -2,395 +2,158 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title >ArmSearch</title>
-    
-    <script>
-function calc(){
-	document.getElementById("menu2").style.display = "block";
-}
-
-</script>
-    
-    
-    <style>
-        .text {
-            color: #333;
-            text-align: center;
-        }
-    </style>
-    <link rel="stylesheet" th:href="@{/css/home.css}"/>
+    <link rel="stylesheet" th:href="@{/registration.css}"/>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
 </head>
-<body bgcolor="#FFFFFF"
-</div>
-<form action="hame.html" method="get">
-</form>
-</body>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title >All_U_Need</title>
-    <style>
-        .bkg { background-color:#FF9
-        }
-        .text1 {
-            background: #ff8300;
-            border-radius: 3px;
-            color: #fff;
-            float: right;
-            font-size: 14px;
-            margin-bottom: 13px;
-            margin-top: 13px;
-            padding: 8px 14px 8px 34px;
-            position: relative;
-            text-transform: uppercase;
-        }
-        .text_div {
-            border-radius: 3px;
-            color: #00C;
-            font-size: 14px;
-        }
-        .text {
-            color: #201830;
-            text-align: center;
-            text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-            text-shadow: #8A7BA8 0 0 10px;
-        }
-        .rot {-moz-transform: scaleX(-1);
-            -o-transform: scaleX(-1);
-            -webkit-transform: scaleX(-1);
-            transform: scaleX(-1);
-            filter: FlipV;
-            -ms-filter: 'FlipV'
-        }
-		.drop {
-				display:inline;
-				/*position: relative*/ 
-		}
-		.content {
-					background-color: #999;
-					padding:10px 12px;
-					/*position:absolute;*/
-					display:none 
-		}
-		.drop:hover .content { /*mkniki reakcian*/
-					display:block;
-					cursor: pointer;
-		}
-@import "bourbon";
-
-body {
-  background: #eee;
-}
-.list {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
-.list--item {
-  width:25%;
-  float:left;
-  padding:10px;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  
-  figure {
-    background:#fff;
-    box-shadow:0 2px 3px rgba(black,0.1);
-    position:relative;
-  }
-  
-  img {
-    display:block;
-    width:100%;
-  }
-  
-  figcaption {
-    padding:6px 12px 12px;
-    font-size:12px;
-    color:#444;
-  }
-  header, figcaption {
-    padding-left:25%;
-  }
-  header {
-    margin-top:12px;
-  }
-  h2 {
-    font-size:14px;
-    padding:0 0 0;
-    margin:0;
-  }
-  
-  
-}
-.floater {
-  width:7%;
-  height:2%;
-  background:orange;
-  position: absolute;
-  left:0; 
-}
-
-@media screen and (min-width: 1200px) {
-  .container { text-align:center;
-  	width:100%;
-  }
-  .list--item {
-    width:20%;
-  }
-}
-@media screen and (max-width: 768px) {
-  .list--item {
-    width:33%;
-  }
-}
-@media screen and (max-width: 620px) {
-  .list--item {
-    width:50%;
-  }
-}
-@media screen and (max-width: 480px) {
-  .list--item {
-    width:100%;
-  }
-}
-.da-TBButton{ text-align:center;
-  color: #FFF;
-  background-color: #00C;
-  padding: 3%;
-  font-size: 12px;
-  text-decoration:none;
-  margin: 10%;
-  display: block;
-}
-
-/*Link button*/
-nav{
-  width: 80px;
-  background: #00C;
-}
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #00C;
-    width: 100%;
-}
-
-
-li a, .dropbtn {
-    display: inline-block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-.dropbtn:hover{
-  text-decoration: none;
-  color: white;
-}
-li a:hover, .drop-menu:hover .dropbtn {
-    background-color: #F60;
-
-}
-
-li.drop-menu {
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #F60;
-    min-width: 80px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display:block;
-    text-align: left;
-}
-
-.dropdown-content a:hover {
-  background-color: #3d3d3d;
-  color:white;
-}
-
-.drop-menu:hover .dropdown-content {
-    display: block;
-}
-
-		
-    </style>
-</head>
-
-<body style="background: >
+<body  bgcolor="#FFFFFF">
 <table width="100%" border="0" >
-<tr>
-<table width="92%" height=24% border="0" align="center">
-          <td width="16%" height="69" align="left"><span style='padding-left:100px;'> </span>
-          <img src="Images/cm.gif" class="rot" width="88%" height="71" alt="A" align="center" /><img src="Images/all.jpg" width="87%" height=116%><br/></td>
-        <td height="69" align="center" colspan="2"><a href="Login.html"> <input type="submit" id="name" name="name" value="My Account" width="100" class="text1"/></a></td>
-        <td width="23%" height="69" colspan="2" align="center"><a href="AddItem.html"> <input type="submit" id="name" name="name" value=" + Post to Classifieds" width="100" class="text1"/></a></td>
-    </table>
-</tr>
-<table width="736" height="51" align="center">
     <tr>
-        <td width="40%" height="27" colspan="1" align="center" bgcolor="#0000CC" ><input width="600" border-radius="3px" size="80" color="#00C" id="search" defaultval="Search" name="search" type="Search" class="text_div"/> <input id="submit-search" type="submit" value="Search" class="text_div"></td></tr>
-</table>
+        <table width="92%" height=24% border="0" align="center">
+                  <td width="16%" height="69" align="left"><span style='padding-left:100px;'></span></td>
+                <td height="69" align="center" colspan="2">
+                    <a th:href="@{/user}">
+                        <input type="submit" name="name" value="My Account" width="100" class="text1"/>
+                    </a>
+                </td>
+                <td width="23%" height="69" colspan="2" align="center">
+                    <a th:href="@{/addItem}">
+                        <input type="submit" name="name" value=" + Post to Classifieds" width="100" class="text1"/>
+                    </a>
+                </td>
+        </table>
+    </tr>
+        <table width="736" height="51" align="center">
+            <tr>
+                <td width="40%" height="27" colspan="1" align="center" bgcolor="#0000CC" >
+                    <input width="600" border-radius="3px" size="80" color="#00C" id="search" defaultval="Search" name="search" type="Search" class="text_div"/> <input id="submit-search" type="submit" value="Search" class="text_div">
+                </td>
+            </tr>
+        </table>
     <p width="159" height="28" align="center" color="#00C"><h3> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Categories</h3> </p>
     <table width="100%" border="0" align="center"  class="container">
         <tr>
             <td >
             	<ul>
                   <li class="drop-menu">
-                  <a href="#" class="dropbtn">Electronics<span class="caret"></span> </a>
-                  <div class="dropdown-content">
-                    <a href="#">Cat 1</a>
-                    <a href="#">Cat 2</a>
-                    <a href="#">Cat 3</a>
-                  </div>
+                      <a th:href="@{/home/categoryGroupId}" class="dropbtn">Electronics<span class="caret"></span></a>
+                        <div class="dropdown-content">
+                            <a th:href="@{/home/categoryGroupId/categoryId}" th:each="categoryGroupId : ${categoryGroup.categories}"></a>
+                        </div>
                   </li>
             	</ul>
     		</td>
             <td >
             	<ul>
                   <li class="drop-menu">
-                  <a href="#" class="dropbtn">Real Estate<span class="caret"></span> </a>
-                  <div class="dropdown-content">
-                    <a href="#">Cat 1</a>
-                    <a href="#">Cat 2</a>
-                    <a href="#">Cat 3</a>
-                  </div>
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Real Estate<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="categoryGroupId : ${categoryGroup.categories}"></a>
+                      </div>
                   </li>
             	</ul>
     		</td>
             <td >
             	<ul>
                   <li class="drop-menu">
-                  <a href="#" class="dropbtn">Vehicles<span class="caret"></span> </a>
-                  <div class="dropdown-content">
-                    <a href="#">Cat 1</a>
-                    <a href="#">Cat 2</a>
-                    <a href="#">Cat 3</a>
-                  </div>
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Vehicles<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="categoryGroupId : ${categoryGroup.categories}"></a>
+                      </div>
                   </li>
             	</ul>
     		</td>       
             <td >
             	<ul>
                   <li class="drop-menu">
-                  <a href="#" class="dropbtn">Services<span class="caret"></span> </a>
-                  <div class="dropdown-content">
-                    <a href="#">Cat 1</a>
-                    <a href="#">Cat 2</a>
-                    <a href="#">Cat 3</a>
-                  </div>
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Services<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="categoryGroupId : ${categoryGroup.categories}"></a>
+                      </div>
                   </li>
             	</ul>
     		</td>
             <td >
             	<ul>
                   <li class="drop-menu">
-                  <a href="#" class="dropbtn">Jobs<span class="caret"></span> </a>
-                  <div class="dropdown-content">
-                    <a href="#">Cat 1</a>
-                    <a href="#">Cat 2</a>
-                    <a href="#">Cat 3</a>
-                  </div>
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Jobs<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="categoryGroupId : ${categoryGroup.categories}"></a>
+                      </div>
                   </li>
             	</ul>
       </td>
             <td >
             	<ul>
                   <li class="drop-menu">
-                  <a href="#" class="dropbtn">Fashion<span class="caret"></span> </a>
-                  <div class="dropdown-content">
-                    <a href="#">Cat 1</a>
-                    <a href="#">Cat 2</a>
-                    <a href="#">Cat 3</a>
-                  </div>
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Fashion<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="categoryGroupId : ${categoryGroup.categories}"></a>
+                      </div>
                   </li>
             	</ul>
       </td>
             <td >
             	<ul>
                   <li class="drop-menu">
-                  <a href="#" class="dropbtn">Tools and Materials<span class="caret"></span> </a>
-                  <div class="dropdown-content">
-                    <a href="#">Cat 1</a>
-                    <a href="#">Cat 2</a>
-                    <a href="#">Cat 3</a>
-                  </div>
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Tools and Materials<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="categoryGroupId : ${categoryGroup.categories}"></a>
+                      </div>
                   </li>
             	</ul>
       </td>
             <td >
             	<ul>
                   <li class="drop-menu">
-                  <a href="#" class="dropbtn">Hausehold<span class="caret"></span> </a>
-                  <div class="dropdown-content">
-                    <a href="#">Cat 1</a>
-                    <a href="#">Cat 2</a>
-                    <a href="#">Cat 3</a>
-                  </div>
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Hausehold<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="categoryGroupId : ${categoryGroup.categories}"></a>
+                      </div>
                   </li>
             	</ul>
       </td>
             <td >
             	<ul>
                   <li class="drop-menu">
-                  <a href="#" class="dropbtn">For Kids<span class="caret"></span> </a>
-                  <div class="dropdown-content">
-                    <a href="#">Cat 1</a>
-                    <a href="#">Cat 2</a>
-                    <a href="#">Cat 3</a>
-                  </div>
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">For Kids<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="categoryGroupId : ${categoryGroup.categories}"></a>
+                      </div>
                   </li>
             	</ul>
       </td>
             <td >
             	<ul>
                   <li class="drop-menu">
-                  <a href="#" class="dropbtn">Culture and Hobby<span class="caret"></span> </a>
-                  <div class="dropdown-content">
-                    <a href="#">Cat 1</a>
-                    <a href="#">Cat 2</a>
-                    <a href="#">Cat 3</a>
-                  </div>
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Culture and Hobby<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="categoryGroupId : ${categoryGroup.categories}"></a>
+                      </div>
                   </li>
             	</ul>
       </td>
             <td >
             	<ul>
                   <li class="drop-menu">
-                  <a href="#" class="dropbtn">Appliances<span class="caret"></span> </a>
-                  <div class="dropdown-content">
-                    <a href="#">Cat 1</a>
-                    <a href="#">Cat 2</a>
-                    <a href="#">Cat 3</a>
-                  </div>
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Appliances<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="categoryGroupId : ${categoryGroup.categories}"></a>
+                      </div>
                   </li>
             	</ul>
       </td>
             <td >
             	<ul>
                   <li class="drop-menu">
-                  <a href="#" class="dropbtn">Everythink Else<span class="caret"></span> </a>
-                  <div class="dropdown-content">
-                    <a href="#">Cat 1</a>
-                    <a href="#">Cat 2</a>
-                    <a href="#">Cat 3</a>
-                  </div>
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Everythink Else<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="categoryGroupId : ${categoryGroup.categories}"></a>
+                      </div>
                   </li>
             	</ul>
    		  </td>
@@ -400,178 +163,23 @@ li.drop-menu {
  
     
     <div class="container">
-    <div class="list">
- 
-    <article class="list--item">
-      <figure>
-        <img src="https://hotline.ua/img/tx/156/156678207_s265.jpg" alt="">
-        <header>
-         <div>256.000 $
+        <div class="list">
+           <form th:each="randomItemId, stat : ${randomItemList}">
+                <article class="list--item">
+                  <figure>
+                    <img src="randomItemId.imageList.get(0).getFilePath()">
+                    <header>
+                     <div th:utext="${randomItemId.price}"></div>
+
+                    </header>
+                    <figcaption th:utext="${randomItemId.title}">
+                      <a class="da-TBButton" th:href="@{/Item/randomItemId}" target="_blank">Learn More</a>
+                    </figcaption>
+                  </figure>
+                </article>
+           </form>
         </div>
-           
-        </header>  
-        <figcaption > Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          <a class="da-TBButton" href="Home.html" target="_blank">Learn More</a>
-        </figcaption>
-      </figure>
-       
-    </article>
-   <article class="list--item">
-      <figure>
-        <img src="https://hotline.ua/img/tx/156/156678207_s265.jpg" alt="">
-        <header>
-         <div>256.000 $
-          
-        </div>
-           
-        </header>  
-        <figcaption> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          <a class="da-TBButton" href="Home.html" target="_blank">Learn More</a>
-        </figcaption>
-      </figure>
-    </article>
-   <article class="list--item">
-      <figure>
-        <img src="https://hotline.ua/img/tx/156/156678207_s265.jpg" alt="">
-        <header>
-         <div>256.000 $
-          
-        </div>
-           
-        </header>  
-        <figcaption> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          <a class="da-TBButton" href="Home.html" target="_blank">Learn More</a>
-        </figcaption>
-      </figure>
-    </article>
-    <article class="list--item">
-      <figure>
-        <img src="https://hotline.ua/img/tx/156/156678207_s265.jpg" alt="">
-        <header>
-         <div>256.000 $
-          
-        </div>
-           
-        </header>  
-        <figcaption> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          <a class="da-TBButton" href="Home.html" target="_blank">Learn More</a>
-        </figcaption>
-      </figure>
-    </article>
-    <article class="list--item">
-      <figure>
-        <img src="https://hotline.ua/img/tx/156/156678207_s265.jpg" alt="">
-        <header>
-         <div>256.000 $
-          
-        </div>
-           
-        </header>  
-        <figcaption> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          <a class="da-TBButton" href="Home.html" target="_blank">Learn More</a>
-        </figcaption>
-      </figure>
-    </article>
-    <article class="list--item">
-      <figure>
-        <img src="https://hotline.ua/img/tx/156/156678207_s265.jpg" alt="">
-        <header>
-         <div>256.000 $
-          
-        </div>
-           
-        </header>  
-        <figcaption> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          <a class="da-TBButton" href="Home.html" target="_blank">Learn More</a>
-        </figcaption>
-      </figure>
-    </article>
-    <article class="list--item">
-      <figure>
-        <img src="https://hotline.ua/img/tx/156/156678207_s265.jpg" alt="">
-        <header>
-         <div>256.000 $
-          
-        </div>
-           
-        </header>  
-        <figcaption> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          <a class="da-TBButton" href="Home.html" target="_blank">Learn More</a>
-        </figcaption>
-      </figure>
-    </article>
-    <article class="list--item">
-      <figure>
-        <img src="https://hotline.ua/img/tx/156/156678207_s265.jpg" alt="">
-        <header>
-         <div>256.000 $
-          
-        </div>
-           
-        </header>  
-        <figcaption> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          <a class="da-TBButton" href="Home.html" target="_blank">Learn More</a>
-        </figcaption>
-      </figure>
-    </article>
-    <article class="list--item">
-      <figure>
-        <img src="https://hotline.ua/img/tx/156/156678207_s265.jpg" alt="">
-        <header>
-         <div>256.000 $
-          
-        </div>
-           
-        </header>  
-        <figcaption> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          <a class="da-TBButton" href="Home.html" target="_blank">Learn More</a>
-        </figcaption>
-      </figure>
-    </article>
-    <article class="list--item">
-      <figure>
-        <img src="https://hotline.ua/img/tx/156/156678207_s265.jpg" alt="">
-        <header>
-         <div>256.000 $
-          
-        </div>
-           
-        </header>  
-        <figcaption> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          <a class="da-TBButton" href="Home.html" target="_blank">Learn More</a>
-        </figcaption>
-      </figure>
-    </article>
-    <article class="list--item">
-      <figure>
-        <img src="https://hotline.ua/img/tx/156/156678207_s265.jpg" alt="">
-        <header>
-         <div>256.000 $
-          
-        </div>
-           
-        </header>  
-        <figcaption> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          <a class="da-TBButton" href="Home.html" target="_blank">Learn More</a>
-        </figcaption>
-      </figure>
-    </article>
-    <article class="list--item">
-      <figure>
-        <img src="https://hotline.ua/img/tx/156/156678207_s265.jpg" alt="">
-        <header>
-         <div>256.000 $
-          
-        </div>
-           
-        </header>  
-        <figcaption> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          <a class="da-TBButton" href="Home.html" target="_blank">Learn More</a>
-        </figcaption>
-      </figure>
-    </article>
-  </div>
-</div>
+    </div>
     <p>&nbsp;</p>
     </body>
     </html>

@@ -12,6 +12,10 @@ public class CategoryGroupService {
         this.categoryGroupRepository = categoryGroupRepository;
     }
 
+    public CategoryGroup findByName(String name) {
+       return categoryGroupRepository.findByName(name);
+    }
+
     public CategoryGroup findById(Integer id) {
         return categoryGroupRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("CategoryGroup", "id", id));

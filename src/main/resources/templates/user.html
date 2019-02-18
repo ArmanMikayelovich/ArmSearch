@@ -1,0 +1,68 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>User</title>
+    <link rel="stylesheet" th:href="@{/user.css}"/>
+</head>
+<body>
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet">
+<table width="100%"  bgcolor="#34495e">
+  <tr>
+    <td width="0%" height="97"></td>
+    <td width="74%">
+    <div class="profile_main">
+      <div class="container"> 
+        <div class="row">
+    	 <div class="about-user">
+             <span class="name" th:text="${user.firstname} + ' ' + ${user.lasttname}"></span><br/>
+             <span class="country" th:text="'E-mail: ' + ${user.email}"></span><br/>
+             <span class="country" th:text="'Phone No.: ' + ${user.phoneNumber}"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </td>
+    <td width="25%"> 
+        <div class="row">
+    	 <div class="about-user">  
+ 			<div class="about-user">
+             <div align="right">
+                 <a th:href="@{/addItem/currentUserId}" class="post">
+                    <input type="submit" id="new_post" name="new_post" value="Post New Classifieds" class="text1"/>
+                 </a>
+                 <a th:href="@{/editUser/currentUserId}" class="post">
+                <input type="submit" id="edit_user" name="edit_user" value="Edit User" class="text1"/></a>
+                 </a>
+             </div>
+            </div>
+          </div>
+        </div>
+ </td>
+ <td width="1%"></td>
+  </tr>
+</table>
+
+<div class="alerts-block" align="center"><h2>My Classifieds</h2></div>
+
+        <div class="container">
+            <div class="list">
+                <form th:each="currentUserId, stat : ${currentUserItemList}">
+                    <article class="list--item">
+                        <figure>
+                            <img src="currentItemId.imageList.get(0).getFilePath()">
+                                <header>
+                                    <div th:utext="${randomItemId.price}"></div>
+                                </header>
+                                <figcaption th:utext="${currentItemId.title}"></br>
+                                     <a class="da-TBButton" th:href="@{/editItem/currentItemId}" target="_blank"><input type="submit" id="edit_post" name="edit_post" value="    Edit    "></input></a>
+                                     <a class="da-TBButton" th:href="@{/editItem/currentUserId}" target="_blank"><input type="submit" id="update_post" name="update_post" value=" Update "></input></a>
+                                     <a class="da-TBButton" th:href="@{/editItem/currentUserId}" target="_blank"><input type="submit" id="remove_post" name="remove_post" value=" Remove "></input></a>
+                                </figcaption>
+                        </figure>
+                    </article>
+                </form>
+            </div>
+        </div>
+
+</body>
+</html>
