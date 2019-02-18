@@ -12,10 +12,7 @@ import project.model.Image;
 import project.model.Item;
 import project.repository.ImageRepository;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 
 @Service
@@ -62,5 +59,21 @@ public class ImageService {
         File serverFile = new File(imagePath);
 
         return Files.readAllBytes(serverFile.toPath());
+    }
+
+    public byte[] getBytes(String imgPath) {
+        File file = new File(imgPath);
+        //init array with file length
+        byte[] bytesArray = new byte[(int) file.length()];
+
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+            fis.read(bytesArray); //read file into bytes[]
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bytesArray;
     }
 }

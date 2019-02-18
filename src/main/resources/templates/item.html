@@ -180,7 +180,8 @@ span {
 
       <tr th:each ="image : ${item.getImageList()}">
         <img
-             th:src="${image.getFilePath()}" height="420" width="327"/>
+             th:src="@{/items/itemImages(image=${image.getFilePath()})}" height="420" width="360"/>
+
       </tr>
 
     </div>

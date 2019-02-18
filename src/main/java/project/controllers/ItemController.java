@@ -22,6 +22,7 @@ import project.repository.UserRepository;
 import project.service.ImageService;
 import project.service.ItemService;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.*;
 import java.util.List;
@@ -52,7 +53,7 @@ public class ItemController {
      * this method is only for testing
      * @return
      */
-    @GetMapping("/items")
+    @GetMapping("/addItem")
     public ModelAndView getAllProducts() {
         ModelAndView modelAndView = new ModelAndView("addItem");
         modelAndView.addObject("categories", categoryRepository.findAll());
@@ -60,17 +61,20 @@ public class ItemController {
 
         return modelAndView;
     }
-    //TODO testavorumic heto jnjel
+
 
     // CreatgetOriginalFilenaee a new Product
 
     @PostMapping(value = "/items/add", consumes = "multipart/form-data")
-    public ModelAndView createItem(ItemDto itemDto, MultipartFile[] filesToUpload) {
-     itemService.addItem(itemDto,filesToUpload);
-        ModelAndView modelAndView = new ModelAndView("addItem");
-
-        return modelAndView;
+    public void createItem(ItemDto itemDto, MultipartFile[] filesToUpload, HttpServletResponse response) {
+               Item item =  itemService.addItem(itemDto,filesToUpload);
+        try {
+             response.sendRedirect(item.getId().toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         //TODO REDIRECT TO CREATED ITEM'S PAGE, OK???
+
     }
 
 

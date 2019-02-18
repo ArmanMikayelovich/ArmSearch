@@ -36,7 +36,7 @@ public class ItemService {
     }
 
     @Transactional
-    public void addItem(ItemDto itemDto, MultipartFile[] images) {
+    public Item addItem(ItemDto itemDto, MultipartFile[] images) {
         System.out.println(itemDto.toString());
         Item item = new Item();
 
@@ -64,6 +64,7 @@ public class ItemService {
                 }
             }
         itemRepository.save(item);
+        return item;
 
     }
     @Transactional
@@ -86,5 +87,14 @@ public class ItemService {
         Item item = itemRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
         itemRepository.delete(item);
+    }
+
+    public List<Item> getRamdomItems(int countOfItems) {
+        //TODO ARO SHTAAAAAAAAAAAP!!!!!!!!!!!!!
+//        return null;
+
+        List<Item> list = itemRepository.findAll();
+        return list;
+
     }
 }
