@@ -1,0 +1,186 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title >ArmSearch</title>
+    <link rel="stylesheet" th:href="@{/registration.css}"/>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+</head>
+<body  bgcolor="#FFFFFF">
+<table width="100%" border="0" >
+    <tr>
+        <table width="92%" height=24% border="0" align="center">
+                  <td width="16%" height="69" align="left"><span style='padding-left:100px;'></span></td>
+                <td height="69" align="center" colspan="2">
+                    <a th:href="@{/user}">
+                        <input type="submit" name="name" value="My Account" width="100" class="text1"/>
+                    </a>
+                </td>
+                <td width="23%" height="69" colspan="2" align="center">
+                    <a th:href="@{/addItem}">
+                        <input type="submit" name="name" value=" + Post to Classifieds" width="100" class="text1"/>
+                    </a>
+                </td>
+        </table>
+    </tr>
+        <table width="736" height="51" align="center">
+            <tr>
+                <td width="40%" height="27" colspan="1" align="center" bgcolor="#0000CC" >
+                    <input width="600" border-radius="3px" size="80" color="#00C" id="search" defaultval="Search" name="search" type="Search" class="text_div"/> <input id="submit-search" type="submit" value="Search" class="text_div">
+                </td>
+            </tr>
+        </table>
+    <p width="159" height="28" align="center" color="#00C"><h3> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Categories</h3> </p>
+    <table width="100%" border="0" align="center"  class="container">
+        <tr>
+            <td >
+            	<ul>
+                  <li class="drop-menu">
+                      <a th:href="@{/home/categoryGroupId}" class="dropbtn">Electronics<span class="caret"></span></a>
+                        <div class="dropdown-content">
+                            <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${electronicsGroup.categories}"></a>
+                        </div>
+                  </li>
+            	</ul>
+    		</td>
+            <td >
+            	<ul>
+                  <li class="drop-menu">
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Real Estate<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${realEstateGroup.categories}"></a>
+                      </div>
+                  </li>
+            	</ul>
+    		</td>
+            <td >
+            	<ul>
+                  <li class="drop-menu">
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Vehicles<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${vehiclesGroup.categories}"></a>
+                      </div>
+                  </li>
+            	</ul>
+    		</td>       
+            <td >
+            	<ul>
+                  <li class="drop-menu">
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Services<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${servicesGroup.categories}"></a>
+                      </div>
+                  </li>
+            	</ul>
+    		</td>
+            <td >
+            	<ul>
+                  <li class="drop-menu">
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Jobs<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${jobsGroup.categories}"></a>
+                      </div>
+                  </li>
+            	</ul>
+      </td>
+            <td >
+            	<ul>
+                  <li class="drop-menu">
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Fashion<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${fashionGroup.categories}"></a>
+                      </div>
+                  </li>
+            	</ul>
+      </td>
+            <td >
+            	<ul>
+                  <li class="drop-menu">
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Tools and Materials<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${toolsAndMaterialsGroup.categories}"></a>
+                      </div>
+                  </li>
+            	</ul>
+      </td>
+            <td >
+            	<ul>
+                  <li class="drop-menu">
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Household<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${householdGroup.categories}"></a>
+                      </div>
+                  </li>
+            	</ul>
+      </td>
+            <td >
+            	<ul>
+                  <li class="drop-menu">
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">For Kids<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${forKidsGroup.categories}"></a>
+                      </div>
+                  </li>
+            	</ul>
+      </td>
+            <td >
+            	<ul>
+                  <li class="drop-menu">
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Culture and Hobby<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${cultureAndHobbyGroup.categories}"></a>
+                      </div>
+                  </li>
+            	</ul>
+      </td>
+            <td >
+            	<ul>
+                  <li class="drop-menu">
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Appliances<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${appliancesGroup.categories}"></a>
+                      </div>
+                  </li>
+            	</ul>
+      </td>
+            <td >
+            	<ul>
+                  <li class="drop-menu">
+                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Everythink Else<span class="caret"></span> </a>
+                      <div class="dropdown-content">
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${everythinkElseGroup.categories}"></a>
+                      </div>
+                  </li>
+            	</ul>
+   		  </td>
+        </tr>
+    </table>
+    </table>
+ 
+    
+    <div class="container">
+        <div class="list">
+           <form th:each="item : ${randomItemList}">
+                <article class="list--item">
+                  <figure>
+                    <img src="item.imageList.get(0).getFilePath()">
+                    <header>
+                     <div th:utext="${item.price}"></div>
+
+                    </header>
+                    <figcaption th:utext="${item.title}">
+                      <a class="da-TBButton" th:href="@{'/item/'+ ${item.getId()}}" target="_blank">Learn More</a>
+                    </figcaption>
+                  </figure>
+                </article>
+
+           </form>
+        </div>
+    </div>
+    <p>&nbsp;</p>
+    </body>
+    </html>

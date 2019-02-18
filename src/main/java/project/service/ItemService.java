@@ -88,4 +88,13 @@ public class ItemService {
                 .orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
         itemRepository.delete(item);
     }
+
+    public List<Item> getRamdomItems(int countOfItems) {
+        //TODO ARO SHTAAAAAAAAAAAP!!!!!!!!!!!!!
+//        return null;
+
+        List<Item> list = itemRepository.findAll();
+        return list;
+
+    }
 }
