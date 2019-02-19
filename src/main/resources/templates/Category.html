@@ -239,7 +239,7 @@
                 </a>
             </td>
                 <td height="49" align="center" colspan="2">
-                    <a th:href="@{'/users/'+ ${user.id} }">
+                    <a th:href="@{'/users/'+ ${user.id} }" >
                         <input type="submit" name="name" value="My Account" width="100" class="text1"/>
                     </a>
                 </td>
@@ -266,7 +266,7 @@
                   <li class="drop-menu">
                       <a th:href="@{/home/categoryGroupId}" class="dropbtn">Electronics<span class="caret"></span></a>
                         <div class="dropdown-content">
-                            <a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${electronicsGroup.categories}">
+                            <a th:href="@{${category.getId()} }" th:each="category : ${electronicsGroup.categories}">
                                 <label th:utext="${category.getName()}">...</label>
                             </a>
                         </div>
@@ -278,7 +278,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">Real Estate<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${realEstateGroup.categories}">
+                          <a th:href="@{${category.getId()} }" th:each="category : ${realEstateGroup.categories}">
                               <label th:utext="${category.getName()}">...</label>
                           </a>
                       </div>
@@ -290,7 +290,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">Vehicles<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${vehiclesGroup.categories}">
+                          <a th:href="@{${category.getId()} }" th:each="category : ${vehiclesGroup.categories}">
                               <label th:utext="${category.getName()}">...</label>
                           </a>
                       </div>
@@ -302,7 +302,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">Services<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${servicesGroup.categories}">
+                          <a th:href="@{${category.getId()} }" th:each="category : ${servicesGroup.categories}">
                               <label th:utext="${category.getName()}">...</label>
                           </a>
                       </div>
@@ -314,7 +314,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">Jobs<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${jobsGroup.categories}">
+                          <a th:href="@{${category.getId()} }" th:each="category : ${jobsGroup.categories}">
                               <label th:utext="${category.getName()}">...</label>
                           </a>
                       </div>
@@ -326,7 +326,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">Fashion<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${fashionGroup.categories}">
+                          <a th:href="@{${category.getId()} }" th:each="category : ${fashionGroup.categories}">
                               <label th:utext="${category.getName()}">...</label>
                           </a>
                       </div>
@@ -339,7 +339,7 @@
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">Tools and Materials<span class="caret"></span> </a>
                       <div class="dropdown-content">
 
-                          <a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${toolsAndMaterialsGroup.categories}">
+                          <a th:href="@{${category.getId()} }" th:each="category : ${toolsAndMaterialsGroup.categories}">
                               <label th:utext="${category.getName()}">...</label>
                           </a>
                       </div>
@@ -351,7 +351,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">Household<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${householdGroup.categories}">
+                          <a th:href="@{${category.getId()} }" th:each="category : ${householdGroup.categories}">
                               <label th:utext="${category.getName()}">...</label>
                           </a>
                       </div>
@@ -363,7 +363,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">For Kids<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${forKidsGroup.categories}">
+                          <a th:href="@{${category.getId()} }" th:each="category : ${forKidsGroup.categories}">
                               <label th:utext="${category.getName()}">...</label>
                           </a>
                       </div>
@@ -375,7 +375,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">Culture and Hobby<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${cultureAndHobbyGroup.categories}">
+                          <a th:href="@{${category.getId()} }" th:each="category : ${cultureAndHobbyGroup.categories}">
                               <label th:utext="${category.getName()}">...</label>
                           </a>
                       </div>
@@ -387,7 +387,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">Appliances<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${appliancesGroup.categories}">
+                          <a th:href="@{${category.getId()} }" th:each="category : ${appliancesGroup.categories}">
                               <label th:utext="${category.getName()}">...</label>
                           </a>
                       </div>
@@ -399,7 +399,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">Everythink Else<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${everythinkElseGroup.categories}">
+                          <a th:href="@{${category.getId()} }" th:each="category : ${everythinkElseGroup.categories}">
                               <label th:utext="${category.getName()}">...</label>
                           </a>
                       </div>
@@ -413,7 +413,7 @@
 
 <table>
     <tr>
-        <td class="container" th:each="item : ${randomItemList}">
+        <td class="container" th:each="item : ${itemList}">
                 <div class="list">
                    <form >
                         <article class="list--item">

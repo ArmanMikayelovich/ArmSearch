@@ -62,14 +62,21 @@ public class UserService  {
     @Transactional
     public void updateUser(User userDetails) {
 
-        User user = userRepository.findById(userDetails.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userDetails.getId()));
+        User user = getAuthenticatedUser();
+        if (userDetails.getFirstName() != null) {
+            user.setFirstName(userDetails.getFirstName());
+        }
+        if (userDetails.getLastName() != null) {
+            user.setLastName(userDetails.getLastName());
+        }
+        if (userDetails.getEmail() != null) {
+            user.setEmail(userDetails.getEmail());
 
-        user.setFirstName(userDetails.getFirstName());
-        user.setLastName(userDetails.getLastName());
-        user.setEmail(userDetails.getEmail());
-        user.setPhoneNumber(userDetails.getPhoneNumber());
-        user.setPassword(passwordEncoder().encode(userDetails.getPassword()));
+        }
+        if (userDetails.getPhoneNumber() != null) {
+            user.setPhoneNumber(userDetails.getPhoneNumber());
+
+        }
         userRepository.save(user);
     }
     @Transactional
@@ -95,5 +102,21 @@ public class UserService  {
         return userRepository.findByEmail(email);
 
     }
+    @Transactional
+    public boolean changePassword(String oldPassword, String newPassword) {
+        if (passwordEncoder().matches(oldPassword, newPassword)) {
+            User user = getAuthenticatedUser();
+            user.setPassword(passwordEncoder().encode(newPassword));
+            userRepository.save(user);
 
+            return true;
+        } else return false;
+
+    }
+
+    public void deleteUser(String password) {
+        User user = getAuthenticatedUser();
+        userRepository.delete(user);
+        //TODO ARO jnjel bolor 
+    }
 }

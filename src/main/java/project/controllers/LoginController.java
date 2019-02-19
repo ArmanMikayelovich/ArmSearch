@@ -23,7 +23,8 @@ public class LoginController {
     AuthenticationProvider provider;
     private final UserService userService;
 
-    public LoginController(UserService userService) {
+    public LoginController(UserService userService)
+    {
         this.userService = userService;
     }
 
@@ -35,11 +36,6 @@ public class LoginController {
     }
 
 
-    @GetMapping("/valod")//only for test... this is only for Authenticated users XD
-    public ModelAndView valod() {
-        ModelAndView m = new ModelAndView("registration");
-        return m;
-    }
 
 
 }
