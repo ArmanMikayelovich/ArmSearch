@@ -15,7 +15,7 @@ import project.model.Item;
 public interface ItemRepository extends JpaRepository<Item, Long>{
 
 
-    @Query("select i from Item i where title like %?1% or description like %?1%")
+    @Query("select i from Item i where title like %?1% or description like %?2%")
     Page<Item> findByTitleOrByDescription(String text, Pageable pageable);
 }
 

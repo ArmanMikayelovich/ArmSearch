@@ -15,27 +15,21 @@ import project.model.DeletedImagesPath;
 import java.io.File;
 import java.util.List;
 
-@Component
 @Data
-
+@Component
 public class Scheduler {
+
+    private final DeletedImagesPathService deletedImagesPathService;
+
+    @Autowired
+    public Scheduler(DeletedImagesPathService deletedImagesPathService) {
+        this.deletedImagesPathService = deletedImagesPathService;
+    }
 
     @Scheduled(fixedRate = 24 * 60 * 60 * 1000)
     public void startScheduler() {
-        new Thread(new ScheduleThread()).start();
-    }
-}
-
-@Data
-
-class ScheduleThread implements Runnable {
-    private DeletedImagesPathService deletedImagesPathService;
-
-    @Override
-    public void run(){
-
-        if(!(deletedImagesPathService.findAllDeletedImagesPathsWithCriteriaQuery().isEmpty())) {
-            List<DeletedImagesPath> dIPs = deletedImagesPathService.findAllDeletedImagesPathsWithCriteriaQuery();
+        if(!(deletedImagesPathService.findAllDeletedImagesPaths().isEmpty())) {
+            List<DeletedImagesPath> dIPs = deletedImagesPathService.findAllDeletedImagesPaths();
 
             for (DeletedImagesPath dPs : dIPs) {
 
@@ -43,7 +37,8 @@ class ScheduleThread implements Runnable {
                 file.delete();
             }
 
-            int deleted = deletedImagesPathService.hqlTruncate("deleted_images_pathes");
+
+            deletedImagesPathService.truncate();
         }
     }
 }

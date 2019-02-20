@@ -9,7 +9,6 @@ import project.model.DeletedImagesPath;
 
 import java.util.List;
 
-public interface DeletedImagesPathRepository extends JpaRepository<Image, Long>{
-
+public interface DeletedImagesPathRepository extends JpaRepository<DeletedImagesPath, Long>{
 
 }

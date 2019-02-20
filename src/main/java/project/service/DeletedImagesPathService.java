@@ -13,14 +13,15 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @Data
 public class DeletedImagesPathService {
 
-    private  Session session;
-
+    @Autowired
+    private DeletedImagesPathRepository deletedImagesPathRepository;
 
     public void deletedImagesPathsaver(List<Image> images){
 
@@ -28,24 +29,19 @@ public class DeletedImagesPathService {
 
             DeletedImagesPath DIP = new DeletedImagesPath();
             DIP.setFilePath(img.getFilePath());
+            deletedImagesPathRepository.save(DIP);
         }
     }
 
 
-    public List<DeletedImagesPath> findAllDeletedImagesPathsWithCriteriaQuery() {
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<DeletedImagesPath> cq = cb.createQuery(DeletedImagesPath.class);
-        Root<DeletedImagesPath> rootEntry = cq.from(DeletedImagesPath.class);
-        CriteriaQuery<DeletedImagesPath> all = cq.select(rootEntry);
+    public List<DeletedImagesPath> findAllDeletedImagesPaths() {
+        return deletedImagesPathRepository.findAll();
 
-        TypedQuery<DeletedImagesPath> allQuery = session.createQuery(all);
-        return allQuery.getResultList();
     }
 
-    public int hqlTruncate(String table){
-        String hql = String.format("delete from %s",table);
-        Query query = session.createQuery(hql);
-        return query.executeUpdate();
+    public void truncate(){
+
+        deletedImagesPathRepository.deleteAll();
     }
 
 }
