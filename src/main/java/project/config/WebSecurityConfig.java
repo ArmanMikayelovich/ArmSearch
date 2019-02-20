@@ -40,18 +40,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-
                 .and()
                 .authorizeRequests()
-                //give acces for home, login, categories/{ID}, items{ID}, registration to ALL
-                .antMatchers("/**").permitAll()
+                //give acces for home, login, categories/{unenID}, items{ID}, registration to ALL
+                .antMatchers("/home","/items/*","categories/*","/users/*").permitAll()
 
                 .and().authorizeRequests()
                 .antMatchers("/addCategory",
                "/deleteCategory/*","/users" ).access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/addItem","/updateItem","/updateUser","changePassword","deleteUser"
-                ).authenticated()
+                ).access("hasRole('ROLE_USER')")
                 .and().authorizeRequests().and().exceptionHandling().accessDeniedPage("/403").and()
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/home").and()
                 .authenticationProvider(daoAuthenticationProvider())
                 .sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry());
 
