@@ -78,5 +78,5 @@ public class Item {
 
     @OneToMany(mappedBy = "item",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> imageList = new ArrayList<>();
-    
+
 }

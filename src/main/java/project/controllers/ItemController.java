@@ -19,6 +19,7 @@ import project.repository.UserRepository;
 import project.service.ImageService;
 import project.service.ItemService;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.*;
@@ -46,11 +47,12 @@ public class ItemController {
 
 
     @GetMapping("/items")
-    public Page<Item> findAll(@RequestParam Optional<String> text,
+    public Page<Item> findAll(@RequestParam Optional<String> titleOrDescriptionText,
                               @RequestParam Optional<Integer> page,
                               @RequestParam Optional<String> sortBy){
-        return itemRepository.findByTitleOrByDescription(text.orElse("_"),
-                PageRequest.of(1, 12, Sort.by("price"))); // TODO Arman dzel es cantroller@ u tal Aniin
+        return itemRepository.findByTitleOrByDescription(titleOrDescriptionText.orElse("_"),
+               PageRequest.of(page.orElse(1), 12,
+                       Sort.Direction.ASC, sortBy.orElse("updatedAt")));
     }
 
     /**
