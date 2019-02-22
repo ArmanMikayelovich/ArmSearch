@@ -107,6 +107,6 @@ public class ItemService {
 
 
     public Page<Item> findByTitleOrByDescription(String titleOrDescriptionText, Pageable pageable){
-        return itemRepository.findByTitleOrByDescription(titleOrDescriptionText, pageable);
+        return itemRepository.findAllByTitleOrDescription(titleOrDescriptionText);
     }
 }

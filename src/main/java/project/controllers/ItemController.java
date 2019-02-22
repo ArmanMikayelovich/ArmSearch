@@ -23,6 +23,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.*;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -36,7 +37,6 @@ public class ItemController {
     UserRepository userRepository;
     @Autowired
     ImageRepository imageRepository;
-    @Autowired
     private final ItemService itemService;
     @Autowired
     ImageService imageService;
@@ -47,12 +47,12 @@ public class ItemController {
 
 
     @GetMapping("/items")
-    public Page<Item> findAll(@RequestParam Optional<String> titleOrDescriptionText,
+    public List<Item> findAll(@RequestParam Optional<String> titleOrDescriptionText,
                               @RequestParam Optional<Integer> page,
                               @RequestParam Optional<String> sortBy){
         return itemRepository.findByTitleOrByDescription(titleOrDescriptionText.orElse("_"),
                PageRequest.of(page.orElse(1), 12,
-                       Sort.Direction.ASC, sortBy.orElse("updatedAt")));
+                       Sort.Direction.ASC, sortBy.orElse("updatedAt"))).getContent();
     }
 
     /**
