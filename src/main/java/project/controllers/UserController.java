@@ -1,12 +1,7 @@
 package project.controllers;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
 
@@ -14,7 +9,10 @@ import project.exception.ResourceNotFoundException;
 import project.model.User;
 import project.service.UserService;
 
+import javax.jws.WebParam;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping
@@ -46,43 +44,76 @@ public class UserController {
     }
 
 
+    @GetMapping("/users/{id}")
+    public ModelAndView getUserPage(@PathVariable("id") Integer id) {
+        ModelAndView modelAndView = new ModelAndView("user");
+        User user = userService.getUserById(id);
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("items", user.getItemList());
+        return modelAndView;
+    }
+
 
 
     @PostMapping("/registration")
-    User addNewUser(User user) {
+    void addNewUser(User user,HttpServletResponse response) {
         userService.saveUser(user);
 
-       return  user;
+        try {
+              response.sendRedirect("/");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
 
 
-    // Get a Single User
-    @GetMapping("/users/{id}")
-    public ModelAndView getUserById(@PathVariable(value = "id") Integer userId) {
-        ModelAndView modelAndView = new ModelAndView("userPage");
-        modelAndView.addObject("user", userService.getAuthenticatedUser());
+
+
+    @GetMapping("/updateUser")
+    public ModelAndView getUpdateUserPage() {
+        ModelAndView modelAndView = new ModelAndView("EditUser");
         return modelAndView;
-    }//TODO ANI|||erb bacvi mardu ej@ piti haytararutyunner@ irar takic sharvac gan
-    //  nkar@ dzax koxqic, ajic title,title -ic mi qich aj apranqi gin@,
-    //  //title-i tak@ grvac lini Category, Category-i takic vejin tarmacman amsativ@
+    }
 
-
-    // Update a User
-    @PostMapping("/users/{id}")
-    public User updateUser(@PathVariable(value = "id") Integer userId,
-                           @Valid User user) {
+    @PostMapping("/updateUser")
+    /**
+        * vercnel useri tvyalnery u dnel useri mej
+     */
+    public User updateUser(@Valid User user) {
         userService.updateUser(user);
         return user;
     }
 
+    @PostMapping("/changePassword")
+    public void changePassword(String oldPassword, String newPassword, HttpServletResponse response) {
+        userService.changePassword(oldPassword, newPassword);
+        try {
+            response.sendRedirect("/updateUser");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     // Delete a User
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Integer userId) {
-        User user = userService.findById(userId).
-                    orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
-        return ResponseEntity.ok().build();
+    @PostMapping("/deleteUser")
+    public void deleteUser(String password,HttpServletResponse response)  {
+        User user = userService.getAuthenticatedUser();
+        userService.deleteUser(password);
+        try {
+            response.sendRedirect("/logout");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @PostMapping("/deleteUserFromAdminPanel")
+    public void deleteUserFromAdminPanel(Integer id) {
+        User admin = userService.getAuthenticatedUser();
+        if (admin.getRoleName().equals("ADMIN")) {
+            userService.deleteUserFromAdminPanel(id);
+        }
     }
 
 }

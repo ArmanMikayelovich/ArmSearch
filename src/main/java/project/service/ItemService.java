@@ -82,19 +82,25 @@ public class ItemService {
         Item updatedItem = itemRepository.save(item);
         return updatedItem;
     }
-
+    @Transactional
     public void deleteItem(Long id) {
         Item item = itemRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
+        imageService.deleteAllImages(item);
+        itemRepository.delete(item);
+    }
+    public void deleteItem(Item item) {
+        imageService.deleteAllImages(item);
         itemRepository.delete(item);
     }
 
     public List<Item> getRamdomItems(int countOfItems) {
-        //TODO ARO SHTAAAAAAAAAAAP!!!!!!!!!!!!!
-//        return null;
+
 
         List<Item> list = itemRepository.findAll();
         return list;
 
     }
+
+
 }

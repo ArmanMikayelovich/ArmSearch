@@ -13,6 +13,7 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import project.service.UserDetailsServiceImpl;
 
 @Configuration
@@ -40,18 +41,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .successForwardUrl("/")
                 .and()
                 .authorizeRequests()
-                //give acces for home, login, categories/{ID}, items{ID}, registration to ALL
-                .antMatchers("/login", "/", "/home",
-                        "/categories/*","/items/*","/registration").permitAll()
+                //give acces for home, login, categories/{unenID}, items{ID}, registration to ALL
+                .antMatchers("/home","/items/*","categories/*","/users/*").permitAll()
 
                 .and().authorizeRequests()
-                .antMatchers("/categories/add","/categoryGroups/add",
-               "/categories/delete/**","/categoryGroups/delete/**","/users" ).access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/**").access("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+                .antMatchers("/addCategory",
+               "/deleteCategory/*","/users" ).access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/addItem","/updateItem","/updateUser","changePassword","deleteUser"
+                ).access("hasRole('ROLE_USER')")
                 .and().authorizeRequests().and().exceptionHandling().accessDeniedPage("/403").and()
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID").and()
                 .authenticationProvider(daoAuthenticationProvider())
                 .sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry());
 

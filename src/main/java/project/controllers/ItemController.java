@@ -49,10 +49,7 @@ public class ItemController {
     }
 
 
-    /**
-     * this method is only for testing
-     * @return
-     */
+
     @GetMapping("/addItem")
     public ModelAndView getAllProducts() {
         ModelAndView modelAndView = new ModelAndView("addItem");
@@ -63,9 +60,8 @@ public class ItemController {
     }
 
 
-    // CreatgetOriginalFilenaee a new Product
 
-    @PostMapping(value = "/items/add", consumes = "multipart/form-data")
+    @PostMapping(value = "/addItem", consumes = "multipart/form-data")
     public void createItem(ItemDto itemDto, MultipartFile[] filesToUpload, HttpServletResponse response) {
                Item item =  itemService.addItem(itemDto,filesToUpload);
         try {
@@ -74,6 +70,7 @@ public class ItemController {
             e.printStackTrace();
         }
         //TODO REDIRECT TO CREATED ITEM'S PAGE, OK???
+        //test
 
     }
 
@@ -85,11 +82,10 @@ public class ItemController {
         modelAndView.addObject("item", itemService.findById(itemId));
         modelAndView.addObject("dir", System.getProperty("user.dir"));
         return modelAndView;
-    }//TODO ANI ItemDto - um avelacnel price... sarqel AnnouncementView.html shablon@
-
+    }
 
     // Update a Product
-    @PostMapping("/items/update")
+    @PostMapping("/updateItem")
     public Item updateItem(@PathVariable(value = "id") Long itemId,
                               @Valid  ItemDto itemDetails) {
 
@@ -97,7 +93,7 @@ public class ItemController {
     }
 
     // Delete a Product
-    @DeleteMapping("/items/delete/{id}")
+    @DeleteMapping("/deleteItem{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable(value = "id") Long itemId) {
         itemService.deleteItem(itemId);
         return ResponseEntity.ok().build();

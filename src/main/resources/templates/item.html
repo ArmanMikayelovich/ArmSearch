@@ -6,14 +6,15 @@
   <title>Harvest vase</title>
   <link href="https://fonts.googleapis.com/css?family=Bentham|Playfair+Display|Raleway:400,500|Suranna|Trocchi" rel="stylesheet">
   <style>
-  
+
 body {
-  background-color: #fdf1ec;
+  background-color: #FFFFFF;
 }
 
 .wrapper {
+  background-color: #34495e;
   height: 520px;
-  width: 754px;
+  width: 704px;
   margin: 50px auto;
   border-radius: 7px 7px 7px 7px;
   /* VIA CSS MATIC https://goo.gl/cIbnS */
@@ -47,20 +48,20 @@ body {
 
 .product-text h1 {
   margin: 0 0 0 38px;
-  padding-top: 52px;
+  /*padding-top: 52px;*/
   font-size: 34px;
   color: #474747;
 }
 
 .product-text h1,
 .product-price-btn p {
-  font-family: 'Bentham', serif;
+  /*font-family: 'Bentham', serif;*/
 }
 
 .product-text h2 {
   margin: 0 0 47px 38px;
   font-size: 13px;
-  font-family: 'Raleway', sans-serif;
+  /*font-family: 'Raleway', sans-serif;*/
   font-weight: 400;
   text-transform: uppercase;
   color: #d2d2d2;
@@ -70,12 +71,12 @@ body {
 .product-text p {
   height: 125px;
   margin: 0 0 0 38px;
-  font-family: 'Playfair Display', serif;
+  /*font-family: 'Playfair Display', serif;*/
   color: #8d8d8d;
   line-height: 1.7em;
   font-size: 15px;
-  font-weight: lighter;
-  overflow: hidden;
+  /*font-weight: lighter;*/
+  /*overflow: hidden;*/
 }
 
 .product-price-btn {
@@ -133,7 +134,7 @@ span {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  
+
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
@@ -146,18 +147,18 @@ span {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  
+
   figure {
     background:#fff;
-    box-shadow:0 2px 3px rgba(black,0.1);
+    box-shadow:0 2px 3px rgba(0,0,0,0.1);
     position:relative;
   }
-  
+
   img {
     display:block;
     width:100%;
   }
-  
+
   figcaption {
     padding:6px 12px 12px;
     font-size:12px;
@@ -172,96 +173,31 @@ span {
 </style>
 </head>
 
-<body>
-<a href="Home.html"><img src="https://st.depositphotos.com/1364916/4294/v/950/depositphotos_42942807-stock-illustration-house-and-waves-logo-vector.jpg" height="70" width="70"></a>
-  <div class="wrapper">
-    <div class="product-img">
-      <label th:utext="${dir}"> User's phone number</label>
-
-      <tr th:each ="image : ${item.getImageList()}">
-        <img
-             th:src="@{/items/itemImages(image=${image.getFilePath()})}" height="420" width="360"/>
-
-      </tr>
-
-    </div>
-    <div class="product-info">
-      <div class="product-text">
-        <h1 th:utext ="${item.title}">Item's title</h1>
-        <!--<h2>New</h2> ANI JAN QEZ INCH VATUTYUN EINQ AREL)))) new te ogtagorcac, inch kap uni)))-->
-        <p th:utext="${item.description}">Item's description</p>
-      </div>
-      <div class="product-price-btn">
-        <p><span th:utext="${#numbers.formatDecimal(item.price,1,2)}">Items'price</span>֏</p>
-      </div>
-      <div class="product-text">
-         Contacts
-          </br>
-                <a
-                  th:href="@{'/users/'+ ${item.getUser().getId()}}"
-                th:utext="${item.getUser().getFirstName()} + ' ' + ${item.getUser().getLastName()}" >
-               </a>
-            <br/>
-          <!--E-mail: <label th:utext="${item.getUser().getEmail()}">User's email</label>-->
-        <!--<a th:href="mailto:+''+${item.getUser().getEmail()}(Subject=${item.title})" target="_top">Send Mail</a>-->
-        <!--<a th:href="mailto:someone@example.com?Subject=Hello%20again" target="_top">Send Mail</a>-->
-        E-mail:<a th:href="'mailto:' + ${item.getUser().getEmail()}+'?Subject='+${item.title}"
-                  th:utext="${item.getUser().getEmail()}" >Send email </a></td>
-          </br>
-        Phone No.: <label th:utext="${item.getUser().getPhoneNumber()}"> User's phone number</label>
-      </div>
-    </div>
-  </div>
-  <div><h2>You might also be interested in...</h2></div>
-  
-    <div class="container">
-    <div class="list">
- 
-    <article class="list--item">
-      <figure>
-        <img src="https://hotline.ua/img/tx/156/156678207_s265.jpg" alt="">
-        <header>
-         <div>256.000 $
+<body class="container">
+<a th:href="@{/home}"><img src="https://st.depositphotos.com/1364916/4294/v/950/depositphotos_42942807-stock-illustration-house-and-waves-logo-vector.jpg" height="70" width="70"></a>
+<div class="wrapper">
+  <table>
+    <tr>
+      <td class="product-img">
+        <div th:each ="image : ${item.getImageList()}">
+          <img th:src="@{/items/itemImages(image=${image.getFilePath()})}" height="320" width="260"/>
         </div>
-           
-        </header>  
-        <figcaption > Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          <a class="da-TBButton" href="Home.html" target="_blank">Learn More</a>
-        </figcaption>
-      </figure>
-       
-    </article>
-   <article class="list--item">
-      <figure>
-        <img src="https://hotline.ua/img/tx/156/156678207_s265.jpg" alt="">
-        <header>
-         <div>256.000 $
-          
+      </td>
+      <td class="product-info">
+        <div class="product-text">
+          <h1 th:utext ="${item.title}"></h1>
+          <p th:utext="${item.description}"></p>
+          <p><span th:utext="${#numbers.formatDecimal(item.price,1,2)} + ' $'"></span></p>
         </div>
-           
-        </header>  
-        <figcaption> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          <a class="da-TBButton" href="Home.html" target="_blank">Learn More</a>
-        </figcaption>
-      </figure>
-    </article>
-    <article class="list--item">
-      <figure>
-        <img src="https://hotline.ua/img/tx/156/156678207_s265.jpg" alt="">
-        <header>
-         <div>256.000 $
-          
+        <div class="product-text">Contacts:</br>
+          <a th:href="@{'/user/'+ ${item.getUser().getId()}}" th:utext="${item.getUser().getFirstName()} + ' ' + ${item.getUser().getLastName()}" ></a><br/>
+          E-mail:<a th:href="'mailto:' + ${item.getUser().getEmail()}+'?Subject='+${item.title}" th:utext="${item.getUser().getEmail()}" ></a></br>
+          Phone No.: <label th:utext="${item.getUser().getPhoneNumber()}"> User's phone number</label>
         </div>
-           
-        </header>  
-        <figcaption> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          <a class="da-TBButton" href="Home.html" target="_blank">Learn More</a>
-        </figcaption>
-      </figure>
-    </article>
-  </div>
+      </td>
+    </tr>
+  </table>
 </div>
-
 </body>
 
 </html>

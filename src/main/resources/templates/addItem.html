@@ -77,86 +77,85 @@ new Vue({
 </head>
 
 <body>
-<form action="/items/add" method="post" enctype="multipart/form-data">
-<p width="37%" height="69%" align="left"></p>
-<table width="45%" height="30%" border="0" cellspacing="3" cellpadding="3" align="center" bgcolor="#FF6600">
-      <tr>
-      <tr>
-        <td width="15%">&nbsp;</td>
-        <td width="70%"><h2 align="center">Post to Classifieds</h2></td>
-        <td width="15%">&nbsp;</td>
-      </tr>
-      <tr>
-        <td>  </td>
-        <td>Title</td>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <td>&nbsp;</td>
-        <td><textarea id="textarea3" name="title" placeholder="Add Title"></textarea></td>
-        <td>&nbsp;</td>
-      </tr>
+    <form action="/addItem" method="post" enctype="multipart/form-data">
+    <p width="37%" height="69%" align="left"></p>
+    <table width="45%" height="30%" border="0" cellspacing="3" cellpadding="3" align="center" bgcolor="#34495e">
+          <tr>
+          <tr>
+            <td width="15%">&nbsp;</td>
+            <td width="70%"><h2 align="center">Post to Classifieds</h2></td>
+            <td width="15%">&nbsp;</td>
+          </tr>
+          <tr>
+            <td>  </td>
+            <td>Title</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td><textarea id="textarea3" name="title" placeholder="Add Title"></textarea></td>
+            <td>&nbsp;</td>
+          </tr>
 
-            <tr>
-        <td>&nbsp;</td>
-        <td>Category</td>
-        <td>&nbsp;</td>
-      </tr>
-            <tr>
-        <td>&nbsp;</td>
-        <td>           <select name="categoryId">
-            <!--<option value=""> &#45;&#45; </option>-->
-            <option th:each="category : ${categories}"
-                    th:value="${category.id}"
-                    th:utext="${category.name}"/>
-        </select>
-        </td>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <td>&nbsp;</td>
-        <td>Description</td>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <td>&nbsp;</td>
-        <td>
+                <tr>
+            <td>&nbsp;</td>
+            <td>Category</td>
+            <td>&nbsp;</td>
+          </tr>
+                <tr>
+            <td>&nbsp;</td>
+            <td>           <select name="categoryId">
+                <!--<option value=""> &#45;&#45; </option>-->
+                <option th:each="category : ${categories}"
+                        th:value="${category.id}"
+                        th:utext="${category.name}"/>
+            </select>
+            </td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>Description</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>
+                <textarea id="textarea"  name = "description" rows="5" cols="60" placeholder="Detailed description of your item or offering...">...</textarea>
+            </td>
+          </tr>
 
-            <textarea id="textarea"  name = "description" rows="5" cols="60" placeholder="Detailed description of your item or offering...">...</textarea>
-        </td>
-      </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td><div id="app">
+      <div v-for="item in items">
+        <div v-if="!image">
+            <input type="file" name="filesToUpload" id="filesToUpload" accept="image/*" multiple>
+        </div>
+        <div v-else>
+          <img :src="image"/>
+          <button @click="removeImage">Remove image</button>
+        </div>
+      </div>
+    </div></td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
 
-      <tr>
-        <td>&nbsp;</td>
-        <td><div id="app">
-  <div v-for="item in items">
-    <div v-if="!image">
-        <input type="file" name="filesToUpload" id="filesToUpload" accept="image/*" multiple>
-    </div>
-    <div v-else>
-      <img :src="image"/>
-      <button @click="removeImage">Remove image</button>
-    </div>
-  </div>
-</div></td>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-
-      <tr>
-        <td>&nbsp;</td>
-        <td>Price
-        <input id="lastname" name="price" type="number" value="" /></td>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <td>&nbsp;</td>
-        <td align="center"><h3><input type="submit" id="add" name="add" value="Post"/></h3></td>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-      </tr>
-  </table>
-</form>
+          <tr>
+            <td>&nbsp;</td>
+            <td>Price
+            <input id="lastname" name="price" type="number" value=""/></td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td align="center"><h3><input type="submit" id="add" name="add" value="Post"/></h3></td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+          </tr>
+      </table>
+    </form>
 </body>
 </html>

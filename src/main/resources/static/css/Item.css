@@ -16,8 +16,8 @@ body {
 
 .product-img {
     float: left;
-    height: 420px;
-    width: 327px;
+    height: 220px;
+    width: 227px;
 }
 
 .product-img img {
@@ -39,15 +39,15 @@ body {
 
 .product-text h1 {
     margin: 0 0 0 38px;
-    padding-top: 52px;
+    /*padding-top: 52px;*/
     font-size: 34px;
     color: #474747;
 }
 
-.product-text h1,
-.product-price-btn p {
-    font-family: 'Bentham', serif;
-}
+/*.product-text h1,*/
+/*.product-price-btn p {*/
+    /*font-family: 'Bentham', serif;*/
+/*}*/
 
 .product-text h2 {
     margin: 0 0 47px 38px;

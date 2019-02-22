@@ -40,7 +40,7 @@ public class CategoryGroupController {
     }
 
     // Create a new CategoryGroup //TODO this must be accesible only for admins and delete
-    @PostMapping("/categoryGroups/add")
+    @PostMapping("addCategoryGroup")
     public CategoryGroup createCategoryGroup(CategoryGroup categoryGroup) {
         categoryGroupService.createCategoryGroup(categoryGroup);
 

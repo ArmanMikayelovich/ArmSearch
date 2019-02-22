@@ -40,8 +40,8 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 @Data
 @Table(name = "items", indexes = { @Index(
-        name = "IDX_search_tag",
-        columnList = "title, description") })
+        name = "IDX_title", columnList = "title"),
+        @Index(name = "IDX_description",columnList = "description") })
 public class Item {
 
     @Id
