@@ -39,7 +39,7 @@ public class CategoryController {
     }
 
     // Get All Categories
-    @GetMapping("/categories")
+    @GetMapping("/addCategory")
     public ModelAndView getAllCategories() {
         ModelAndView modelAndView = new ModelAndView("addCategory");
         modelAndView.addObject("groups", categoryGroupRepository.findAll());

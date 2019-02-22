@@ -19,12 +19,14 @@ import javax.persistence.ManyToOne;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeletedImagesPath {
-
+    public DeletedImagesPath(String filePath) {
+        this.filePath = filePath;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(name = "file_path", nullable = false, unique = true)
     private String filePath;
+
 
 }

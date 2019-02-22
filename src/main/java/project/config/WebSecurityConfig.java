@@ -13,6 +13,7 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import project.service.UserDetailsServiceImpl;
 
 @Configuration
@@ -51,7 +52,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/addItem","/updateItem","/updateUser","changePassword","deleteUser"
                 ).access("hasRole('ROLE_USER')")
                 .and().authorizeRequests().and().exceptionHandling().accessDeniedPage("/403").and()
-                .logout().logoutUrl("/logout").logoutSuccessUrl("/home").and()
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID").and()
                 .authenticationProvider(daoAuthenticationProvider())
                 .sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry());
 

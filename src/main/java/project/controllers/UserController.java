@@ -90,7 +90,7 @@ public class UserController {
     public void changePassword(String oldPassword, String newPassword, HttpServletResponse response) {
         userService.changePassword(oldPassword, newPassword);
         try {
-            response.sendRedirect("");
+            response.sendRedirect("/updateUser");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -98,10 +98,22 @@ public class UserController {
 
     // Delete a User
     @PostMapping("/deleteUser")
-    public ResponseEntity<?> deleteUser(String password)  {
+    public void deleteUser(String password,HttpServletResponse response)  {
         User user = userService.getAuthenticatedUser();
         userService.deleteUser(password);
-        return ResponseEntity.ok().build();
+        try {
+            response.sendRedirect("/logout");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @PostMapping("/deleteUserFromAdminPanel")
+    public void deleteUserFromAdminPanel(Integer id) {
+        User admin = userService.getAuthenticatedUser();
+        if (admin.getRoleName().equals("ADMIN")) {
+            userService.deleteUserFromAdminPanel(id);
+        }
     }
 
 }
