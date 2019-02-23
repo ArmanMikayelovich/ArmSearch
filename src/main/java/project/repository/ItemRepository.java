@@ -19,7 +19,7 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Long>, 
 
 
     @Query("select i from Item i where title like %?1% or description like %?1%")
-    List<Item> findAllByTitleOrDescription(String titleOrDescription);
+    Set<Item> findAllByTitleOrDescription(String titleOrDescription);
 
 }
 
