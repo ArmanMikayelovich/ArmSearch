@@ -1,6 +1,7 @@
 package project.service;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,7 +18,14 @@ import project.repository.ItemRepository;
 import project.repository.UserRepository;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
 @Service
 public class ItemService {
     private final ItemRepository itemRepository;
@@ -107,8 +115,19 @@ public class ItemService {
 
     }
 
-    public Page<Item> findAllPageable(Pageable pageable){
-        return itemRepository.findAll(pageable);
+
+    public Page<Item> findAllByTitleOrDescription(String titleOrDescription, Pageable pageable){
+
+        Set<Item> allByTitleOrDescription = itemRepository.findAllByTitleOrDescription(titleOrDescription);
+        System.out.println(allByTitleOrDescription);
+        List<Item> items = new ArrayList<>();
+        items.addAll(allByTitleOrDescription);
+        //Set<Item> itemList = Stream.concat(allByTitleOrDescription.stream().distinct().collect(Collectors.toList()));
+       /* List<Item> items = StreamSupport.stream(allByTitleOrDescription.spliterator(), false)
+                .distinct()
+                .collect(Collectors.toList());
+*/
+        return new PageImpl<Item>(items, pageable, items.size());
     }
 
 

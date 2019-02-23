@@ -3,6 +3,7 @@ package project.controllers;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -51,6 +52,13 @@ public class ItemController {
         this.itemService = itemService;
     }
 
+    @GetMapping("/items")
+    public ModelAndView items(@RequestParam String n , @PageableDefault(sort = {"updatedAt"}, direction = Sort.Direction.DESC, size = 2) Pageable page){
+        ModelAndView view = new ModelAndView("items");
+        Page<Item> items = itemService.findAllByTitleOrDescription(n, page);
+        view.addObject("items", items);
+        return view;
+    }
 
 
     @GetMapping("/addItem")
@@ -111,10 +119,10 @@ public class ItemController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/items")
+/*    @GetMapping("/items")
     public ModelAndView items(@PageableDefault(sort = {"updatedAt"}, direction = Sort.Direction.DESC, size = 10) Pageable page){
         ModelAndView modelAndView = new ModelAndView("items");
-        modelAndView.addObject("items", itemService.findAllPageable(page));
+        modelAndView.addObject("items", itemService.findAllByTitleOrDescription(String titleOrDescription, page));
         return modelAndView;
-    }
+    }*/
 }
