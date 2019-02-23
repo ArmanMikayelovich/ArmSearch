@@ -1,10 +1,9 @@
-/**
- * User is the creator
- * of announcement
- */
+
 package project.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority; //
 
 import javax.persistence.OneToMany;
@@ -25,30 +24,9 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Data
+@Getter
+@Setter
 public class User  {
-//    public User(String username, String password, Collection<? extends GrantedAuthority> authorities, String firstName, String lastName, String fullName, String email, String phoneNumber, String password1, List<Item> itemList, String roleName) {
-//        super(username, password, authorities);
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.fullName = fullName;
-//        this.email = email;
-//        this.phoneNumber = phoneNumber;
-//        this.password = password1;
-//        this.itemList = itemList;
-//        this.roleName = roleName;
-//    }
-//
-//    public User(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, String firstName, String lastName, String fullName, String email, String phoneNumber, String password1, List<Item> itemList, String roleName) {
-//        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.fullName = fullName;
-//        this.email = email;
-//        this.phoneNumber = phoneNumber;
-//        this.password = password1;
-//        this.itemList = itemList;
-//        this.roleName = roleName;
-//    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

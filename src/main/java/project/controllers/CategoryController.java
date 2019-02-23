@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import project.dto.CategoryDto;
 import project.model.Category;
+import project.model.CategoryGroup;
 import project.model.User;
 import project.repository.CategoryGroupRepository;
 
@@ -16,6 +17,8 @@ import project.repository.CategoryRepository;
 import project.service.CategoryGroupService;
 import project.service.CategoryService;
 import project.service.UserService;
+
+import java.util.List;
 
 //TODO Arman u Ani es class@ dzevapoxel hamadzayn telegrami meji im grac 12.02.2019 00:34 /amboxjutyamb/
 
@@ -50,7 +53,7 @@ public class CategoryController {
     // Create a new Category //TODO this must be accesible only for admins and delete
     @PostMapping(value = "/addCategory")
 
-    public Category createCategory( CategoryDto categoryDto) {
+    public Category createCategory(CategoryDto categoryDto) {
 
         Category category;
         category = categoryService.createCategory(categoryDto);
@@ -62,20 +65,9 @@ public class CategoryController {
     @GetMapping("/categories/{id}")
     public ModelAndView getCategoryById(@PathVariable(value = "id") Integer categoryId) {
         ModelAndView view = new ModelAndView("Category");
-        view.addObject("electronicsGroup", categoryGroupService.findByName("Electronics"));
-        view.addObject("realEstateGroup", categoryGroupService.findByName("Real Estate"));
-        view.addObject("vehiclesGroup", categoryGroupService.findByName("Vehicle"));
-        view.addObject("servicesGroup", categoryGroupService.findByName("Services"));
-        view.addObject("jobsGroup", categoryGroupService.findByName("Jobs"));
-        view.addObject("fashionGroup", categoryGroupService.findByName("Fashion"));
-        view.addObject("toolsAndMaterialsGroup", categoryGroupService.findByName("Tools and Materials"));
-        view.addObject("householdGroup", categoryGroupService.findByName("Household"));
-        view.addObject("forKidsGroup", categoryGroupService.findByName("For Kids"));
-        view.addObject("cultureAndHobbyGroup", categoryGroupService.findByName("Culture and Hobby"));
-        view.addObject("appliancesGroup", categoryGroupService.findByName("Appliances"));
-        view.addObject("everythinkElseGroup", categoryGroupService.findByName("Everythink Else"));
-        view.addObject( "itemList", categoryService.findById(categoryId).getItemList());
-        try{
+        categoryService.getCategoriesWithTheirGroups(view);
+        view.addObject("itemList", categoryService.findById(categoryId).getItemList());
+        try {
             User auth = userService.getAuthenticatedUser();
             view.addObject("user", auth);
 
@@ -88,12 +80,19 @@ public class CategoryController {
     }
 
 
-
-       // Delete a Category //TODO @PostMapping or @GetMapping for easy deleting from front-end...
+    // Delete a Category //TODO @PostMapping or @GetMapping for easy deleting from front-end...
     @PostMapping("/deleteCategory/{id}")
     public ResponseEntity<?> deleteCategory(@PathVariable(value = "id") Integer categoryId) {
 
         categoryService.deleteCategory(categoryId);
+
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/getCategoryList")
+    public List<Category> getCategoryList(@RequestParam(value = "id") Integer id) {
+        CategoryGroup group = categoryGroupRepository.findById(id).get();
+        return group.getCategories();
+    }
+
 }

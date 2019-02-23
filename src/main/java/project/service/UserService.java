@@ -1,5 +1,6 @@
 package project.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,23 +21,25 @@ import java.util.Optional;
 
 @Service
 public class UserService  {
-
-    private final UserRepository userRepository;
-    private final ItemService itemService;
+    @Autowired
+    private  UserRepository userRepository;
+    @Autowired
+    private  ItemService itemService;
 
     private PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
 
     }
-    public UserService(UserRepository userRepository, ItemService itemService) {
-
-        this.userRepository = userRepository;
-        this.itemService = itemService;
-    }
+//    public UserService(UserRepository userRepository, ItemService itemService) {
+//
+//        this.userRepository = userRepository;
+//        this.itemService = itemService;
+//    }
 
     public User getAuthenticatedUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
+
         return userRepository.findByEmail(springUser.getUsername());
     }
     @Transactional

@@ -1,5 +1,6 @@
 package project.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,18 +16,22 @@ import java.io.IOException;
 import java.util.List;
 @Service
 public class ItemService {
-    private final ItemRepository itemRepository;
-    private final CategoryService categoryService;
-    private final UserService userService;
-    private final ImageService imageService;
+    @Autowired
+    private  ItemRepository itemRepository;
+    @Autowired
+    private  CategoryService categoryService;
+    @Autowired
+    private  UserService userService;
+    @Autowired
+    private  ImageService imageService;
 
-    public ItemService(ItemRepository itemRepository, CategoryService categoryService,
-                                UserService userService, ImageService imageService) {
-        this.itemRepository = itemRepository;
-        this.categoryService = categoryService;
-        this.userService = userService;
-        this.imageService = imageService;
-    }
+//    public ItemService(ItemRepository itemRepository, CategoryService categoryService,
+//                                UserService userService, ImageService imageService) {
+//        this.itemRepository = itemRepository;
+//        this.categoryService = categoryService;
+//        this.userService = userService;
+//        this.imageService = imageService;
+//    }
     public Item findById(Long id) {
        return itemRepository.findById(id)
                .orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
