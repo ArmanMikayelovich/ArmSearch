@@ -3,6 +3,9 @@ package project.controllers;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -106,5 +109,12 @@ public class ItemController {
     public ResponseEntity<?> deleteImage(@PathVariable(value = "id") Long imageId) {
         imageService.deleteImage(imageId);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/items")
+    public ModelAndView items(@PageableDefault(sort = {"updatedAt"}, direction = Sort.Direction.DESC, size = 10) Pageable page){
+        ModelAndView modelAndView = new ModelAndView("items");
+        modelAndView.addObject("items", itemService.findAllPageable(page));
+        return modelAndView;
     }
 }
