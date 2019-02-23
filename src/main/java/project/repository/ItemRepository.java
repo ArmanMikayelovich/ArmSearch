@@ -5,14 +5,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+<<<<<<< HEAD
 
 
 import org.springframework.data.repository.PagingAndSortingRepository;
+=======
+import org.springframework.data.repository.query.Param;
+>>>>>>> Arman
 import org.springframework.stereotype.Repository;
 
 import project.model.Item;
 
 import java.util.List;
+<<<<<<< HEAD
+=======
+import java.util.Set;
+>>>>>>> Arman
 
 @Repository
 public interface ItemRepository extends PagingAndSortingRepository<Item, Long>, JpaRepository<Item, Long> {
@@ -21,5 +29,10 @@ public interface ItemRepository extends PagingAndSortingRepository<Item, Long>, 
     @Query("select i from Item i where title like %?1% or description like %?1%")
     Set<Item> findAllByTitleOrDescription(String titleOrDescription);
 
+
+    @Query("SELECT i FROM Item i WHERE " +
+            "LOWER(i.title) LIKE LOWER(CONCAT('%',:searchTerm, '%')) OR " +
+            "LOWER(i.description) LIKE LOWER(CONCAT('%',:searchTerm, '%'))")
+    Set<Item> findAllByTitleOrDescription(@Param("searchTerm") String searchTerm);
 }
 

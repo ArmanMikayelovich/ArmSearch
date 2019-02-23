@@ -3,8 +3,15 @@ package project.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+<<<<<<< HEAD
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+=======
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
+>>>>>>> Arman
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +52,13 @@ public class ItemController {
         this.itemService = itemService;
     }
 
+    @GetMapping("/items")
+    public ModelAndView items(@RequestParam String n , @PageableDefault(sort = {"updatedAt"}, direction = Sort.Direction.DESC, size = 2) Pageable page){
+        ModelAndView view = new ModelAndView("items");
+        Page<Item> items = itemService.findAllByTitleOrDescription(n, page);
+        view.addObject("items", items);
+        return view;
+    }
 
 <<<<<<< HEAD
     @GetMapping("/items")
@@ -120,4 +134,11 @@ public class ItemController {
         imageService.deleteImage(imageId);
         return ResponseEntity.ok().build();
     }
+
+/*    @GetMapping("/items")
+    public ModelAndView items(@PageableDefault(sort = {"updatedAt"}, direction = Sort.Direction.DESC, size = 10) Pageable page){
+        ModelAndView modelAndView = new ModelAndView("items");
+        modelAndView.addObject("items", itemService.findAllByTitleOrDescription(String titleOrDescription, page));
+        return modelAndView;
+    }*/
 }
