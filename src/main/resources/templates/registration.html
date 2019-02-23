@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Forms Exemple</title>
+    <link rel="stylesheet" th:href="@{/registration.css}"/>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+</head>
+
+<body class="container">
+<a th:href="@{/home}"><img src="https://st.depositphotos.com/1364916/4294/v/950/depositphotos_42942807-stock-illustration-house-and-waves-logo-vector.jpg" height="70" width="70"></a>
+<table width="509" height="414" border="0" align="center" cellpadding="3" cellspacing="3" bgcolor="#34495e" class="text">
+        <td>&nbsp;</td>
+        <td><h1>Registration</h1></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>  </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>
+        <form  th:action="@{/registration}" method="post" >
+            <div class="form-group">
+                <label for="firstName" class="control-label col-sm-2">First Name:</label>
+                <div class="col-sm-4">
+                    <input type="text" id="firstName" class="form-control" name="firstName" maxlength="10" placeholder="Enter name">
+                </div>
+                <span class="col-sm-6" ><p id="errFName" ></p></span>
+             </div>    
+           
+            <div class="form-group">
+                <label for="lastName" class="control-label col-sm-2">Last Name:</label>
+                <div class="col-sm-4">
+                    <input type="text" id="LastName" class="form-control" name="LastName" maxlength="7" placeholder="Enter last name">
+                </div>
+                 <span class="col-sm-6"><p id="errUName"> </p></span>
+            </div>
+            
+            <div class="form-group">
+                <label for="email" class="control-label col-sm-2">E-Mail:</label>
+                <div class="col-sm-4">
+                    <input type="email" id="email" class="form-control" name="email" placeholder="someone@example.com">
+                </div>
+                 <span class="col-sm-6" ><p id="errEmail"> </p></span>
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber" class="control-label col-sm-2">Phone No.:</label>
+                <div class="col-sm-4">
+                     <input type="tel" id="phoneNumber" class="form-control" name="phoneNumber" placeholder="+374xxxxxxxx">
+                </div>
+                <span class="col-sm-6" ><p id="errPhone"> </p></span>
+            </div>
+           
+            <div class="form-group">
+                <label for="password" class="control-label col-sm-2">Password:</label>
+                <div class="col-sm-4">
+                    <input type="password" id="password" class="form-control" name="password" maxlength="6" placeholder="Enter password">
+                </div>
+                 <span class="col-sm-6" ><p id="errPwd"> </p></span>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirm_password" class="control-label col-sm-2">Confirm Password:</label>
+                <div class="col-sm-4">
+                    <input type="password" id="confirm_password" class="form-control" name="confirm_password" maxlength="6" placeholder="Re-type password">
+                </div>
+                 <span class="col-sm-6" ><p id="errConfirmPwd"> </p></span>
+            </div>
+            <div class="col-sm-6">
+                <a th:href="@{/login}"><input type="submit" value="Submit" class="btn btn-primary btn-lg" ></input></a>
+            </div>
+        </form>
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        </tr>
+      
+    </table>
+</body>
+</html>
