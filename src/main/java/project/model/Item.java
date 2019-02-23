@@ -40,8 +40,13 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 @Data
 @Table(name = "items", indexes = { @Index(
+<<<<<<< HEAD
         name = "IDX_title",
         columnList = "title"),@Index(name = "IDX_description",columnList = "description") })
+=======
+        name = "IDX_title", columnList = "title"),
+        @Index(name = "IDX_description",columnList = "description") })
+>>>>>>> Arman
 public class Item {
 
     @Id

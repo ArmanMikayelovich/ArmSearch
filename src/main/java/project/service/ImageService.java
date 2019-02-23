@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import project.exception.ResourceNotFoundException;
+import project.model.DeletedImagesPath;
 import project.model.Image;
 import project.model.Item;
 import project.repository.ImageRepository;
@@ -18,10 +19,13 @@ import java.nio.file.Files;
 @Service
 public class ImageService {
     private final ImageRepository imageRepository;
+    private final DeletedImagesPathService deletedImagesPathService;
 
-    public ImageService(ImageRepository imageRepository) {
+    public ImageService(ImageRepository imageRepository, DeletedImagesPathService deletedImagesPathService) {
         this.imageRepository = imageRepository;
+        this.deletedImagesPathService = deletedImagesPathService;
     }
+
     @Transactional
     public Image addImage(Item item, MultipartFile imgFile,int id) throws IOException {
         Image image = new Image();
@@ -75,5 +79,10 @@ public class ImageService {
             e.printStackTrace();
         }
         return bytesArray;
+    }
+    @Transactional
+    public void deleteAllImages(Item item) {
+        deletedImagesPathService.saveDeletedImagesPathFromImageList(item.getImageList());
+        item.getImageList().forEach(imageRepository::delete);
     }
 }

@@ -1,23 +1,26 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" >
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title >ArmSearch</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Դօոնլօադ Ցհրօմե</title>
 
     <!--<link rel="stylesheet" type="text/css"  th:href="@{/css/home.css}"/>-->
     <!--<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>-->
 
     <script>
-        function calc(){
-        document.getElementById("menu2").style.display = "block";
-    }
+        function calc() {
+            document.getElementById("menu2").style.display = "block";
+        }
     </script>
     <style>
-        .bkg { background-color:#FF9
+        .bkg {
+            background-color: #FF9
         }
+
         .text1 {
-            background: #ff8300;
+            background: #CCC;
             border-radius: 3px;
-            color: #fff;
+            color: #34495e;
             float: right;
             font-size: 14px;
             margin-bottom: 13px;
@@ -26,42 +29,51 @@
             position: relative;
             text-transform: uppercase;
         }
+
         .text_div {
             border-radius: 3px;
-            color: #00C;
+            color: #34495e;
             font-size: 14px;
         }
+
         .text {
             color: #201830;
             text-align: center;
             text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
             text-shadow: #8A7BA8 0 0 10px;
         }
-        .rot {-moz-transform: scaleX(-1);
+
+        .rot {
+            -moz-transform: scaleX(-1);
             -o-transform: scaleX(-1);
             -webkit-transform: scaleX(-1);
             transform: scaleX(-1);
             filter: flipV();
             -ms-filter: flipV();
         }
+
         .drop {
-            display:inline;
+            display: inline;
             /*position: relative*/
         }
+
         .content {
             background-color: #999;
-            padding:10px 12px;
+            padding: 10px 12px;
             /*position:absolute;*/
-            display:none
+            display: none
         }
+
         .drop:hover .content { /*mkniki reakcian*/
-            display:block;
+            display: block;
             cursor: pointer;
         }
+
         /*@import "bourbon";*/
         body {
             background: #eee;
         }
+
         .list {
             display: -webkit-flex;
             display: -ms-flexbox;
@@ -80,80 +92,93 @@
             display: -ms-flexbox;
             display: flex;
         }
+
         figure {
-            background:#fff;
-            box-shadow:0 2px 3px rgba(0,0,0,0.1);
-            position:relative;
+            background: #fff;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
 
         img {
-            display:block;
-            width:100%;
+            display: block;
+            height: 160px;
+            width: 160px;
         }
 
         figcaption {
-            padding:6px 12px 12px;
-            font-size:12px;
-            color:#444;
+            padding: 6px 12px 12px;
+            font-size: 12px;
+            color: #444;
         }
+
         header, figcaption {
-            padding-left:25%;
+            padding-left: 25%;
         }
+
         header {
-            margin-top:12px;
+            margin-top: 12px;
         }
+
         h2 {
-            font-size:14px;
-            padding:0 0 0;
-            margin:0;
+            font-size: 14px;
+            padding: 0 0 0;
+            margin: 0;
         }
 
         .floater {
-            width:7%;
-            height:2%;
-            background:orange;
+            width: 7%;
+            height: 2%;
+            background: orange;
             position: absolute;
-            left:0;
+            left: 0;
         }
 
         @media screen and (min-width: 1200px) {
-            .container { text-align:center;
-                width:100%;
+            .container {
+                text-align: center;
+                width: 100%;
             }
+
             .list--item {
-                width:20%;
+                width: 20%;
             }
         }
+
         @media screen and (max-width: 768px) {
             .list--item {
-                width:33%;
+                width: 33%;
             }
         }
+
         @media screen and (max-width: 620px) {
             .list--item {
-                width:50%;
+                width: 50%;
             }
         }
+
         @media screen and (max-width: 480px) {
             .list--item {
-                width:100%;
+                width: 100%;
             }
         }
-        .da-TBButton{ text-align:center;
+
+        .da-TBButton {
+            text-align: center;
             color: #FFF;
-            background-color: #00C;
+            background-color: #34495e;
             padding: 3%;
             font-size: 12px;
-            text-decoration:none;
+            text-decoration: none;
             margin: 10%;
             display: block;
         }
 
         /*Link button*/
-        nav{
+        nav {
             width: 80px;
             background: #00C;
         }
+
         ul {
             list-style-type: none;
             margin: 0;
@@ -171,247 +196,300 @@
             padding: 14px 16px;
             text-decoration: none;
         }
-        .dropbtn:hover{
+
+        .dropbtn:hover {
             text-decoration: none;
             color: white;
         }
+
         li a:hover, .drop-menu:hover .dropbtn {
-            background-color: #F60;
+            background-color: #999;
 
         }
 
         li.drop-menu {
             display: inline-block;
+            background-color: #34495e;
         }
 
         .dropdown-content {
+            background-color: #999;
             display: none;
             position: absolute;
-            background-color: #F60;
+            /*background-color: #FC3;*/
             min-width: 80px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
             z-index: 1;
         }
 
         .dropdown-content a {
+            background-color: #999;
             color: black;
             padding: 12px 16px;
             text-decoration: none;
-            display:block;
+            display: block;
             text-align: left;
         }
 
         .dropdown-content a:hover {
-            background-color: #3d3d3d;
-            color:white;
+            background-color: #999;
+            color: white;
         }
 
         .drop-menu:hover .dropdown-content {
+            background-color: #999;
             display: block;
+        }
+
+        .profile_main {
+            padding: 30px 0 0 0;
+            background: #34495e;
+        }
+
+        .profile_main-logo {
+            text-align: center;
+            color: #CCC;
+            display: inline-block;
+            padding-left: 20px;
+            vertical-align: top;
         }
     </style>
 </head>
-<body  bgcolor="#FFFFFF">
-<table width="100%" border="0" >
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0">
     <tr>
-        <table width="92%" height=24% border="0" align="center">
-                  <td width="16%" height="69" align="left"><span style='padding-left:100px;'></span></td>
-                <td height="69" align="center" colspan="2">
-                    <a th:href="@{/user}">
+        <table width="100%" height=24% border="0" align="center" class="profile_main">
+            <td width="16%" height="49" align="left" class="profile_main-logo"><h1>ArmDesc</h1></td>
+            <td height="49" align="center" colspan="2">
+                <div sec:authorize="hasRole('ROLE_USER')">
+                    This content is only shown to users.
+                    <label th:utext="${user.getEmail()}"></label>
+                    <label th:utext="${user.getRoleName()}"></label>
+                </div>
+                <a th:href="@{'/login'}">
+                    <input type="submit" name="login" value="Log In" width="100" class="text1"/>
+                </a>
+            </td>
+            <div sec:authorize="hasRole('ROLE_USER')">
+                <td height="49" align="center" colspan="2">
+                    <a th:href="@{'/users/'+ ${user.id} }">ot
+
                         <input type="submit" name="name" value="My Account" width="100" class="text1"/>
                     </a>
                 </td>
-                <td width="23%" height="69" colspan="2" align="center">
-                    <a th:href="@{/addItem}">
-                        <input type="submit" name="name" value=" + Post to Classifieds" width="100" class="text1"/>
-                    </a>
-                </td>
+            </div>
+
+            <td width="13%" height="49" colspan="2" align="center">
+                <a th:href="@{/addItem}">
+                    <input type="submit" name="name" value=" + Post to Classifieds" width="100" class="text1"/>
+                </a>
+            </td>
         </table>
     </tr>
-        <table width="736" height="51" align="center">
-            <tr>
-                <td width="40%" height="27" colspan="1" align="center" bgcolor="#0000CC" >
-                    <input width="600" border-radius="3px" size="80" color="#00C" id="search" defaultval="Search" name="search" type="Search" class="text_div"/> <input id="submit-search" type="submit" value="Search" class="text_div">
-                </td>
-            </tr>
-        </table>
-    <p width="159" height="28" align="center" color="#00C"><h3> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Categories</h3> </p>
-    <table width="100%" border="0" align="center"  class="container">
+
+    <table width="736" height="51" align="center">
         <tr>
-            <td >
-            	<ul>
-                  <li class="drop-menu">
-                      <a th:href="@{/home/categoryGroupId}" class="dropbtn">Electronics<span class="caret"></span></a>
+            <td width="40%" height="27" colspan="1" align="center" bgcolor="#34495e">
+                <input width="600" border-radius="3px" size="80" color="#00C" id="search" defaultval="Search"
+                       name="search" type="Search" class="text_div"/> <input id="submit-search" type="submit"
+                                                                             value="Search" class="text_div">
+            </td>
+        </tr>
+    </table>
+    <p width="159" height="28" align="center" color="#00C">
+    <h3> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Categories</h3> </p>
+    <table width="100%" border="0" align="center" class="container">
+        <tr>
+            <td>
+                <ul>
+                    <li class="drop-menu">
+                        <a th:href="@{/home/categoryGroupId}" class="dropbtn">Electronics<span class="caret"></span></a>
                         <div class="dropdown-content">
-                            <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${electronicsGroup.categories}">
+                            <a th:href="@{'categories/'+${category.getId()} }"
+                               th:each="category : ${electronicsGroup.categories}">
                                 <label th:utext="${category.getName()}">...</label>
                             </a>
                         </div>
-                  </li>
-            	</ul>
-    		</td>
-            <td >
-            	<ul>
-                  <li class="drop-menu">
-                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Real Estate<span class="caret"></span> </a>
-                      <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${realEstateGroup.categories}">
-                              <label th:utext="${category.getName()}">...</label>
-                          </a>
-                      </div>
-                  </li>
-            	</ul>
-    		</td>
-            <td >
-            	<ul>
-                  <li class="drop-menu">
-                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Vehicles<span class="caret"></span> </a>
-                      <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${vehiclesGroup.categories}">
-                              <label th:utext="${category.getName()}">...</label>
-                          </a>
-                      </div>
-                  </li>
-            	</ul>
-    		</td>       
-            <td >
-            	<ul>
-                  <li class="drop-menu">
-                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Services<span class="caret"></span> </a>
-                      <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${servicesGroup.categories}">
-                              <label th:utext="${category.getName()}">...</label>
-                          </a>
-                      </div>
-                  </li>
-            	</ul>
-    		</td>
-            <td >
-            	<ul>
-                  <li class="drop-menu">
-                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Jobs<span class="caret"></span> </a>
-                      <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${jobsGroup.categories}">
-                              <label th:utext="${category.getName()}">...</label>
-                          </a>
-                      </div>
-                  </li>
-            	</ul>
-      </td>
-            <td >
-            	<ul>
-                  <li class="drop-menu">
-                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Fashion<span class="caret"></span> </a>
-                      <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${fashionGroup.categories}">
-                              <label th:utext="${category.getName()}">...</label>
-                          </a>
-                      </div>
-                  </li>
-            	</ul>
-      </td>
-            <td >
-            	<ul>
-                  <li class="drop-menu">
-                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Tools and Materials<span class="caret"></span> </a>
-                      <div class="dropdown-content">
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li class="drop-menu">
+                        <a th:href="@{/home/categoryGroupId}" class="dropbtn">Real Estate<span class="caret"></span>
+                        </a>
+                        <div class="dropdown-content">
+                            <a th:href="@{'categories/'+${category.getId()} }"
+                               th:each="category : ${realEstateGroup.categories}">
+                                <label th:utext="${category.getName()}">...</label>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li class="drop-menu">
+                        <a th:href="@{/home/categoryGroupId}" class="dropbtn">Vehicles<span class="caret"></span> </a>
+                        <div class="dropdown-content">
+                            <a th:href="@{'categories/'+${category.getId()} }"
+                               th:each="category : ${vehiclesGroup.categories}">
+                                <label th:utext="${category.getName()}">...</label>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li class="drop-menu">
+                        <a th:href="@{/home/categoryGroupId}" class="dropbtn">Services<span class="caret"></span> </a>
+                        <div class="dropdown-content">
+                            <a th:href="@{'categories/'+${category.getId()} }"
+                               th:each="category : ${servicesGroup.categories}">
+                                <label th:utext="${category.getName()}">...</label>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li class="drop-menu">
+                        <a th:href="@{/home/categoryGroupId}" class="dropbtn">Jobs<span class="caret"></span> </a>
+                        <div class="dropdown-content">
+                            <a th:href="@{'categories/'+${category.getId()} }"
+                               th:each="category : ${jobsGroup.categories}">
+                                <label th:utext="${category.getName()}">...</label>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li class="drop-menu">
+                        <a th:href="@{/home/categoryGroupId}" class="dropbtn">Fashion<span class="caret"></span> </a>
+                        <div class="dropdown-content">
+                            <a th:href="@{'categories/'+${category.getId()} }"
+                               th:each="category : ${fashionGroup.categories}">
+                                <label th:utext="${category.getName()}">...</label>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li class="drop-menu">
+                        <a th:href="@{/home/categoryGroupId}" class="dropbtn">Tools and Materials<span
+                                class="caret"></span> </a>
+                        <div class="dropdown-content">
 
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${toolsAndMaterialsGroup.categories}">
-                              <label th:utext="${category.getName()}">...</label>
-                          </a>
-                      </div>
-                  </li>
-            	</ul>
-      </td>
-            <td >
-            	<ul>
-                  <li class="drop-menu">
-                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Household<span class="caret"></span> </a>
-                      <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${householdGroup.categories}">
-                              <label th:utext="${category.getName()}">...</label>
-                          </a>
-                      </div>
-                  </li>
-            	</ul>
-      </td>
-            <td >
-            	<ul>
-                  <li class="drop-menu">
-                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">For Kids<span class="caret"></span> </a>
-                      <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${forKidsGroup.categories}">
-                              <label th:utext="${category.getName()}">...</label>
-                          </a>
-                      </div>
-                  </li>
-            	</ul>
-      </td>
-            <td >
-            	<ul>
-                  <li class="drop-menu">
-                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Culture and Hobby<span class="caret"></span> </a>
-                      <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${cultureAndHobbyGroup.categories}">
-                              <label th:utext="${category.getName()}">...</label>
-                          </a>
-                      </div>
-                  </li>
-            	</ul>
-      </td>
-            <td >
-            	<ul>
-                  <li class="drop-menu">
-                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Appliances<span class="caret"></span> </a>
-                      <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${appliancesGroup.categories}">
-                              <label th:utext="${category.getName()}">...</label>
-                          </a>
-                      </div>
-                  </li>
-            	</ul>
-      </td>
-            <td >
-            	<ul>
-                  <li class="drop-menu">
-                  <a th:href="@{/home/categoryGroupId}" class="dropbtn">Everythink Else<span class="caret"></span> </a>
-                      <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${everythinkElseGroup.categories}">
-                              <label th:utext="${category.getName()}">...</label>
-                          </a>
-                      </div>
-                  </li>
-            	</ul>
-   		  </td>
+                            <a th:href="@{'categories/'+${category.getId()} }"
+                               th:each="category : ${toolsAndMaterialsGroup.categories}">
+                                <label th:utext="${category.getName()}">...</label>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li class="drop-menu">
+                        <a th:href="@{/home/categoryGroupId}" class="dropbtn">Household<span class="caret"></span> </a>
+                        <div class="dropdown-content">
+                            <a th:href="@{'categories/'+${category.getId()} }"
+                               th:each="category : ${householdGroup.categories}">
+                                <label th:utext="${category.getName()}">...</label>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li class="drop-menu">
+                        <a th:href="@{/home/categoryGroupId}" class="dropbtn">For Kids<span class="caret"></span> </a>
+                        <div class="dropdown-content">
+                            <a th:href="@{'categories/'+${category.getId()} }"
+                               th:each="category : ${forKidsGroup.categories}">
+                                <label th:utext="${category.getName()}">...</label>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li class="drop-menu">
+                        <a th:href="@{/home/categoryGroupId}" class="dropbtn">Culture and Hobby<span
+                                class="caret"></span> </a>
+                        <div class="dropdown-content">
+                            <a th:href="@{'categories/'+${category.getId()} }"
+                               th:each="category : ${cultureAndHobbyGroup.categories}">
+                                <label th:utext="${category.getName()}">...</label>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li class="drop-menu">
+                        <a th:href="@{/home/categoryGroupId}" class="dropbtn">Appliances<span class="caret"></span> </a>
+                        <div class="dropdown-content">
+                            <a th:href="@{'categories/'+${category.getId()} }"
+                               th:each="category : ${appliancesGroup.categories}">
+                                <label th:utext="${category.getName()}">...</label>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li class="drop-menu">
+                        <a th:href="@{/home/categoryGroupId}" class="dropbtn">Everythink Else<span class="caret"></span>
+                        </a>
+                        <div class="dropdown-content">
+                            <a th:href="@{'categories/'+${category.getId()} }"
+                               th:each="category : ${everythinkElseGroup.categories}">
+                                <label th:utext="${category.getName()}">...</label>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </td>
+
         </tr>
     </table>
-    </table>
- 
-    
-    <div class="container">
-        <div class="list">
-           <form th:each="item : ${randomItemList}">
-                <article class="list--item">
-                  <figure>
-                    <img
+</table>
 
-                         th:src="@{/items/itemImages(image=${item.imageList.get(0).getFilePath()})}" />
+<table>
+    <tr>
+        <td class="container" th:each="item : ${randomItemList}">
+            <div class="list">
+                <form>
+                    <article class="list--item">
+                        <figure>
+                            <img th:src="@{/items/itemImages(image=${item.imageList.get(0).getFilePath()})}"/>
+                            <header>
+                                <div th:utext="${item.price} + ' $'"></div>
 
+                            </header>
+                            <figcaption th:utext="${item.title}">
+                            </figcaption>
+                            <a class="da-TBButton" th:href="@{'/items/'+ ${item.getId()}}">Learn More</a>
 
-                      <header>
-                     <div th:utext="${item.price}"></div>
+                        </figure>
+                    </article>
 
-                    </header>
-                    <figcaption th:utext="${item.title}">
-                    </figcaption>
-                      <a class="da-TBButton" th:href="@{'/item/'+ ${item.getId()}}" >Learn More</a>
-
-                  </figure>
-                </article>
-
-           </form>
-        </div>
-    </div>
-    <p>&nbsp;</p>
-    </body>
-    </html>
+                </form>
+            </div>
+        </td>
+    </tr>
+</table>
+<p align="center">page 1</p>
+</body>
+</html>
