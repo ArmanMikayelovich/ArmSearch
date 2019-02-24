@@ -15,10 +15,12 @@ import java.util.Set;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
+    @Query(value = "select * from items order by rand() limit 12", nativeQuery = true)
+    List<Item> getRandomItems();
 
     @Query("SELECT i FROM Item i WHERE " +
             "LOWER(i.title) LIKE LOWER(CONCAT('%',:searchTerm, '%')) OR " +
             "LOWER(i.description) LIKE LOWER(CONCAT('%',:searchTerm, '%'))")
-    Set<Item> findAllByTitleOrDescription(@Param("searchTerm") String searchTerm);
+    Page<Item> findAllByTitleOrDescription(@Param("searchTerm") String searchTerm, Pageable pageable);
 }
 

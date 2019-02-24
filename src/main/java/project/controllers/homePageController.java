@@ -38,7 +38,7 @@ public class homePageController {
         view.addObject("cultureAndHobbyGroup", categoryGroupService.findByName("Culture and Hobby"));
         view.addObject("appliancesGroup", categoryGroupService.findByName("Appliances"));
         view.addObject("everythinkElseGroup", categoryGroupService.findByName("Everythink Else"));
-        view.addObject( "randomItemList", itemService.getRamdomItems(555));
+
         try{
             User auth = userService.getAuthenticatedUser();
             view.addObject("user", auth);

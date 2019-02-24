@@ -118,16 +118,12 @@ public class ItemService {
 
     public Page<Item> findAllByTitleOrDescription(String titleOrDescription, Pageable pageable){
 
-        Set<Item> allByTitleOrDescription = itemRepository.findAllByTitleOrDescription(titleOrDescription);
-        System.out.println(allByTitleOrDescription);
-        List<Item> items = new ArrayList<>();
-        items.addAll(allByTitleOrDescription);
-        //Set<Item> itemList = Stream.concat(allByTitleOrDescription.stream().distinct().collect(Collectors.toList()));
-       /* List<Item> items = StreamSupport.stream(allByTitleOrDescription.spliterator(), false)
-                .distinct()
-                .collect(Collectors.toList());
-*/
-        return new PageImpl<Item>(items, pageable, items.size());
+        Page<Item> allByTitleOrDescription = itemRepository.findAllByTitleOrDescription(titleOrDescription, pageable);
+        return  allByTitleOrDescription;
+    }
+
+    public List<Item> getRandomItems(){
+        return itemRepository.getRandomItems();
     }
 
 

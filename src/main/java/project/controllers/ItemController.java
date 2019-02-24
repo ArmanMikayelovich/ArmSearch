@@ -31,6 +31,7 @@ import javax.validation.Valid;
 import java.io.*;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @RestController
 @RequestMapping
@@ -53,9 +54,16 @@ public class ItemController {
     }
 
     @GetMapping("/items")
-    public ModelAndView items(@RequestParam String n , @PageableDefault(sort = {"updatedAt"}, direction = Sort.Direction.DESC, size = 2) Pageable page){
+    public ModelAndView items(@RequestParam String n , @PageableDefault(sort = {"updatedAt"}, direction = Sort.Direction.DESC, size = 12) Pageable page){
         ModelAndView view = new ModelAndView("items");
         Page<Item> items = itemService.findAllByTitleOrDescription(n, page);
+
+        int totalPages = items.getTotalPages();
+        if(totalPages>1){
+            List<Integer> pageNumbers = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
+            view.addObject("pageNumbers", pageNumbers);
+            view.addObject("n", n);
+        }
         view.addObject("items", items);
         return view;
     }
