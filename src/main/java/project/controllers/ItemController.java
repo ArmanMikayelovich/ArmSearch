@@ -58,7 +58,7 @@ public class ItemController {
         this.itemService = itemService;
     }
 
-    @GetMapping("/items")
+/*    @GetMapping("/items")
     public ModelAndView items(@RequestParam String n , @PageableDefault(sort = {"updatedAt"}, direction = Sort.Direction.DESC, size = 12) Pageable page){
         ModelAndView view = new ModelAndView("items");
         Page<Item> items = itemService.findAllByTitleOrDescription(n, page);
@@ -71,7 +71,7 @@ public class ItemController {
         }
         view.addObject("items", items);
         return view;
-    }
+    }*/
 
 
     @GetMapping("/addItem")

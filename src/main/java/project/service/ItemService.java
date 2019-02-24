@@ -129,5 +129,9 @@ public class ItemService {
         return itemRepository.getRandomItems();
     }
 
+    Page<Item> findAllByCategory(Integer categoryId, Pageable pageable){
+
+        return  itemRepository.findAllByCategory(categoryId, pageable);
+    }
 
 }

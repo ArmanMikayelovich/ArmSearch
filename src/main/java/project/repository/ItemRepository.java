@@ -15,6 +15,9 @@ import java.util.Set;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
+    Page<Item> findAllByCategory(Integer categoryId, Pageable pageable);
+
+
     @Query(value = "select * from items order by rand() limit 12", nativeQuery = true)
     List<Item> getRandomItems();
 
