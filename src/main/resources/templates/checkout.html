@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<title>Checkout</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Little Closet template">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" th:href="@{/styles/bootstrap-4.1.2/bootstrap.min.css}">
+<link th:href="@{/plugins/font-awesome-4.7.0/css/font-awesome.min.css}" rel="stylesheet">
+<link rel="stylesheet" th:href="@{/styles/checkout.css}">
+<link rel="stylesheet" th:href="@{/styles/checkout_responsive.css}">
+
+	<script>
+
+		function nameValidator(){
+			var name = document.regForm.fullName.value;
+			var errName = document.getElementById("errFName");
+			if(name == "" || name == null){
+				//alert(name);
+				errName.innerHTML = "Provide Name";
+				errName.style.color = "red";
+			}
+		}
+		function userNameValidator(){
+			var userName = document.regForm.userName.value;
+			var errUserName = document.getElementById("errUName");
+			if(userName=="" || userName==null){
+				errUserName.innerHTML = "Provide User Name";
+				errUserName.style.color = "red";
+			}
+		}
+
+		function emailValidator(){
+			var email = document.regForm.email.value;
+			var errEmail = document.getElementById("errEmail");
+			if(email=="" || email==null){
+				errEmail.innerHTML = "Provide email";
+				errEmail.style.color = "red";
+			}
+		}
+
+		function phoneValidator(){
+			var phone = document.regForm.phone.value;
+			var errPhone = document.getElementById("errPhone");
+			if(phone=="" || phone==null){
+				errPhone.innerHTML = "Provide Phone number";
+				errPhone.style.color = "red";
+			}
+		}
+
+		function passwordValidator(){
+			var pwd = document.regForm.password.value;
+			var confirmPwd = document.regForm.confirmPassword.value;
+			var errpwd = document.getElementById("errPwd");
+			var errConfirmPwd = document.getElementById("errConfirmPwd");
+			if(pwd=="" || pwd==null){
+				errpwd.innerHTML="Choose a password";
+				errpwd.style.color = "red";
+			}
+			if(confirmPwd == "" || confirmPwd == null){
+				errConfirmPwd.innerHTML = "Re-type the password"
+				errConfirmPwd.style.color = "red";
+			}
+			else if(pwd!=confirmPwd) {
+				errConfirmPwd.innerHTML = "Password don't match";
+			}
+		}
+
+		function validator(){
+			nameValidator();
+			userNameValidator();
+			emailValidator();
+			phoneValidator();
+			passwordValidator();
+			genderValidator();
+		}
+	</script>
+
+</head>
+<body>
+
+<div class="super_container">
+
+	<!-- Header -->
+
+	<header>
+		<!--<div class="header_overlay"></div>-->
+		<div class="header_content d-flex flex-row align-items-center justify-content-start">
+			<!--<div align="left">-->
+			<!--<ul align="left" class="d-flex flex-row align-items-start justify-content-start">-->
+			<!--<div sec:authorize="isAuthenticated()">-->
+			<!--<li class="block" style="float:left;"><a th:href="@{'/users/'+ ${user.id} }">My Account</a></li>-->
+			<!--<li class="block" style="float:left;"><a th:href="@{/addItem}">+ Post to Classifieds</a></li>-->
+			<!--<li class="block" style="float:left;"><a th:href="@{'/logout'}">Log Out</a></li>-->
+			<!--</div>-->
+			<!--<div sec:authorize="!isAuthenticated()">-->
+			<!--<li class="block" style="float:left"><a th:href="@{'/login'}">Log In</a></li>-->
+			<!--</div>-->
+			<!--<div sec:authorize="hasRole('ADMIN')">-->
+			<!--<li class="block" style="float:left;"><a th:href="@{'/admin'}">Admin</a></li>-->
+			<!--</div>-->
+
+			<!--</ul>-->
+			<!--</div>-->
+			<div class="header_right d-flex flex-row align-items-center justify-content-start ml-auto">
+				<!-- Search -->
+				<div class="header_search">
+					<form action="#" id="header_search_form">
+						<input type="text" class="search_input" placeholder="Search Item" required="required">
+						<button class="header_search_button"><img th:src="@{/images/search.png}" alt=""></button>
+					</form>
+				</div>
+				<!-- User -->
+				<!--<div class="user"><a href="#"><div><img th:th:src="@{/@{/../static/images/user.svg" alt="https://www.flaticon.com/authors/freepik"><div>1</div></div></a></div>-->
+				<!-- Cart -->
+				<!--<div class="cart"><a href="cart.html"><div><img class="svg" th:th:src="@{/@{/../static/images/cart.svg" alt="https://www.flaticon.com/authors/freepik"></div></a></div>-->
+				<!-- Phone -->
+				<div class="header_phone d-flex flex-row align-items-center justify-content-start">
+					<div><div><img th:src="@{/images/phone.svg}" alt="https://www.flaticon.com/authors/freepik"></div></div>
+					<div>+1 912-252-7350</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<div class="super_container_inner">
+		<div class="super_overlay"></div>
+
+		<!-- Categories -->
+
+		<!--<div class="home">-->
+		<!--<div class="home_container d-flex flex-column align-items-center justify-content-end">-->
+		<!--<div class="home_content text-center">-->
+		<!--<div class="home_title">Categories</div>-->
+		<!--<div>-->
+		<!--<table width="100%" border="0" align="center"  class="container">-->
+		<!--<tr>-->
+		<!--<td >-->
+		<!--<ul>-->
+		<!--<li class="drop-menu">-->
+		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Electronics<span class="caret"></span></a>-->
+		<!--<div class="dropdown-content">-->
+		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${electronicsGroup.categories}">-->
+		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--</a>-->
+		<!--</div>-->
+		<!--</li>-->
+		<!--</ul>-->
+		<!--</td>-->
+		<!--<td >-->
+		<!--<ul>-->
+		<!--<li class="drop-menu">-->
+		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Real Estate<span class="caret"></span> </a>-->
+		<!--<div class="dropdown-content">-->
+		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${realEstateGroup.categories}">-->
+		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--</a>-->
+		<!--</div>-->
+		<!--</li>-->
+		<!--</ul>-->
+		<!--</td>-->
+		<!--<td >-->
+		<!--<ul>-->
+		<!--<li class="drop-menu">-->
+		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Vehicles<span class="caret"></span> </a>-->
+		<!--<div class="dropdown-content">-->
+		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${vehiclesGroup.categories}">-->
+		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--</a>-->
+		<!--</div>-->
+		<!--</li>-->
+		<!--</ul>-->
+		<!--</td>-->
+		<!--<td >-->
+		<!--<ul>-->
+		<!--<li class="drop-menu">-->
+		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Services<span class="caret"></span> </a>-->
+		<!--<div class="dropdown-content">-->
+		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${servicesGroup.categories}">-->
+		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--</a>-->
+		<!--</div>-->
+		<!--</li>-->
+		<!--</ul>-->
+		<!--</td>-->
+		<!--<td >-->
+		<!--<ul>-->
+		<!--<li class="drop-menu">-->
+		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Jobs<span class="caret"></span> </a>-->
+		<!--<div class="dropdown-content">-->
+		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${jobsGroup.categories}">-->
+		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--</a>-->
+		<!--</div>-->
+		<!--</li>-->
+		<!--</ul>-->
+		<!--</td>-->
+		<!--<td >-->
+		<!--<ul>-->
+		<!--<li class="drop-menu">-->
+		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Fashion<span class="caret"></span> </a>-->
+		<!--<div class="dropdown-content">-->
+		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${fashionGroup.categories}">-->
+		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--</a>-->
+		<!--</div>-->
+		<!--</li>-->
+		<!--</ul>-->
+		<!--</td>-->
+		<!--<td >-->
+		<!--<ul>-->
+		<!--<li class="drop-menu">-->
+		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Tools and Materials<span class="caret"></span> </a>-->
+		<!--<div class="dropdown-content">-->
+
+		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${toolsAndMaterialsGroup.categories}">-->
+		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--</a>-->
+		<!--</div>-->
+		<!--</li>-->
+		<!--</ul>-->
+		<!--</td>-->
+		<!--<td >-->
+		<!--<ul>-->
+		<!--<li class="drop-menu">-->
+		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Household<span class="caret"></span> </a>-->
+		<!--<div class="dropdown-content">-->
+		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${householdGroup.categories}">-->
+		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--</a>-->
+		<!--</div>-->
+		<!--</li>-->
+		<!--</ul>-->
+		<!--</td>-->
+		<!--<td >-->
+		<!--<ul>-->
+		<!--<li class="drop-menu">-->
+		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">For Kids<span class="caret"></span> </a>-->
+		<!--<div class="dropdown-content">-->
+		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${forKidsGroup.categories}">-->
+		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--</a>-->
+		<!--</div>-->
+		<!--</li>-->
+		<!--</ul>-->
+		<!--</td>-->
+		<!--<td >-->
+		<!--<ul>-->
+		<!--<li class="drop-menu">-->
+		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Culture and Hobby<span class="caret"></span> </a>-->
+		<!--<div class="dropdown-content">-->
+		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${cultureAndHobbyGroup.categories}">-->
+		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--</a>-->
+		<!--</div>-->
+		<!--</li>-->
+		<!--</ul>-->
+		<!--</td>-->
+		<!--<td >-->
+		<!--<ul>-->
+		<!--<li class="drop-menu">-->
+		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Appliances<span class="caret"></span> </a>-->
+		<!--<div class="dropdown-content">-->
+		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${appliancesGroup.categories}">-->
+		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--</a>-->
+		<!--</div>-->
+		<!--</li>-->
+		<!--</ul>-->
+		<!--</td>-->
+		<!--<td >-->
+		<!--<ul>-->
+		<!--<li class="drop-menu">-->
+		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Everythink Else<span class="caret"></span> </a>-->
+		<!--<div class="dropdown-content">-->
+		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${everythinkElseGroup.categories}">-->
+		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--</a>-->
+		<!--</div>-->
+		<!--</li>-->
+		<!--</ul>-->
+		<!--</td>-->
+
+		<!--</tr>-->
+		<!--</table>-->
+		<!--</div>-->
+		<!--</div>-->
+		<!--</div>-->
+		<!--</div>-->
+
+		<!-- Checkout -->
+
+		<div class="checkout">
+			<div class="container">
+				<div class="row">
+					
+					<!-- Billing -->
+					<div class="col-lg-6">
+						<div class="billing">
+							<div class="checkout_title">Billing</div>
+							<div class="checkout_form_container">
+								<form action="#" id="checkout_form" class="checkout_form">
+									<div class="row">
+										<div class="col-lg-6">
+											<!-- Name -->
+											<input type="text" id="checkout_name" class="checkout_input" placeholder="First Name" required="required">
+										</div>
+										<div class="col-lg-6">
+											<!-- Last Name -->
+											<input type="text" id="checkout_last_name" class="checkout_input" placeholder="Last Name" required="required">
+										</div>
+									</div>
+									<div>
+										<!-- Company -->
+										<input type="text" id="checkout_company" placeholder="Company" class="checkout_input">
+									</div>
+									<div>
+										<!-- Country -->
+										<select name="checkout_country" id="checkout_country" class="dropdown_item_select checkout_input" require="required">
+											<option>Country</option>
+											<option>Lithuania</option>
+											<option>Sweden</option>
+											<option>UK</option>
+											<option>Italy</option>
+										</select>
+									</div>
+									<div>
+										<!-- Address -->
+										<input type="text" id="checkout_address" class="checkout_input" placeholder="Address Line 1" required="required">
+										<input type="text" id="checkout_address_2" class="checkout_input checkout_address_2" placeholder="Address Line 2" required="required">
+									</div>
+									<div>
+										<!-- Zipcode -->
+										<input type="text" id="checkout_zipcode" class="checkout_input" placeholder="Zip Code" required="required">
+									</div>
+									<div>
+										<!-- City / Town -->
+										<select name="checkout_city" id="checkout_city" class="dropdown_item_select checkout_input" require="required">
+											<option>City / Town</option>
+											<option>City</option>
+											<option>City</option>
+											<option>City</option>
+											<option>City</option>
+										</select>
+									</div>
+									<div>
+										<!-- Province -->
+										<select name="checkout_province" id="checkout_province" class="dropdown_item_select checkout_input" require="required">
+											<option>Province</option>
+											<option>Province</option>
+											<option>Province</option>
+											<option>Province</option>
+											<option>Province</option>
+										</select>
+									</div>
+									<div>
+										<!-- Phone no -->
+										<input type="phone" id="checkout_phone" class="checkout_input" placeholder="Phone No." required="required">
+									</div>
+									<div>
+										<!-- Email -->
+										<input type="phone" id="checkout_email" class="checkout_input" placeholder="Email" required="required">
+									</div>
+									<div class="checkout_extra">
+										<ul>
+											<li class="billing_info d-flex flex-row align-items-center justify-content-start">
+												<label class="checkbox_container">
+													<input type="checkbox" id="cb_1" name="billing_checkbox" class="billing_checkbox">
+													<span class="checkbox_mark"></span>
+													<span class="checkbox_text">Terms and conditions</span>
+												</label>
+											</li>
+											<li class="billing_info d-flex flex-row align-items-center justify-content-start">
+												<label class="checkbox_container">
+													<input type="checkbox" id="cb_2" name="billing_checkbox" class="billing_checkbox">
+													<span class="checkbox_mark"></span>
+													<span class="checkbox_text">Create an account</span>
+												</label>
+											</li>
+											<li class="billing_info d-flex flex-row align-items-center justify-content-start">
+												<label class="checkbox_container">
+													<input type="checkbox" id="cb_3" name="billing_checkbox" class="billing_checkbox">
+													<span class="checkbox_mark"></span>
+													<span class="checkbox_text">Subscribe to our newsletter</span>
+												</label>
+											</li>
+										</ul>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
+					<!--&lt;!&ndash; Cart Total &ndash;&gt;-->
+					<!--<div class="col-lg-6 cart_col">-->
+						<!--<div class="cart_total">-->
+							<!--<div class="cart_extra_content cart_extra_total">-->
+								<!--<div class="checkout_title">Cart Total</div>-->
+								<!--<ul class="cart_extra_total_list">-->
+									<!--<li class="d-flex flex-row align-items-center justify-content-start">-->
+										<!--<div class="cart_extra_total_title">Subtotal</div>-->
+										<!--<div class="cart_extra_total_value ml-auto">$29.90</div>-->
+									<!--</li>-->
+									<!--<li class="d-flex flex-row align-items-center justify-content-start">-->
+										<!--<div class="cart_extra_total_title">Shipping</div>-->
+										<!--<div class="cart_extra_total_value ml-auto">Free</div>-->
+									<!--</li>-->
+									<!--<li class="d-flex flex-row align-items-center justify-content-start">-->
+										<!--<div class="cart_extra_total_title">Total</div>-->
+										<!--<div class="cart_extra_total_value ml-auto">$29.90</div>-->
+									<!--</li>-->
+								<!--</ul>-->
+								<!--<div class="payment_options">-->
+									<!--<div class="checkout_title">Payment</div>-->
+									<!--<ul>-->
+										<!--<li class="shipping_option d-flex flex-row align-items-center justify-content-start">-->
+											<!--<label class="radio_container">-->
+												<!--<input type="radio" id="radio_1" name="payment_radio" class="payment_radio">-->
+												<!--<span class="radio_mark"></span>-->
+												<!--<span class="radio_text">Paypal</span>-->
+											<!--</label>-->
+										<!--</li>-->
+										<!--<li class="shipping_option d-flex flex-row align-items-center justify-content-start">-->
+											<!--<label class="radio_container">-->
+												<!--<input type="radio" id="radio_2" name="payment_radio" class="payment_radio">-->
+												<!--<span class="radio_mark"></span>-->
+												<!--<span class="radio_text">Cash on Delivery</span>-->
+											<!--</label>-->
+										<!--</li>-->
+										<!--<li class="shipping_option d-flex flex-row align-items-center justify-content-start">-->
+											<!--<label class="radio_container">-->
+												<!--<input type="radio" id="radio_3" name="payment_radio" class="payment_radio" checked>-->
+												<!--<span class="radio_mark"></span>-->
+												<!--<span class="radio_text">Credit Card</span>-->
+											<!--</label>-->
+										<!--</li>-->
+									<!--</ul>-->
+								<!--</div>-->
+								<!--<div class="cart_text">-->
+									<!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra tempor so dales. Phasellus sagittis auctor gravida. Integ er bibendum sodales arcu id te mpus. Ut consectetur lacus.</p>-->
+								<!--</div>-->
+								<!--<div class="checkout_button trans_200"><a href="checkout.html">place order</a></div>-->
+							<!--</div>-->
+						<!--</div>-->
+					<!--</div>-->
+				</div>
+			</div>
+		</div>
+
+		<!-- Footer -->
+
+		<footer class="footer">
+			<div class="footer_content">
+				<div class="container">
+					<div class="row">
+
+						<!-- About -->
+						<div class="col-lg-4 footer_col">
+							<div class="footer_about">
+								<div class="footer_logo">
+									<a href="#">
+										<div class="d-flex flex-row align-items-center justify-content-start">
+											<div class="footer_logo_icon"><img th:src="@{/images/logo_2.png}" alt=""></div>
+											<div>ArmDesc</div>
+										</div>
+									</a>
+								</div>
+								<div class="footer_about_text">
+									<p>ArmDesc is the largest Armenian community and classifieds site for all types of goods, services and offers. The entire country knows, loves and uses ArmDesc.<br/>ArmDesc is free and easy to use.<br/>Good luck!</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	</div>
+		
+</div>
+
+<script th:src="@{js/jquery-3.2.1.min.js}"></script>
+<script th:src="@{styles/bootstrap-4.1.2/popper.js}"></script>
+<script th:src="@{styles/bootstrap-4.1.2/bootstrap.min.js}"></script>
+<script th:src="@{plugins/greensock/TweenMax.min.js}"></script>
+<script th:src="@{plugins/greensock/TimelineMax.min.js}"></script>
+<script th:src="@{plugins/scrollmagic/ScrollMagic.min.js}"></script>
+<script th:src="@{plugins/greensock/animation.gsap.min.js}"></script>
+<script th:src="@{plugins/greensock/ScrollToPlugin.min.js}"></script>
+<script th:src="@{plugins/easing/easing.js}"></script>
+<script th:src="@{plugins/parallax-js-master/parallax.min.js}"></script>
+<script th:src="@{js/checkout.js}"></script>
+</body>
+</html>

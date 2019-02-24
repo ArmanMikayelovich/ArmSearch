@@ -1,49 +1,52 @@
 package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.DeleteMapping;
-
+import org.springframework.web.bind.annotation.*;
 import project.exception.ResourceNotFoundException;
-import project.model.ImageEntity;
+import project.model.Image;
 import project.repository.ImageRepository;
+import project.service.ImageService;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+
+//TODO ANI ARMAN nayel telegrami grac@
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/items")
 public class ImageController {
     @Autowired
     ImageRepository imageRepository;
 
+    private final ImageService imageService;
 
-    // Create/Upload a new Image
-    @PostMapping("/images")
-    public ImageEntity createImage(@Valid @RequestBody ImageEntity imageEntity) {
-        return imageRepository.save(imageEntity);
+    public ImageController(ImageService imageService) {
+        this.imageService = imageService;
     }
 
-    // Get a Single Product // TODO ete mez petq lini mek producti bolor imagener@ berel apa es metod@ miqani angam kkanchvi
-    @GetMapping("/images/{id}")
-    public ImageEntity getImageById(@PathVariable(value = "id") Long imageId) {
-        return imageRepository.findById(imageId)
-                .orElseThrow(() -> new ResourceNotFoundException("Image", "id", imageId));
+
+    @RequestMapping(
+            value = "/itemImages",
+            produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET
+    )
+    public @ResponseBody
+    ResponseEntity<byte[]> getImageWithMediaType(@RequestParam(value="image") String imagePath, HttpServletResponse response) throws IOException {
+
+
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageService.getBytes(imagePath));
     }
 
 
     // Delete an Image
-    @DeleteMapping("/images/{id}")
+    @DeleteMapping("/static/images/{id}")
     public ResponseEntity<?> deleteImage(@PathVariable(value = "id") Long imageId) {
-        ImageEntity image = imageRepository.findById(imageId)
+        Image image = imageRepository.findById(imageId)
                 .orElseThrow(() -> new ResourceNotFoundException("Image", "id", imageId));
-        imageRepository.delete(image);
-
+        File file = new File(image.getFilePath());//
+        imageRepository.delete(image);            // TODO Arman check
+        file.delete();                            //
         return ResponseEntity.ok().build();
     }
 }

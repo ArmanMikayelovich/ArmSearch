@@ -1,57 +1,99 @@
 package project.controllers;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.*;
 
-import project.exception.ResourceNotFoundException;
-import project.model.CategoryEntity;
-import project.model.ProductEntity;
+import org.springframework.web.servlet.ModelAndView;
+import project.dto.CategoryDto;
+import project.model.Category;
+import project.model.User;
+import project.repository.CategoryGroupRepository;
+
 import project.repository.CategoryRepository;
+import project.service.CategoryGroupService;
+import project.service.CategoryService;
+import project.service.UserService;
 
-import javax.validation.Valid;
-import java.util.List;
+//TODO Arman u Ani es class@ dzevapoxel hamadzayn telegrami meji im grac 12.02.2019 00:34 /amboxjutyamb/
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping
 public class CategoryController {
     @Autowired
     CategoryRepository categoryRepository;
+    @Autowired
+    CategoryGroupRepository categoryGroupRepository;
 
-    // Get All Categories
-    @GetMapping("/categories")
-    public List<CategoryEntity> getAllCategories() {
+    private final CategoryService categoryService;
+    private final UserService userService;
 
-        return categoryRepository.findAll();
+    private final CategoryGroupService categoryGroupService;
+
+    public CategoryController(CategoryService categoryService, UserService userService, CategoryGroupService categoryGroupService) {
+        this.categoryService = categoryService;
+        this.userService = userService;
+        this.categoryGroupService = categoryGroupService;
     }
 
+    // Get All Categories
+/*    @GetMapping("/categories")
+    public ModelAndView getAllCategories() {
+        ModelAndView modelAndView = new ModelAndView("addCategory");
+        modelAndView.addObject("groups", categoryGroupRepository.findAll());
+
+        return modelAndView;
+    }*/
+
     // Create a new Category //TODO this must be accesible only for admins and delete
-    @PostMapping("/categories")
-    public CategoryEntity createCategory(@Valid @RequestBody CategoryEntity categoryEntity) {
-        return categoryRepository.save(categoryEntity);
+    @PostMapping(value = "/addCategory")
+
+    public Category createCategory( CategoryDto categoryDto) {
+
+        Category category;
+        category = categoryService.createCategory(categoryDto);
+
+        return categoryRepository.save(category);
     }
 
     // Get a Single category
     @GetMapping("/categories/{id}")
-    public CategoryEntity getCategoryById(@PathVariable(value = "id") Integer categoryId) {
-        return categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));
+    public ModelAndView getCategoryById(@PathVariable(value = "id") Integer categoryId) {
+        ModelAndView view = new ModelAndView("Category");
+        view.addObject("electronicsGroup", categoryGroupService.findByName("Electronics"));
+        view.addObject("realEstateGroup", categoryGroupService.findByName("Real Estate"));
+        view.addObject("vehiclesGroup", categoryGroupService.findByName("Vehicle"));
+        view.addObject("servicesGroup", categoryGroupService.findByName("Services"));
+        view.addObject("jobsGroup", categoryGroupService.findByName("Jobs"));
+        view.addObject("fashionGroup", categoryGroupService.findByName("Fashion"));
+        view.addObject("toolsAndMaterialsGroup", categoryGroupService.findByName("Tools and Materials"));
+        view.addObject("householdGroup", categoryGroupService.findByName("Household"));
+        view.addObject("forKidsGroup", categoryGroupService.findByName("For Kids"));
+        view.addObject("cultureAndHobbyGroup", categoryGroupService.findByName("Culture and Hobby"));
+        view.addObject("appliancesGroup", categoryGroupService.findByName("Appliances"));
+        view.addObject("everythinkElseGroup", categoryGroupService.findByName("Everythink Else"));
+        view.addObject( "itemList", categoryService.findById(categoryId).getItemList());
+        try{
+            User auth = userService.getAuthenticatedUser();
+            view.addObject("user", auth);
+
+        } catch (Exception e) {
+            User adminpage = userService.getUserById(1);
+            view.addObject("user", adminpage);
+
+        }
+        return view;
     }
 
-       // Delete a Category
-    @DeleteMapping("/categories/{id}")
-    public ResponseEntity<?> deleteCategory(@PathVariable(value = "id") Integer categoryId) {
-        CategoryEntity category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));
-        categoryRepository.delete(category);
 
+
+       // Delete a Category //TODO @PostMapping or @GetMapping for easy deleting from front-end...
+    @PostMapping("/deleteCategory/{id}")
+    public ResponseEntity<?> deleteCategory(@PathVariable(value = "id") Integer categoryId) {
+
+        categoryService.deleteCategory(categoryId);
         return ResponseEntity.ok().build();
     }
 }

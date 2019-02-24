@@ -1,0 +1,531 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="en">
+<head>
+<title>Home</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="Little Closet template">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" th:href="@{/styles/bootstrap-4.1.2/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/plugins/font-awesome-4.7.0/css/font-awesome.min.css}">
+<link rel="stylesheet" th:href="@{/plugins/OwlCarousel2-2.2.1/owl.carousel.css}">
+<link rel="stylesheet" th:href="@{/plugins/OwlCarousel2-2.2.1/owl.theme.default.css}">
+<link rel="stylesheet" th:href="@{/plugins/OwlCarousel2-2.2.1/animate.css}">
+<link rel="stylesheet" th:href="@{/styles/category.css}">
+<link rel="stylesheet" th:href="@{/styles/category_responsive.css}">
+	<!--<script>-->
+		<!--// function calc(){-->
+		<!--// 	document.getElementById("menu2").style.display = "block";-->
+		<!--// }-->
+	<!--</script>-->
+
+<style>
+
+	.drop {
+		display:inline;
+		/*position: relative*/
+	}
+	.content {
+		background-color: #FFFFFF;
+		padding:10px 12px;
+		/*position:absolute;*/
+		display:none
+	}
+	.drop:hover .content { /*mkniki reakcian*/
+		display:block;
+		cursor: pointer;
+	}
+	/*@import "bourbon";*/
+	.list {
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+
+		-webkit-flex-wrap: wrap;
+		-ms-flex-wrap: wrap;
+		flex-wrap: wrap;
+	}
+
+	.list--item {
+		width: 25%;
+		float: left;
+		padding: 10px;
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+	}
+
+
+	figcaption {
+		padding:6px 12px 12px;
+		font-size:12px;
+		color: #444444;
+	}
+	header, figcaption {
+		padding-left:25%;
+	}
+	header {
+		margin-top:12px;
+	}
+
+	.floater {
+		width:7%;
+		height:2%;
+		background:orange;
+		position: absolute;
+		left:0;
+	}
+
+	@media screen and (min-width: 1200px) {
+		.container { text-align:center;
+			width:100%;
+		}
+		.list--item {
+			width:20%;
+		}
+	}
+	@media screen and (max-width: 768px) {
+		.list--item {
+			width:33%;
+		}
+	}
+	@media screen and (max-width: 620px) {
+		.list--item {
+			width:50%;
+		}
+	}
+	@media screen and (max-width: 480px) {
+		.list--item {
+			width:100%;
+		}
+	}
+	.da-TBButton{ text-align:center;
+		color: #FFF;
+		background-color: #444444;
+		padding: 3%;
+		font-size: 12px;
+		text-decoration:none;
+		margin: 10%;
+		display: block;
+	}
+
+	/*Link button*/
+	nav{
+		width: 80px;
+		background: #444444;
+	}
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		background-color: #444444;
+		width: 100%;
+	}
+
+
+	li a, .dropbtn {
+		display: inline-block;
+		color: white;
+		text-align: center;
+		padding: 14px 16px;
+		text-decoration: none;
+	}
+	.dropbtn:hover{
+		text-decoration: none;
+		color: white;
+	}
+	li a:hover, .drop-menu:hover .dropbtn {
+		background-color: #444444;
+
+	}
+
+	li.drop-menu {
+		display: inline-block;
+	}
+
+	.dropdown-content {
+		display: none;
+		position: absolute;
+		background-color: #444444;
+		min-width: 80px;
+		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		z-index: 1;
+	}
+
+	.dropdown-content a {
+		color: black;
+		padding: 12px 16px;
+		text-decoration: none;
+		display:block;
+		text-align: left;
+	}
+
+	.dropdown-content a:hover {
+		background-color: #444444;
+		color:white;
+	}
+
+	.drop-menu:hover .dropdown-content {
+		display: block;
+	}
+</style>
+
+</head>
+<body>
+
+<div class="super_container">
+
+	<!-- Header -->
+
+	<header>
+		<!--<div class="header_overlay"></div>-->
+		<div class="header_content d-flex flex-row align-items-center justify-content-start">
+			<div align="left">
+				<ul align="left" class="d-flex flex-row align-items-start justify-content-start">
+					<div sec:authorize="isAuthenticated()">
+					<li class="block" style="float:left;"><a th:href="@{'/users/'+ ${user.id} }">My Account</a></li>
+					<li class="block" style="float:left;"><a th:href="@{/addItem}">+ Post to Classifieds</a></li>
+					<li class="block" style="float:left;"><a th:href="@{'/logout'}">Log Out</a></li>
+					</div>
+					<div sec:authorize="!isAuthenticated()">
+					<li class="block" style="float:left"><a th:href="@{'/login'}">Log In</a></li>
+					</div>
+					<div sec:authorize="hasRole('ADMIN')">
+						<li class="block" style="float:left;"><a th:href="@{'/admin'}">Admin</a></li>
+					</div>
+
+				</ul>
+			</div>
+			<div class="header_right d-flex flex-row align-items-center justify-content-start ml-auto">
+				<!-- Search -->
+				<div class="header_search">
+					<form action="/items" method="get" id="header_search_form">
+						<input  name="n" type="text" class="search_input" placeholder="Search Item" required="required">
+						<button class="header_search_button"><img th:src="@{/images/search.png}" alt=""></button>
+					</form>
+				</div>
+				<!-- User -->
+				<!--<div class="user"><a href="#"><div><img src="../static/images/user.svg" alt="https://www.flaticon.com/authors/freepik"><div>1</div></div></a></div>-->
+				<!-- Cart -->
+				<!--<div class="cart"><a href="cart.html"><div><img class="svg" src="../static/images/cart.svg" alt="https://www.flaticon.com/authors/freepik"></div></a></div>-->
+				<!-- Phone -->
+				<div class="header_phone d-flex flex-row align-items-center justify-content-start">
+					<div><div><img th:src="@{/images/phone.svg}" alt="https://www.flaticon.com/authors/freepik"></div></div>
+					<div>+1 912-252-7350</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<div class="super_container_inner">
+		<div class="super_overlay"></div>
+
+		<!-- Categories -->
+
+		<div class="home">
+			<div class="home_container d-flex flex-column align-items-center justify-content-end">
+				<div class="home_content text-center">
+					<div class="home_title">Categories</div>
+					<div>
+						<table width="100%" border="0" align="center"  class="container">
+							<tr>
+								<td >
+									<ul>
+										<li class="drop-menu">
+											<a href="#" class="dropbtn">Electronics<span class="caret"></span></a>
+											<div class="dropdown-content">
+												<a th:href="@{'/categories?catId='+${category.getId()}}" th:each="category : ${electronicsGroup.categories}">
+													<label th:utext="${category.getName()}">...</label>
+												</a>
+											</div>
+										</li>
+									</ul>
+								</td>
+								<td >
+									<ul>
+										<li class="drop-menu">
+											<a href="#" class="dropbtn">Real Estate<span class="caret"></span> </a>
+											<div class="dropdown-content">
+												<a th:href="@{'/categories?catId='+${category.getId()}}" th:each="category : ${realEstateGroup.categories}">
+													<label th:utext="${category.getName()}">...</label>
+												</a>
+											</div>
+										</li>
+									</ul>
+								</td>
+								<td >
+									<ul>
+										<li class="drop-menu">
+											<a href="#" class="dropbtn">Vehicles<span class="caret"></span> </a>
+											<div class="dropdown-content">
+												<a th:href="@{'/categories?catId='+${category.getId()}}" th:each="category : ${vehiclesGroup.categories}">
+													<label th:utext="${category.getName()}">...</label>
+												</a>
+											</div>
+										</li>
+									</ul>
+								</td>
+								<td >
+									<ul>
+										<li class="drop-menu">
+											<a href="#" class="dropbtn">Services<span class="caret"></span> </a>
+											<div class="dropdown-content">
+												<a th:href="@{'/categories?catId='+${category.getId()}}" th:each="category : ${servicesGroup.categories}">
+													<label th:utext="${category.getName()}">...</label>
+												</a>
+											</div>
+										</li>
+									</ul>
+								</td>
+								<td >
+									<ul>
+										<li class="drop-menu">
+											<a href="#" class="dropbtn">Jobs<span class="caret"></span> </a>
+											<div class="dropdown-content">
+												<a th:href="@{'/categories?catId='+${category.getId()}}" th:each="category : ${jobsGroup.categories}">
+													<label th:utext="${category.getName()}">...</label>
+												</a>
+											</div>
+										</li>
+									</ul>
+								</td>
+								<td >
+									<ul>
+										<li class="drop-menu">
+											<a href="#" class="dropbtn">Fashion<span class="caret"></span> </a>
+											<div class="dropdown-content">
+												<a th:href="@{'/categories?catId='+${category.getId()}}" th:each="category : ${fashionGroup.categories}">
+													<label th:utext="${category.getName()}">...</label>
+												</a>
+											</div>
+										</li>
+									</ul>
+								</td>
+								<td >
+									<ul>
+										<li class="drop-menu">
+											<a href="#" class="dropbtn">Tools and Materials<span class="caret"></span> </a>
+											<div class="dropdown-content">
+
+												<a th:href="@{'/categories?catId='+${category.getId()}}" th:each="category : ${toolsAndMaterialsGroup.categories}">
+													<label th:utext="${category.getName()}">...</label>
+												</a>
+											</div>
+										</li>
+									</ul>
+								</td>
+								<td >
+									<ul>
+										<li class="drop-menu">
+											<a href="#" class="dropbtn">Household<span class="caret"></span> </a>
+											<div class="dropdown-content">
+												<a th:href="@{'/categories?catId='+${category.getId()}}" th:each="category : ${householdGroup.categories}">
+													<label th:utext="${category.getName()}">...</label>
+												</a>
+											</div>
+										</li>
+									</ul>
+								</td>
+								<td >
+									<ul>
+										<li class="drop-menu">
+											<a href="#" class="dropbtn">For Kids<span class="caret"></span> </a>
+											<div class="dropdown-content">
+												<a th:href="@{'/categories?catId='+${category.getId()}}" th:each="category : ${forKidsGroup.categories}">
+													<label th:utext="${category.getName()}">...</label>
+												</a>
+											</div>
+										</li>
+									</ul>
+								</td>
+								<td >
+									<ul>
+										<li class="drop-menu">
+											<a href="#" class="dropbtn">Culture and Hobby<span class="caret"></span> </a>
+											<div class="dropdown-content">
+												<a th:href="@{'/categories?catId='+${category.getId()}}" th:each="category : ${cultureAndHobbyGroup.categories}">
+													<label th:utext="${category.getName()}">...</label>
+												</a>
+											</div>
+										</li>
+									</ul>
+								</td>
+								<td >
+									<ul>
+										<li class="drop-menu">
+											<a href="#" class="dropbtn">Appliances<span class="caret"></span> </a>
+											<div class="dropdown-content">
+												<a th:href="@{'/categories?catId='+${category.getId()}}" th:each="category : ${appliancesGroup.categories}">
+													<label th:utext="${category.getName()}">...</label>
+												</a>
+											</div>
+										</li>
+									</ul>
+								</td>
+								<td >
+									<ul>
+										<li class="drop-menu">
+											<a href="#" class="dropbtn">Everythink Else<span class="caret"></span> </a>
+											<div class="dropdown-content">
+												<a th:href="@{'/categories?catId='+${category.getId()}}" th:each="category : ${everythinkElseGroup.categories}">
+													<label th:utext="${category.getName()}">...</label>
+												</a>
+											</div>
+										</li>
+									</ul>
+								</td>
+
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Products -->
+
+		<div class="products">
+		</br>
+			<div class="container">
+				<div class="row products_row products_container grid">
+					<!-- Product -->
+					<div class="col-xl-4 col-md-6 grid-item new" th:each="item : ${randomItemList}">
+						<div class="product">
+							<div class="product_image"><img th:src="@{/images/product_1.jpg}" alt=""></div>
+							<div class="product_content">
+								<div class="product_info d-flex flex-row align-items-start justify-content-start">
+									<div>
+										<div>
+											<div class="product_name"><a th:href="@{'/items/'+ ${item.getId()}}" th:utext="${item.title}"></a></div>
+										</div>
+									</div>
+									<div class="ml-auto text-right">
+
+										<div class="product_price text-right" th:utext="${item.price} + '$'"><span></span></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="row page_nav_row">
+					<div class="col">
+						<div class="page_nav">
+							<ul class="d-flex flex-row align-items-start justify-content-center">
+								<li th:each="pageNumber : ${pageNumbers}">
+									<a th:href="@{/items(n=${n}, page=(${pageNumber}-1))}">[[${pageNumber}]]</a>
+								</li>
+								<!--<li><a href="#">02</a></li>-->
+								<!--<li><a href="#">03</a></li>-->
+								<!--<li><a href="#">04</a></li>-->
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+
+		<!-- Footer -->
+
+		<footer class="footer">
+			<div class="footer_content">
+				<div class="container">
+					<div class="row">
+
+						<!-- About -->
+						<div class="col-lg-4 footer_col">
+							<div class="footer_about">
+								<div class="footer_logo">
+									<a href="#">
+										<div class="d-flex flex-row align-items-center justify-content-start">
+											<div class="footer_logo_icon"><img th:src="@{/images/logo_2.png}" alt=""></div>
+											<div>ArmDesc</div>
+										</div>
+									</a>
+								</div>
+								<div class="footer_about_text">
+									<p>ArmDesc is the largest Armenian community and classifieds site for all types of goods, services and offers. The entire country knows, loves and uses ArmDesc.<br/>ArmDesc is free and easy to use.<br/>Good luck!</p>
+								</div>
+							</div>
+						</div>
+
+						<!-- Footer Links -->
+						<!--<div class="col-lg-4 footer_col">-->
+							<!--<div class="footer_menu">-->
+								<!--<div class="footer_title">Support</div>-->
+								<!--<ul class="footer_list">-->
+									<!--<li>-->
+										<!--<a href="#"><div>Customer Service<div class="footer_tag_1">online now</div></div></a>-->
+									<!--</li>-->
+									<!--<li>-->
+										<!--<a href="#"><div>Return Policy</div></a>-->
+									<!--</li>-->
+									<!--<li>-->
+										<!--<a href="#"><div>Size Guide<div class="footer_tag_2">recommended</div></div></a>-->
+									<!--</li>-->
+									<!--<li>-->
+										<!--<a href="#"><div>Terms and Conditions</div></a>-->
+									<!--</li>-->
+									<!--<li>-->
+										<!--<a href="#"><div>Contact</div></a>-->
+									<!--</li>-->
+								<!--</ul>-->
+							<!--</div>-->
+						<!--</div>-->
+
+						<!-- Footer Contact -->
+						<!--<div class="col-lg-4 footer_col">-->
+							<!--<div class="footer_contact">-->
+								<!--<div class="footer_title">Stay in Touch</div>-->
+								<!--<div class="newsletter">-->
+									<!--<form action="#" id="newsletter_form" class="newsletter_form">-->
+										<!--<input type="email" class="newsletter_input" placeholder="Subscribe to our Newsletter" required="required">-->
+										<!--<button class="newsletter_button">+</button>-->
+									<!--</form>-->
+								<!--</div>-->
+								<!--<div class="footer_social">-->
+									<!--<div class="footer_title">Social</div>-->
+									<!--<ul class="footer_social_list d-flex flex-row align-items-start justify-content-start">-->
+										<!--<li><a href="https://www.facebook.com/"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>-->
+										<!--&lt;!&ndash;<li><a href="#"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>&ndash;&gt;-->
+										<!--&lt;!&ndash;<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>&ndash;&gt;-->
+										<!--&lt;!&ndash;<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>&ndash;&gt;-->
+									<!--</ul>-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</div>-->
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+</div>
+
+<script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/styles/bootstrap-4.1.2/popper.js}"></script>
+<script th:src="@{/styles/bootstrap-4.1.2/bootstrap.min.js}"></script>
+<script th:src="@{/plugins/greensock/TweenMax.min.js}"></script>
+<script th:src="@{/plugins/greensock/TimelineMax.min.js}"></script>
+<script th:src="@{/plugins/scrollmagic/ScrollMagic.min.js}"></script>
+<script th:src="@{/plugins/greensock/animation.gsap.min.js}"></script>
+<script th:src="@{/plugins/greensock/ScrollToPlugin.min.js}"></script>
+<script th:src="@{/plugins/OwlCarousel2-2.2.1/owl.carousel.js}"></script>
+<script th:src="@{/plugins/easing/easing.js}"></script>
+<script th:src="@{/plugins/progressbar/progressbar.min.js}"></script>
+<script th:src="@{/plugins/parallax-js-master/parallax.min.js}"></script>
+<script th:src="@{/plugins/Isotope/isotope.pkgd.min.js}"></script>
+<script th:src="@{/plugins/Isotope/fitcolumns.js}"></script>
+<script th:src="@{/js/category.js}"></script>
+</body>
+</html>
