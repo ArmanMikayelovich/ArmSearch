@@ -1,6 +1,7 @@
 package project.controllers;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
@@ -38,8 +39,11 @@ public class UserController {
 //            headers = "application/x-www-form-urlencoded;charset=UTF-8",
 //            produces = "application/json")
     @GetMapping("/registration")
-    public ModelAndView getRegistrationPage(){
+    public ModelAndView getRegistrationPage(Authentication authentication){
         ModelAndView modelAndView = new ModelAndView("registration");
+        if (authentication!=null) {
+            return new ModelAndView("redirect:/users/"+userService.getAuthenticatedUser().getId());
+        }
         return modelAndView;
     }
 

@@ -89,10 +89,18 @@ public class ItemService {
     }
     @Transactional
     public void deleteItem(Long id) {
+        //TODO ADMIN OR CREATED USER
+
         Item item = itemRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
-        imageService.deleteAllImages(item);
-        itemRepository.delete(item);
+        //Check, is this logined user created or is admin
+        if (userService.getAuthenticatedUser() == item.getUser()
+                || userService.getAuthenticatedUser().getRoleName().equals("ADMIN")) {
+
+            imageService.deleteAllImages(item);
+            itemRepository.delete(item);
+        }
+
     }
     public void deleteItem(Item item) {
         imageService.deleteAllImages(item);

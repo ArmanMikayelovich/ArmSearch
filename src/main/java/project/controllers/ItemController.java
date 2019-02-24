@@ -65,12 +65,10 @@ public class ItemController {
     public void createItem(ItemDto itemDto, MultipartFile[] filesToUpload, HttpServletResponse response) {
                Item item =  itemService.addItem(itemDto,filesToUpload);
         try {
-             response.sendRedirect(item.getId().toString());
+             response.sendRedirect("/items/"+item.getId().toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //TODO REDIRECT TO CREATED ITEM'S PAGE, OK???
-        //test
 
     }
 
@@ -93,7 +91,7 @@ public class ItemController {
     }
 
     // Delete a Product
-    @DeleteMapping("/deleteItem{id}")
+    @DeleteMapping("/deleteItem/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable(value = "id") Long itemId) {
         itemService.deleteItem(itemId);
         return ResponseEntity.ok().build();

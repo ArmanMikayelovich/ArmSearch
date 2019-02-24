@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Admin panel</title>
 <style type="text/css">
     *,
     *::before,
@@ -419,35 +420,25 @@ $admin-header-height: 70px;
 <body><div class="admin">
     <header class="admin__header">
         <a href="#" class="logo">
-            <h1>GridAdmin</h1>
+            <h1>Admin Panel</h1>
         </a>
-        <div class="toolbar">
-            <button class="btn btn--primary">Add New Plumbus</button>
-            <a href="#" class="logout">
-                Log Out
-            </a>
-        </div>
+
     </header>
     <nav class="admin__nav">
         <ul class="menu">
             <li class="menu__item">
-                <a class="menu__link" href="#">Dashboard</a>
+                <a class="menu__link" th:href="@{/admin}">Main page</a>
             </li>
             <li class="menu__item">
-                <a class="menu__link" href="#">Sales</a>
+                <a class="menu__link" th:href="@{/admin/users}">Users</a>
             </li>
             <li class="menu__item">
-                <a class="menu__link" href="#">Campagins</a>
+                <a class="menu__link" th:href="@{/admin/items}">Items</a>
             </li>
             <li class="menu__item">
-                <a class="menu__link" href="#">Servers</a>
+                <a class="menu__link" th:href="@{/admin/categories}">Categories</a>
             </li>
-            <li class="menu__item">
-                <a class="menu__link" href="#">Foobars</a>
-            </li>
-            <li class="menu__item">
-                <a class="menu__link" href="#">Plumbuses</a>
-            </li>
+
         </ul>
     </nav>
     <main class="admin__main">
@@ -455,42 +446,38 @@ $admin-header-height: 70px;
         <div class="dashboard">
             <div class="dashboard__item">
                 <div class="card">
-                    <strong>41</strong> Foobars
+                    <strong th:utext="${usersCount}">777</strong> registered users.
                 </div>
             </div>
             <div class="dashboard__item">
                 <div class="card">
-                    <strong>81.712</strong> Doohickeys
+                    <strong th:utext="${categoriesCount}">666</strong> categories.
                 </div>
             </div>
-            <div class="dashboard__item dashboard__item--full">
+            <div class="dashboard__item">
                 <div class="card">
-                    <img src="https://imgs.xkcd.com/comics/decline.png" alt="" />
+                    <strong th:utext="${itemsCount}">65465</strong> items.
                 </div>
             </div>
-            <div class="dashboard__item dashboard__item--col">
-                <div class="card">A</div>
-            </div>
-            <div class="dashboard__item dashboard__item--col">
-                <div class="card">B</div>
-            </div>
-            <div class="dashboard__item dashboard__item--col">
-                <div class="card">C</div>
-            </div>
-            <div class="dashboard__item dashboard__item--col">
-                <div class="card">D</div>
-            </div>
+            <!--<div class="dashboard__item dashboard__item&#45;&#45;full">-->
+                <!--<div class="card">-->
+                    <!--<img src="https://imgs.xkcd.com/comics/decline.png" alt="" />-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class="dashboard__item dashboard__item&#45;&#45;col">-->
+                <!--<div class="card">D</div>-->
+            <!--</div>-->
         </div>
-        <p>read more about this in <a href="https://mxb.at/blog/css-grid-admin-dashboard/">this blogpost</a>.</p>
+
     </main>
     <footer class="admin__footer">
         <ul class="ticker">
-            <li class="ticker__item">BTC: +3.12%</li>
-            <li class="ticker__item">ETH: +1.29%</li>
-            <li class="ticker__item">XRP: -0.32%</li>
-            <li class="ticker__item">BCH: -2.82%</li>
-            <li class="ticker__item">EOS: +1.44%</li>
-            <li class="ticker__item">CSS: +13.37%</li>
+            <li class="ticker__item">CopyRight</li>
+            <li class="ticker__item">ArmDesk 2019</li>
+            <li class="ticker__item">   Ani Galajyan</li>
+            <li class="ticker__item">Arayik Gevorgyan</li>
+            <li class="ticker__item">Arman Arshakyan</li>
         </ul>
         <span>
       &copy; 2018 Grid Inc.
