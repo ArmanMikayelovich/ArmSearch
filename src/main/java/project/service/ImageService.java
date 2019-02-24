@@ -83,6 +83,11 @@ public class ImageService {
     @Transactional
     public void deleteAllImages(Item item) {
         deletedImagesPathService.saveDeletedImagesPathFromImageList(item.getImageList());
-        item.getImageList().forEach(imageRepository::delete);
+        item.getImageList().forEach(i-> imageRepository.delete(i));
+    }
+
+    public Long getCountOfImages() {
+
+        return imageRepository.count();
     }
 }

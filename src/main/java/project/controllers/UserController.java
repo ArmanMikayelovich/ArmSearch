@@ -113,10 +113,23 @@ public class UserController {
     }
 
     @PostMapping("/deleteUserFromAdminPanel")
-    public void deleteUserFromAdminPanel(Integer id) {
+    public void deleteUserFromAdminPanel(Integer id,HttpServletResponse response) {
         User admin = userService.getAuthenticatedUser();
         if (admin.getRoleName().equals("ADMIN")) {
             userService.deleteUserFromAdminPanel(id);
+            try {
+                response.sendRedirect("/admin/users");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            try {
+                response.sendRedirect("/404");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 

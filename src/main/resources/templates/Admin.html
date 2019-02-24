@@ -143,9 +143,6 @@ $admin-header-height: 70px;
     }
     }
 
-    // ===============================
-    // Demo stuff to make it look nice
-    // ===============================
 
     a {
         color: #dc5a60;
@@ -427,7 +424,7 @@ $admin-header-height: 70px;
     <nav class="admin__nav">
         <ul class="menu">
             <li class="menu__item">
-                <a class="menu__link" th:href="@{/admin}">Main page</a>
+                <a class="menu__link" th:href="@{/admin/main}">Main page</a>
             </li>
             <li class="menu__item">
                 <a class="menu__link" th:href="@{/admin/users}">Users</a>
@@ -457,6 +454,11 @@ $admin-header-height: 70px;
             <div class="dashboard__item">
                 <div class="card">
                     <strong th:utext="${itemsCount}">65465</strong> items.
+                </div>
+            </div>
+            <div class="dashboard__item">
+                <div class="card">
+                    <strong th:utext="${imgCount}">65465</strong> images.
                 </div>
             </div>
             <!--<div class="dashboard__item dashboard__item&#45;&#45;full">-->

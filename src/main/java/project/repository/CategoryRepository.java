@@ -6,4 +6,7 @@ import project.model.Category;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
+
+
+
 }

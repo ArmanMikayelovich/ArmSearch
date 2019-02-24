@@ -62,5 +62,10 @@ public class CategoryService {
         return view;
     }
 
+    public Long getCountofCategories() {
+
+        return categoryRepository.count();
+    }
+
 
 }

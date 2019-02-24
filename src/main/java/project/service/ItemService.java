@@ -115,5 +115,9 @@ public class ItemService {
 
     }
 
+    public Long getCountOfItems() {
+        return itemRepository.count();
+    }
+
 
 }
