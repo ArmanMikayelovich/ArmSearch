@@ -8,5 +8,6 @@ import project.model.Image;
 @Repository
 public interface ImageRepository extends JpaRepository<Image, Long> {
 
+
 }
 

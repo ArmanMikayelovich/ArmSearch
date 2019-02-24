@@ -105,6 +105,8 @@ public class ItemService {
     public void deleteItem(Item item) {
         imageService.deleteAllImages(item);
         itemRepository.delete(item);
+        itemRepository.flush();
+
     }
 
     public List<Item> getRamdomItems(int countOfItems) {

@@ -154,6 +154,11 @@
             height: auto;
         }
 
+        .button {
+            height: 20px;
+            weight: 160px;
+        }
+
         .logo {
             display: flex;
             flex: 0 0 $admin-nav-width;
@@ -449,7 +454,7 @@
                 <td>
                     <form method="post" th:action="@{/deleteUserFromAdminPanel}">
                             <input type="hidden" name="id" th:value="${user.getId()}">
-                        <button type="submit"></button>
+                        <button class="button"  value="X" type="submit"></button>
                     </form>
                 </td>
             </tr>

@@ -37,8 +37,8 @@ public class homePageController {
                 view.addObject("user", auth);
 
             } catch (Exception e) {
-                User adminpage = userService.getUserById(1);
-                view.addObject("user", adminpage);
+//                User adminpage = userService.getUserById(1);
+                view.addObject("user", new User());
 
 
             }

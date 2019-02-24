@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
 import javax.persistence.CascadeType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,5 +31,6 @@ public class CategoryGroup {
     private String name;
 
     @OneToMany(mappedBy = "categoryGroup", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Category> categories;
+    private List<Category> categories = new ArrayList<>();
+
 }

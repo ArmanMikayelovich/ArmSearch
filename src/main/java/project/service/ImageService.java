@@ -84,6 +84,8 @@ public class ImageService {
     public void deleteAllImages(Item item) {
         deletedImagesPathService.saveDeletedImagesPathFromImageList(item.getImageList());
         item.getImageList().forEach(i-> imageRepository.delete(i));
+        imageRepository.flush();
+
     }
 
     public Long getCountOfImages() {

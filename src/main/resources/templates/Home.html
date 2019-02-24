@@ -195,6 +195,7 @@
 						<li class="block" style="float:left;"><a th:href="@{'/admin/main'}">Admin</a></li>
 					</div>
 
+
 				</ul>
 			</div>
 			<div class="header_right d-flex flex-row align-items-center justify-content-start ml-auto">
@@ -245,7 +246,7 @@
 								<td >
 									<ul>
 										<li class="drop-menu">
-											<a th:href="@{/home/categoryGroupId}" class="dropbtn">Real Estate<span class="caret"></span> </a>
+											<a th:href="@{/home/}" class="dropbtn">Real Estate<span class="caret"></span> </a>
 											<div class="dropdown-content">
 												<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${realEstateGroup.categories}">
 													<label th:utext="${category.getName()}">...</label>

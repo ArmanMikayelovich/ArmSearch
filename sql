@@ -1,5 +1,5 @@
 insert into category_group (name) values ('Electronics');
-insert into category_group (name) values ('Read Estate');
+insert into category_group (name) values ('Real Estate');
 insert into category_group (name) values ('Vehicle');
 insert into category_group (name) values ('Services');
 insert into category_group (name) values ('Jobs');

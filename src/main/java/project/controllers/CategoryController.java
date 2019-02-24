@@ -34,8 +34,7 @@ public class CategoryController {
     private final UserService userService;
 
     private final CategoryGroupService categoryGroupService;
-
-    public CategoryController(CategoryService categoryService, UserService userService, CategoryGroupService categoryGroupService) {
+ public CategoryController(CategoryService categoryService, UserService userService, CategoryGroupService categoryGroupService) {
         this.categoryService = categoryService;
         this.userService = userService;
         this.categoryGroupService = categoryGroupService;

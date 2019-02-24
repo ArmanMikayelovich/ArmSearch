@@ -42,7 +42,7 @@ public class UserController {
     public ModelAndView getRegistrationPage(Authentication authentication){
         ModelAndView modelAndView = new ModelAndView("registration");
         if (authentication!=null) {
-            return new ModelAndView("redirect:/users/"+userService.getAuthenticatedUser().getId());
+//            return new ModelAndView("redirect:/users/"+userService.getAuthenticatedUser().getId());
         }
         return modelAndView;
     }

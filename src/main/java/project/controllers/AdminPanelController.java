@@ -25,7 +25,7 @@ public class AdminPanelController {
         this.imageService = imageService;
     }
 
-    @GetMapping("/main")
+    @GetMapping(value = {"/main","/"})
     public ModelAndView getAdminPanel() {
 
 

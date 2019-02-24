@@ -126,9 +126,9 @@ public class UserService  {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
         user.getItemList()
-                .forEach(i->itemService.deleteItem(i));
-
+                .forEach(itemService::deleteItem);
         userRepository.delete(user);
+        userRepository.flush();
     }
     public Long getCountOfUsers() {
         return userRepository.count();

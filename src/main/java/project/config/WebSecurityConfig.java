@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/addCategory",
                "/deleteCategory/*","/users" ).access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/addItem","/updateItem","/updateUser","changePassword","deleteUser"
-                ).access("hasRole('ROLE_USER')")
+                ).authenticated()
                 .and().authorizeRequests().and().exceptionHandling().accessDeniedPage("/403").and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
                 .invalidateHttpSession(true)

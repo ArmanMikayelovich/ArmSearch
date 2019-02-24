@@ -40,6 +40,5 @@ public class Category {
     private List<Item> itemList;
 
     @ManyToOne
-    @JoinColumn(name = "categoryGroup_id")
     private CategoryGroup categoryGroup;
 }
