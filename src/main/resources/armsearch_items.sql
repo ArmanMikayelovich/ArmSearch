@@ -1,0 +1,8 @@
+iNSERT INTO armdesk.items (id, created_at, description, price, title, updated_at, category_id, user_id) VALUES (1, '2019-02-23 15:51:09', 'mihat ban', 1000, 'apranq', '2019-02-23 15:53:07', 1, 1);
+INSERT INTO armdesk.items (id, created_at, description, price, title, updated_at, category_id, user_id) VALUES (2, '2019-02-23 15:51:13', 'erkuhat ban', 1000, 'apranq', '2019-02-23 15:53:09', 1, 1);
+INSERT INTO armdesk.items (id, created_at, description, price, title, updated_at, category_id, user_id) VALUES (3, '2019-02-23 15:51:15', 'ireqat ban', 2000, 'mashna', '2019-02-23 15:53:10', 2, 1);
+INSERT INTO armdesk.items (id, created_at, description, price, title, updated_at, category_id, user_id) VALUES (4, '2019-02-23 15:51:17', 'erkuhat ban', 1500, 'ak', '2019-02-23 15:53:12', 2, 1);
+INSERT INTO armdesk.items (id, created_at, description, price, title, updated_at, category_id, user_id) VALUES (5, '2019-02-23 15:51:18', 'mihat ban', 1000, 'chm', '2019-02-23 15:53:13', 1, 1);
+INSERT INTO armdesk.items (id, created_at, description, price, title, updated_at, category_id, user_id) VALUES (6, '2019-02-23 15:52:00', 'mek', 1200, 'erku', '2019-02-23 15:53:14', 2, 1);
+INSERT INTO armdesk.items (id, created_at, description, price, title, updated_at, category_id, user_id) VALUES (7, '2019-02-23 15:52:02', 'erku', 1520, 'mek', '2019-02-23 15:53:16', 1, 1);
+INSERT INTO armdesk.items (id, created_at, description, price, title, updated_at, category_id, user_id) VALUES (8, '2019-02-23 15:52:04', 'mek', 1000, 'mek', '2019-02-23 15:53:18', 2, 1);

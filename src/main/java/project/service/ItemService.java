@@ -115,6 +115,9 @@ public class ItemService {
 
     }
 
+    public void save(Item item){
+        itemRepository.save(item);
+    }
 
     public Page<Item> findAllByTitleOrDescription(String titleOrDescription, Pageable pageable){
 

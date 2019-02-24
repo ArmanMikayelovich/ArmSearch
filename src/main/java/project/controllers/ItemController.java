@@ -25,23 +25,28 @@ import project.repository.ItemRepository;
 import project.repository.UserRepository;
 import project.service.ImageService;
 import project.service.ItemService;
+import project.service.UserService;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.*;
+import java.security.Principal;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @RestController
 @RequestMapping
 public class ItemController {
-    @Autowired
-    ItemRepository itemRepository;
+
+    private Set<User> users=new HashSet<>();
+
     @Autowired
     CategoryRepository categoryRepository;
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
     @Autowired
     ImageRepository imageRepository;
     @Autowired
@@ -96,7 +101,16 @@ public class ItemController {
 
     // Get a Single Product
     @GetMapping("/items/{id}")
-    public ModelAndView getItemById(@PathVariable(value = "id") Long itemId) {
+    public ModelAndView getItemById(@PathVariable(value = "id") Long itemId, Principal  principal) {
+
+            Item item=itemService.findById(itemId);
+            long l=item.getCountOfViews();
+            l++;
+            item.setCountOfViews(l);
+            itemService.save(item);
+
+
+
         ModelAndView modelAndView = new ModelAndView("item");
         modelAndView.addObject("item", itemService.findById(itemId));
         modelAndView.addObject("dir", System.getProperty("user.dir"));

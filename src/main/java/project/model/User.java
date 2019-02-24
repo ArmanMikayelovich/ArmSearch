@@ -20,6 +20,7 @@ import javax.persistence.Index;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -79,4 +80,24 @@ public class User  {
     @Column(nullable = false,length = 32)
     private String roleName = "USER";
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(phoneNumber, user.phoneNumber) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(itemList, user.itemList) &&
+                Objects.equals(roleName, user.roleName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, email, phoneNumber, password, itemList, roleName);
+    }
 }
