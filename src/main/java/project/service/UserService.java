@@ -1,15 +1,11 @@
 package project.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import project.dto.UserDto;
 import project.exception.ResourceNotFoundException;
 import project.model.User;
+import project.repository.ImageRepository;
+import project.repository.ItemRepository;
 import project.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -32,6 +30,9 @@ import java.util.Optional;
 public class UserService  {
 
     private final UserRepository userRepository;
+    private final ItemRepository itemRepository;
+    private final ImageRepository imageRepository;
+    private final DeletedImagesPathService deletedImagesPathService;
     @Autowired
     private  ItemService itemService;
 
@@ -46,9 +47,12 @@ public class UserService  {
 //        this.itemService = itemService;
 //    }
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, ItemRepository itemRepository, ImageRepository imageRepository, DeletedImagesPathService deletedImagesPathService) {
 
         this.userRepository = userRepository;
+        this.itemRepository = itemRepository;
+        this.imageRepository = imageRepository;
+        this.deletedImagesPathService = deletedImagesPathService;
     }
 
 
@@ -163,13 +167,19 @@ public class UserService  {
 
     }
 
+    @Transactional
     public void deleteUserFromAdminPanel(int  id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
         user.getItemList()
-                .forEach(itemService::deleteItem);
+                .forEach(item -> {
+                    deletedImagesPathService.saveDeletedImagesPathFromImageList(item.getImageList());
+                    item.getImageList().forEach(img -> {
+                        imageRepository.delete(img);
+                    });
+                });
+//        userRepository.deleteById(id);
         userRepository.delete(user);
-        userRepository.flush();
     }
     public Long getCountOfUsers() {
         return userRepository.count();

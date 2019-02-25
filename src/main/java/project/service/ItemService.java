@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import project.dto.ItemDto;
@@ -58,10 +59,15 @@ public class ItemService {
         Category category = categoryService.findById(itemDto.getCategoryId());
         item.setCategory(category);
 
-//        User user = userService.getAuthenticatedUser();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User)auth.getPrincipal();
-        User user = userRepository.findByEmail(springUser.getUsername());
+        User user = null;
+        try {
+            user = userService.getAuthenticatedUser();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User)auth.getPrincipal();
+//        User user = userRepository.findByEmail(springUser.getUsername());
         item.setUser(user);
         itemRepository.save(item);
         int images_count = 0;
@@ -96,14 +102,14 @@ public class ItemService {
     }
 
     @Transactional
-    public void deleteItem(Long id) throws Exception {
-
+    public void deleteItem(Long id) /*throws Exception*/ {
+        User user = this.getAuthenticatedUser();
 
         Item item = itemRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
         //Check, is this logined user created or is admin
-        if (userService.getAuthenticatedUser() == item.getUser()
-                || userService.getAuthenticatedUser().getRoleName().equals("ADMIN")) {
+        if (user == item.getUser()
+                || user.getRoleName().equals("ADMIN")) {
 
             imageService.deleteAllImages(item);
             itemRepository.save(item);
@@ -111,17 +117,13 @@ public class ItemService {
         }
 
     }
+
     public void deleteItem(Item item) {
         imageService.deleteAllImages(item);
-        itemRepository.save(item);
+//        itemRepository.save(item);
         itemRepository.delete(item);
-        itemRepository.flush();
 
     }
-
-
-
-
 
     public List<Item> getRandomItems(){
         return itemRepository.getRandomItems();
@@ -153,6 +155,14 @@ public class ItemService {
     public Page<Item> findAllByCategory(Integer catId, Pageable pageable){
         Category category = categoryService.findById(catId);
         return itemRepository.findAllByCategory(category, pageable);
+    }
+
+    private User getAuthenticatedUser() {
+        try {
+            return userService.getAuthenticatedUser();
+        } catch (Exception e) {
+            throw new IllegalStateException("No logged in user");
+        }
     }
 
 }

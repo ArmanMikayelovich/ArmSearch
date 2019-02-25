@@ -59,7 +59,7 @@ public class Item {
     private Double price;
 
     @Column(name = "count_of_views",columnDefinition = "bigint default 0")
-    private Long countOfViews= Long.valueOf(0);
+    private Long countOfViews= 0L;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -75,9 +75,11 @@ public class Item {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "item",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "item",fetch = FetchType.EAGER)
     private List<Image> imageList = new ArrayList<>();
+
 }

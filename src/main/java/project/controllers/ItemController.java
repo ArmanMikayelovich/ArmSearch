@@ -82,6 +82,8 @@ public class ItemController {
     public ModelAndView getItemById(@PathVariable(value = "id") Long itemId, Principal principal) {
 
         Item item=itemService.findById(itemId);
+
+        //TODO move everything from here
         long l;
         try {
              l = item.getCountOfViews();
@@ -92,6 +94,8 @@ public class ItemController {
       l++;
         item.setCountOfViews(l);
         itemService.save(item);
+        //TODO to here to itemService get method
+
         ModelAndView modelAndView = new ModelAndView("item");
         modelAndView.addObject("item", itemService.findById(itemId));
         modelAndView.addObject("dir", System.getProperty("user.dir"));
