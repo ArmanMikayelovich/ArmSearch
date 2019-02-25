@@ -1,9 +1,6 @@
 package project.controllers;
 
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,12 +18,15 @@ import project.repository.ItemRepository;
 import project.repository.UserRepository;
 import project.service.ImageService;
 import project.service.ItemService;
+import project.service.UserService;
+import project.service.CategoryGroupService;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.*;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.security.Principal;
 
 @RestController
 @RequestMapping
@@ -65,17 +65,25 @@ public class ItemController {
     public void createItem(ItemDto itemDto, MultipartFile[] filesToUpload, HttpServletResponse response) {
                Item item =  itemService.addItem(itemDto,filesToUpload);
         try {
-             response.sendRedirect("/items/"+item.getId().toString());
+            String url = "/items/" + item.getId().toString();
+             response.sendRedirect(url);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
     }
 
 
     // Get a Single Product
     @GetMapping("/items/{id}")
-    public ModelAndView getItemById(@PathVariable(value = "id") Long itemId) {
+    public ModelAndView getItemById(@PathVariable(value = "id") Long itemId, Principal principal) {
+
+        Item item=itemService.findById(itemId);
+        long l=item.getCountOfViews();
+        l++;
+        item.setCountOfViews(l);
+        itemService.save(item);
         ModelAndView modelAndView = new ModelAndView("item");
         modelAndView.addObject("item", itemService.findById(itemId));
         modelAndView.addObject("dir", System.getProperty("user.dir"));
@@ -92,7 +100,7 @@ public class ItemController {
 
     // Delete a Product
     @DeleteMapping("/deleteItem/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable(value = "id") Long itemId) {
+    public ResponseEntity<?> deleteItem(@PathVariable(value = "id") Long itemId) {
         itemService.deleteItem(itemId);
         return ResponseEntity.ok().build();
     }

@@ -20,8 +20,6 @@ import project.service.UserService;
 
 import java.util.List;
 
-//TODO Arman u Ani es class@ dzevapoxel hamadzayn telegrami meji im grac 12.02.2019 00:34 /amboxjutyamb/
-
 @RestController
 @RequestMapping
 public class CategoryController {
@@ -67,11 +65,11 @@ public class CategoryController {
         categoryService.getCategoriesWithTheirGroups(view);
         view.addObject("itemList", categoryService.findById(categoryId).getItemList());
         try {
-            User auth = userService.getAuthenticatedUser();
+            User.User auth = userService.getAuthenticatedUser();
             view.addObject("user", auth);
 
         } catch (Exception e) {
-            User adminpage = userService.getUserById(1);
+            User.User adminpage = userService.getUserById(1);
             view.addObject("user", adminpage);
 
         }

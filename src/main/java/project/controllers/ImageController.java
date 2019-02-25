@@ -40,7 +40,7 @@ public class ImageController {
 
 
     // Delete an Image
-    @DeleteMapping("/images/{id}")
+    @DeleteMapping("/static/images/{id}")
     public ResponseEntity<?> deleteImage(@PathVariable(value = "id") Long imageId) {
         Image image = imageRepository.findById(imageId)
                 .orElseThrow(() -> new ResourceNotFoundException("Image", "id", imageId));

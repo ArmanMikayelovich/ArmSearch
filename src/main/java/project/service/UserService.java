@@ -1,15 +1,21 @@
 package project.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import project.dto.UserDto;
 import project.exception.ResourceNotFoundException;
 import project.model.User;
 import project.repository.UserRepository;
@@ -19,10 +25,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
+
+
+
 @Service
 public class UserService  {
-    @Autowired
-    private  UserRepository userRepository;
+
+    private final UserRepository userRepository;
     @Autowired
     private  ItemService itemService;
 
@@ -30,17 +39,27 @@ public class UserService  {
         return new BCryptPasswordEncoder();
 
     }
+
 //    public UserService(UserRepository userRepository, ItemService itemService) {
 //
 //        this.userRepository = userRepository;
 //        this.itemService = itemService;
 //    }
 
+    public UserService(UserRepository userRepository) {
+
+        this.userRepository = userRepository;
+    }
+
+
     public User getAuthenticatedUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
 
+
         return userRepository.findByEmail(springUser.getUsername());
+
+
     }
     @Transactional
     public void saveUser(User user) {
@@ -62,7 +81,9 @@ public class UserService  {
 
     }
     @Transactional
-    public void updateUser(User userDetails) {
+
+    public void updateUser(UserDto userDetails) {
+
 
         User user = getAuthenticatedUser();
         if (userDetails.getFirstName() != null) {
@@ -71,10 +92,12 @@ public class UserService  {
         if (userDetails.getLastName() != null) {
             user.setLastName(userDetails.getLastName());
         }
+
         if (userDetails.getEmail() != null) {
             user.setEmail(userDetails.getEmail());
 
         }
+
         if (userDetails.getPhoneNumber() != null) {
             user.setPhoneNumber(userDetails.getPhoneNumber());
 
@@ -114,6 +137,7 @@ public class UserService  {
     public boolean changePassword(String oldPassword, String newPassword) {
         User user = getAuthenticatedUser();
         if (passwordEncoder().matches(oldPassword, user.getPassword())) {
+
             user.setPassword(passwordEncoder().encode(newPassword));
             userRepository.save(user);
 
@@ -138,5 +162,6 @@ public class UserService  {
     public List<User> getAllUsers() {
        return userRepository.findAll();
     }
+
 
 }

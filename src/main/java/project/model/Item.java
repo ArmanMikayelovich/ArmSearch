@@ -58,6 +58,9 @@ public class Item {
     @Column(name = "price", nullable = false)
     private Double price;
 
+    @Column(name = "count_of_views",columnDefinition = "bigint default 0")
+    private Long countOfViews;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreatedDate
@@ -77,5 +80,4 @@ public class Item {
 
     @OneToMany(mappedBy = "item",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> imageList = new ArrayList<>();
-    //TODO ARO user ջնջելու հետ նաև ջնջել բոլոր նկարները fileSYstemի
 }
