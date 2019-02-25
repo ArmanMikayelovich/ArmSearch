@@ -44,6 +44,7 @@ public class homePageController {
         ModelAndView view = new ModelAndView("Home");
         view = categoryService.getCategoriesWithTheirGroups(view);
          view= getAllHomePageFunctions(view, catId,n, page);
+         return view;
     }
 
     public ModelAndView getAllHomePageFunctions(ModelAndView view,Integer catId,String n,Pageable page) {
