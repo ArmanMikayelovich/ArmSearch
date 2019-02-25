@@ -76,11 +76,15 @@ public class homePageController {
             view.addObject("user", auth);
 
         } catch (Exception e) {
-            User adminpage = userService.getUserById(1);
-            view.addObject("user", adminpage);
+           User user = new User(); user.setId(1);
+            view.addObject("user", user);
 
         }
-        view.addObject("user", userService.getAuthenticatedUser());
+        try {
+            view.addObject("user", userService.getAuthenticatedUser());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return view;
     }
 

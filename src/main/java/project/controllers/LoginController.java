@@ -1,6 +1,5 @@
 package project.controllers;
 
-<<<<<<< HEAD
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -11,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import project.service.UserService;
 
 import java.security.Principal;
-=======
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,7 +26,6 @@ import project.model.User;
 import project.service.UserService;
 
 import java.util.HashSet;
->>>>>>> Ani
 
 @RestController
 @RequestMapping
@@ -43,10 +41,14 @@ public class LoginController {
 
 
     @GetMapping("/login")
-    public ModelAndView getLoginPage(Principal authentication) {
+    public ModelAndView getLoginPage(Principal authentication)  {
         ModelAndView modelAndView = new ModelAndView("login");
-        if (authentication!=null) {
-            return new ModelAndView("redirect:/users/"+userService.getAuthenticatedUser().getId());
+        try {
+            if (authentication != null) {
+                return new ModelAndView("redirect:/users/" + userService.getAuthenticatedUser().getId());
+            }
+        } catch (Exception e) {
+
         }
         return modelAndView;
     }

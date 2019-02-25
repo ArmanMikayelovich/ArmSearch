@@ -1,5 +1,6 @@
 package project.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
@@ -21,15 +22,16 @@ import java.util.List;
 @Service
 public class ItemService {
     private final ItemRepository itemRepository;
-    private final CategoryService categoryService;
+    @Autowired
+    private  CategoryService categoryService;
     private final UserRepository userRepository;
 //    private final UserService userService;
     private final ImageService imageService;
     private final UserService userService;
-    public ItemService(ItemRepository itemRepository, CategoryService categoryService,
+    public ItemService(ItemRepository itemRepository,
                        UserRepository userRepository, ImageService imageService, UserService userService) {
         this.itemRepository = itemRepository;
-        this.categoryService = categoryService;
+
         this.userRepository = userRepository;
 //        this.userService = userService;
         this.imageService = imageService;
@@ -94,7 +96,7 @@ public class ItemService {
     }
 
     @Transactional
-    public void deleteItem(Long id) {
+    public void deleteItem(Long id) throws Exception {
 
 
         Item item = itemRepository.findById(id)
@@ -139,9 +141,7 @@ public class ItemService {
         return  allByTitleOrDescription;
     }
 
-    public List<Item> getRandomItems(){
-        return itemRepository.getRandomItems();
-    }
+
 
     public void save(Item item){
         itemRepository.save(item);

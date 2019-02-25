@@ -2,6 +2,7 @@ package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import project.dto.UserDto;
 import project.exception.ResourceNotFoundException;
 import project.model.User;
+import project.repository.UserRepository;
 import project.service.UserService;
 
 import javax.jws.WebParam;
@@ -25,16 +27,14 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    UserService userService;
 
     // Get All Users
     @GetMapping("/users")
     public ModelAndView getAllUsers() {
         ModelAndView modelAndView = new ModelAndView("registerUser");
-            modelAndView.addObject("users",userService.findAll());
-        return modelAndView;
-    public ModelAndView getAllUsers() {
-        ModelAndView modelAndView = new ModelAndView("registerUser");
-            modelAndView.addObject("users",userService.findAll());
+        modelAndView.addObject("users", userService.findAll());
         return modelAndView;
     }
     /////////
@@ -89,9 +89,14 @@ public class UserController {
     /**
         * vercnel useri tvyalnery u dnel useri mej
      */
-    public User updateUser(@Valid User user) {
+    public void updateUser(@Valid UserDto user,HttpServletResponse response) {
         userService.updateUser(user);
-        return user;
+        try {
+            response.sendRedirect("/users/" + userService.getAuthenticatedUser().getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @PostMapping("/changePassword")
@@ -107,17 +112,17 @@ public class UserController {
     // Delete a User
     @PostMapping("/deleteUser")
     public void deleteUser(String password,HttpServletResponse response)  {
-        User user = userService.getAuthenticatedUser();
-        userService.deleteUser(password);
         try {
+            User user = userService.getAuthenticatedUser();
+            userService.deleteUser(password);
             response.sendRedirect("/logout");
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @PostMapping("/deleteUserFromAdminPanel")
-    public void deleteUserFromAdminPanel(Integer id,HttpServletResponse response) {
+    public void deleteUserFromAdminPanel(Integer id,HttpServletResponse response) throws Exception {
         User admin = userService.getAuthenticatedUser();
         if (admin.getRoleName().equals("ADMIN")) {
             userService.deleteUserFromAdminPanel(id);

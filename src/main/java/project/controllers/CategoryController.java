@@ -65,11 +65,11 @@ public class CategoryController {
         categoryService.getCategoriesWithTheirGroups(view);
         view.addObject("itemList", categoryService.findById(categoryId).getItemList());
         try {
-            User.User auth = userService.getAuthenticatedUser();
+            User auth = userService.getAuthenticatedUser();
             view.addObject("user", auth);
 
         } catch (Exception e) {
-            User.User adminpage = userService.getUserById(1);
+            User adminpage = userService.getUserById(1);
             view.addObject("user", adminpage);
 
         }

@@ -52,9 +52,10 @@ public class UserService  {
     }
 
 
-    public User getAuthenticatedUser() {
+    public User getAuthenticatedUser() throws Exception{
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
+        org.springframework.security.core.userdetails.User springUser
+                = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
 
 
         return userRepository.findByEmail(springUser.getUsername());
@@ -85,7 +86,12 @@ public class UserService  {
     public void updateUser(UserDto userDetails) {
 
 
-        User user = getAuthenticatedUser();
+        User user = null;
+        try {
+            user = getAuthenticatedUser();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (userDetails.getFirstName() != null) {
             user.setFirstName(userDetails.getFirstName());
         }
@@ -107,7 +113,12 @@ public class UserService  {
 
     @Transactional
     public void deleteUser(String password) {
-        User user = getAuthenticatedUser();
+        User user = null;
+        try {
+            user = getAuthenticatedUser();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (passwordEncoder().matches(password, user.getPassword())) {
             user.getItemList().forEach(itemService::deleteItem);
@@ -135,7 +146,12 @@ public class UserService  {
     }
     @Transactional
     public boolean changePassword(String oldPassword, String newPassword) {
-        User user = getAuthenticatedUser();
+        User user = null;
+        try {
+            user = getAuthenticatedUser();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (passwordEncoder().matches(oldPassword, user.getPassword())) {
 
             user.setPassword(passwordEncoder().encode(newPassword));

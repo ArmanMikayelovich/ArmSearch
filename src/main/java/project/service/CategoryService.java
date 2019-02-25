@@ -1,5 +1,6 @@
 package project.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,8 +13,8 @@ import project.repository.CategoryRepository;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final UserService userService;
-
-    private final ItemService itemService;
+    @Autowired
+    private  ItemService itemService;
 
     private final CategoryGroupService categoryGroupService;
 

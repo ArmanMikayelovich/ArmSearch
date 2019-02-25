@@ -100,7 +100,7 @@ public class ItemController {
 
     // Delete a Product
     @DeleteMapping("/deleteItem/{id}")
-    public ResponseEntity<?> deleteItem(@PathVariable(value = "id") Long itemId) {
+    public ResponseEntity<?> deleteItem(@PathVariable(value = "id") Long itemId) throws Exception {
         itemService.deleteItem(itemId);
         return ResponseEntity.ok().build();
     }
