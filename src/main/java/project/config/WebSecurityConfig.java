@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and().authorizeRequests()
                 .antMatchers("/addCategory",
-               "/deleteCategory/*","/users" ).access("hasRole('ROLE_ADMIN')")
+               "/deleteCategory/*","/users" ,"/admin/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/addItem","/updateItem","/updateUser","changePassword","deleteUser"
                 ).authenticated()
                 .and().authorizeRequests().and().exceptionHandling().accessDeniedPage("/403").and()

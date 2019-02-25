@@ -106,12 +106,14 @@ public class ItemService {
                 || userService.getAuthenticatedUser().getRoleName().equals("ADMIN")) {
 
             imageService.deleteAllImages(item);
+            itemRepository.save(item);
             itemRepository.delete(item);
         }
 
     }
     public void deleteItem(Item item) {
         imageService.deleteAllImages(item);
+        itemRepository.save(item);
         itemRepository.delete(item);
         itemRepository.flush();
 

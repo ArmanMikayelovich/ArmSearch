@@ -456,7 +456,8 @@
 								<!--</ul>-->
 							<!--</div>-->
 							<div class="product_text" th:utext="${item.description}">
-								<!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec consequat lorem. Maecenas elementum at diam consequat bibendum. Mauris iaculis fringilla ex, sit amet semper libero facilisis sit amet. Nunc ut aliquet metus. Praesent pulvinar justo sed velit tempus bibendum. Quisque dictum lorem id mi viverra, in auctor justo laoreet. Nam at massa malesuada, ullamcorper metus vel, consequat risus. Phasellus ultricies velit vel accumsan porta.</p>-->
+							</div>
+							<div class="product_text" th:utext="'Count of views: ' + ${item.countOfViews}">
 							</div></br>
 							<div class="product-text">Contacts:</br>
 								<a th:href="@{'/user/'+ ${item.getUser().getId()}}" th:utext="${item.getUser().getFirstName()} + ' ' + ${item.getUser().getLastName()}" ></a><br/>

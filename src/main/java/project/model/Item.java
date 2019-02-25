@@ -59,7 +59,7 @@ public class Item {
     private Double price;
 
     @Column(name = "count_of_views",columnDefinition = "bigint default 0")
-    private Long countOfViews;
+    private Long countOfViews= Long.valueOf(0);
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)

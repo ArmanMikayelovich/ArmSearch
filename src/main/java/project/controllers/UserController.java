@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping()
 public class UserController {
 
     @Autowired
@@ -37,10 +37,7 @@ public class UserController {
         modelAndView.addObject("users", userService.findAll());
         return modelAndView;
     }
-    /////////
-//    @PostMapping(path = "/users",  consumes = { MediaType.APPLICATION_JSON_VALUE },
-//            headers = "application/x-www-form-urlencoded;charset=UTF-8",
-//            produces = "application/json")
+
     @GetMapping("/registration")
     public ModelAndView getRegistrationPage(Authentication authentication){
         ModelAndView modelAndView = new ModelAndView("registration");

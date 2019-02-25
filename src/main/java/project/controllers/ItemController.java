@@ -43,6 +43,8 @@ public class ItemController {
     private final ItemService itemService;
     @Autowired
     ImageService imageService;
+    @Autowired
+    private UserService userService;
 
     public ItemController(ItemService itemService) {
         this.itemService = itemService;
@@ -80,8 +82,14 @@ public class ItemController {
     public ModelAndView getItemById(@PathVariable(value = "id") Long itemId, Principal principal) {
 
         Item item=itemService.findById(itemId);
-        long l=item.getCountOfViews();
-        l++;
+        long l;
+        try {
+             l = item.getCountOfViews();
+        } catch (Exception e) {
+             l=0L;
+
+        }
+      l++;
         item.setCountOfViews(l);
         itemService.save(item);
         ModelAndView modelAndView = new ModelAndView("item");
@@ -99,10 +107,15 @@ public class ItemController {
     }
 
     // Delete a Product
-    @DeleteMapping("/deleteItem/{id}")
-    public ResponseEntity<?> deleteItem(@PathVariable(value = "id") Long itemId) throws Exception {
-        itemService.deleteItem(itemId);
-        return ResponseEntity.ok().build();
+    @GetMapping("/deleteItem/{id}")
+    public void deleteItem(@PathVariable(value = "id") Long itemId, HttpServletResponse response) throws Exception {
+        User u = itemRepository.findById(itemId).get().getUser();
+        if (userService.getAuthenticatedUser() == itemRepository.findById(itemId).get().getUser() ||
+                userService.getAuthenticatedUser().getRoleName().equals("ADMIN")) {
+
+            itemService.deleteItem(itemId);
+        }
+        response.sendRedirect("/users/" + u.getId());
     }
 
 

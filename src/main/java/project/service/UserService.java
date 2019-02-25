@@ -122,6 +122,7 @@ public class UserService  {
 
         if (passwordEncoder().matches(password, user.getPassword())) {
             user.getItemList().forEach(itemService::deleteItem);
+            userRepository.save(user);
             userRepository.delete(user);
         }
     }
