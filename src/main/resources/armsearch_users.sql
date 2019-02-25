@@ -1,1 +1,0 @@
-INSERT INTO armdesk.users (id, email, first_name, last_name, password, phone_number, role_name) VALUES (1, 'sobaka@mail.ru', 'anun', 'azganun', '1111111', '+374991980955', 'USER');
