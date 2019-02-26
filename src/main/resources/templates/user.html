@@ -49,7 +49,7 @@
                 <div class="list"  >
                     <form  >
                         <article class="list--item">
-                            <figure>
+                            <figure th:if="${!item.getImageList().isEmpty()}">
                                 <img th:src="@{/items/itemImages(image=${item.imageList.get(0).getFilePath()})}" width="320" height="240"/>
                                     <header>
                                         <div th:utext="${item.price}"></div>
@@ -58,7 +58,9 @@
                                          <a class="da-TBButton" th:href="@{/editItem/currentUserId}" target="_blank"><input type="submit" id="update_post" name="update_post" value=" Update "></input></a>
                                          <a class="da-TBButton" th:href="@{/editItem/currentUserId}" target="_blank"><input type="submit" id="remove_post" name="remove_post" value=" Remove "></input></a>
                                     </figcaption>
-                                <a th:href="'/deleteItem/' + ${item.getId()}" th:utext="Delete"/>
+                                <div th:if="${isCreator}">
+                                    <a th:href="'/deleteItem/' + ${item.getId()}" th:utext="Delete"/>
+                                </div>
                             </figure>
                         </article>
                     </form>

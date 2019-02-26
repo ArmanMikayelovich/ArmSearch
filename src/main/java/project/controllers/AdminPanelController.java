@@ -45,4 +45,18 @@ public class AdminPanelController {
         return modelAndView;
     }
 
+    @GetMapping("/items")
+    public ModelAndView getItemsPanel() {
+        ModelAndView modelAndView = new ModelAndView("Admin_Items");
+        modelAndView.addObject("itemList", itemService.getAllItems());
+        return modelAndView;
+    }
+
+    @GetMapping("/categories")
+    public ModelAndView getCategoriesPanel() {
+        ModelAndView modelAndView = new ModelAndView("Admin_Categories");
+        modelAndView.addObject("categoryList", categoryService.getAllCategories());
+        return modelAndView;
+    }
+
 }

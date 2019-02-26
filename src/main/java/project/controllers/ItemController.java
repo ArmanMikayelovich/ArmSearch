@@ -83,18 +83,6 @@ public class ItemController {
 
         Item item=itemService.findById(itemId);
 
-        //TODO move everything from here
-        long l;
-        try {
-             l = item.getCountOfViews();
-        } catch (Exception e) {
-             l=0L;
-
-        }
-      l++;
-        item.setCountOfViews(l);
-        itemService.save(item);
-        //TODO to here to itemService get method
 
         ModelAndView modelAndView = new ModelAndView("item");
         modelAndView.addObject("item", itemService.findById(itemId));
@@ -110,8 +98,8 @@ public class ItemController {
        return itemService.changeItem(itemId, itemDetails);
     }
 
-    // Delete a Product
-    @GetMapping("/deleteItem/{id}")
+    // Delete a Item
+    @PostMapping("/deleteItem/{id}")
     public void deleteItem(@PathVariable(value = "id") Long itemId, HttpServletResponse response) throws Exception {
         User u = itemRepository.findById(itemId).get().getUser();
         if (userService.getAuthenticatedUser() == itemRepository.findById(itemId).get().getUser() ||
@@ -119,7 +107,10 @@ public class ItemController {
 
             itemService.deleteItem(itemId);
         }
-        response.sendRedirect("/users/" + u.getId());
+        if (userService.getAuthenticatedUser().getRoleName().equals("ADMIN")) {
+            response.sendRedirect("/admin/items/");
+        }
+       else response.sendRedirect("/users/" + u.getId());
     }
 
 

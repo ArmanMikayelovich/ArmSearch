@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -57,12 +58,18 @@ public class UserService  {
 
 
     public User getAuthenticatedUser() throws Exception{
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        org.springframework.security.core.userdetails.User springUser
-                = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
+
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        org.springframework.security.core.userdetails.User springUser
+//                = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            String username = ((UserDetails) principal).getUsername();
+           User user = userRepository.findByEmail(username);
 
 
-        return userRepository.findByEmail(springUser.getUsername());
+        return userRepository.findByEmail(username);
 
 
     }
@@ -125,8 +132,13 @@ public class UserService  {
         }
 
         if (passwordEncoder().matches(password, user.getPassword())) {
-            user.getItemList().forEach(itemService::deleteItem);
-            userRepository.save(user);
+            user.getItemList()
+                    .forEach(item -> {
+                        deletedImagesPathService.saveDeletedImagesPathFromImageList(item.getImageList());
+                        item.getImageList().forEach(img -> {
+                            imageRepository.delete(img);
+                        });
+                    });
             userRepository.delete(user);
         }
     }

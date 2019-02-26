@@ -36,7 +36,7 @@ public class Category {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER) //TODO Check with Vahe's help ManyToMany
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Item> itemList;
 
     @ManyToOne

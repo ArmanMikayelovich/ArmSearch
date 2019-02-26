@@ -18,6 +18,8 @@ import project.service.CategoryGroupService;
 import project.service.CategoryService;
 import project.service.UserService;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -79,11 +81,14 @@ public class CategoryController {
 
     // Delete a Category //TODO @PostMapping or @GetMapping for easy deleting from front-end...
     @PostMapping("/deleteCategory/{id}")
-    public ResponseEntity<?> deleteCategory(@PathVariable(value = "id") Integer categoryId) {
+    public void deleteCategory(@PathVariable(value = "id") Integer categoryId, HttpServletResponse response) {
 
         categoryService.deleteCategory(categoryId);
-
-        return ResponseEntity.ok().build();
+        try {
+            response.sendRedirect("/admin/categories");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @GetMapping("/getCategoryList")

@@ -22,14 +22,14 @@ import java.util.stream.IntStream;
 
 @RestController
 @RequestMapping
-public class homePageController {
+public class HomePageController {
     private final CategoryService categoryService;
     private final CategoryGroupService categoryGroupService;
     private final ItemService itemService;
 
     private final UserService userService;
 
-    public homePageController(CategoryService categoryService, CategoryGroupService categoryGroupService,
+    public HomePageController(CategoryService categoryService, CategoryGroupService categoryGroupService,
                               ItemService itemService, UserService userService) {
         this.categoryService = categoryService;
         this.categoryGroupService = categoryGroupService;

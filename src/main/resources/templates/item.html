@@ -460,7 +460,7 @@
 							<div class="product_text" th:utext="'Count of views: ' + ${item.countOfViews}">
 							</div></br>
 							<div class="product-text">Contacts:</br>
-								<a th:href="@{'/user/'+ ${item.getUser().getId()}}" th:utext="${item.getUser().getFirstName()} + ' ' + ${item.getUser().getLastName()}" ></a><br/>
+								<a th:href="@{'/users/'+ ${item.user.id.toString()}}" th:utext="${item.getUser().getFirstName()} + ' ' + ${item.getUser().getLastName()}" ></a><br/>
 								E-mail:<a th:href="'mailto:' + ${item.getUser().getEmail()}+'?Subject='+${item.title}" th:utext="${item.getUser().getEmail()}" ></a></br>
 								Phone No.: <label th:utext="${item.getUser().getPhoneNumber()}"> User's phone number</label>
 							</div>

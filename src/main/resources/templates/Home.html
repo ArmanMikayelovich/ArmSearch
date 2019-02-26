@@ -189,7 +189,8 @@
 					<li class="block" style="float:left;"><a th:href="@{'/logout'}">Log Out</a></li>
 					</div>
 					<div sec:authorize="!isAuthenticated()">
-					<li class="block" style="float:left"><a th:href="@{'/login'}">Log In</a></li>
+						<li class="block" style="float:left"><a th:href="@{'/login'}">Log In</a></li>
+						<li class="block" style="float:left"><a th:href="@{'/registration'}">Registration</a></li>
 					</div>
 					<div sec:authorize="hasRole('ADMIN')">
 						<li class="block" style="float:left;"><a th:href="@{'/admin/main'}">Admin</a></li>

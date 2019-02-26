@@ -3,6 +3,7 @@
 
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <meta charset="UTF-8">
     <title>Admin panel</title>
     <style type="text/css">
@@ -417,11 +418,6 @@
         .ticker__item {
             margin-right: 1rem;
         }
-        .button {
-            background: rgb(202, 60, 60);
-            width: 60px;
-            text-align: left;/* this is a maroon */
-        }
 
     </style>
 </head>
@@ -450,20 +446,17 @@
         </ul>
     </nav>
     <main class="admin__main">
-        <h2>Users Page</h2>
+        <h2>Items Page</h2>
         <table>
-            <tr th:each="user : ${userList}">
-                <td th:utext="'ID: ' + ${user.getId()}">...</td>
-                <td th:utext="'|| E-mail:  ' + ${user.getEmail()}">...</td>
-                <td th:utext="' || Name:  '+ ${user.getFirstName()} + ' '+ ${user.getLastName()}">...
-                <td th:utext="'  || count of items:' +  ${user.getItemList().size()}">...</td>
-                <td>  <a th:utext="'Go to user page'" th:href="'/users/'+${user.getId()}">...</a></td>
-
+            <tr th:each="item : ${itemList}">
+                <td th:utext="'ID: ' + ${item.getId()}">...</td>
+                <td th:utext="'|| Title:  ' + ${item.getTitle()}">...</td>
+                <td <a th:utext="' || User :  ' + ${item.getUser().getFirstName()} + ' ' + ${item.getUser().getLastName()}"
+                       th:href="@{'/users/'+ ${item.getUser().getId()}}">.</a>...</td>
+                <td th:utext="'  || count of views:' +  ${item.getCountOfViews()}">...</td>
                 <td>
-
-                    <form method="post" th:action="@{/deleteUserFromAdminPanel}">
-                            <input type="hidden" name="id" th:value="${user.getId()}">
-                        <button class="fa fa-close"   title="delete user" value="delete user" type="submit"></button>
+                    <form method="post" th:action="@{'/deleteItem/' + ${item.getId()}} ">
+                        <button class="fa fa-close"   title="delete item" value="delete item" type="submit"></button>
                     </form>
                 </td>
             </tr>

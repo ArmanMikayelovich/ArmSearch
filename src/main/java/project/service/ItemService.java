@@ -15,10 +15,12 @@ import project.model.Category;
 import project.model.Image;
 import project.model.Item;
 import project.model.User;
+import project.repository.ImageRepository;
 import project.repository.ItemRepository;
 import project.repository.UserRepository;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 @Service
 public class ItemService {
@@ -29,6 +31,12 @@ public class ItemService {
 //    private final UserService userService;
     private final ImageService imageService;
     private final UserService userService;
+    @Autowired
+    DeletedImagesPathService deletedImagesPathService;
+    @Autowired
+    private ImageRepository imageRepository;
+
+
     public ItemService(ItemRepository itemRepository,
                        UserRepository userRepository, ImageService imageService, UserService userService) {
         this.itemRepository = itemRepository;
@@ -39,8 +47,20 @@ public class ItemService {
         this.userService = userService;
     }
     public Item findById(Long id) {
-       return itemRepository.findById(id)
+
+       Item item= itemRepository.findById(id)
                .orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
+
+       Long countOfViews = item.getCountOfViews();
+       countOfViews++;
+        item.setCountOfViews(countOfViews);
+        this.save(item);
+
+        return item;
+    }
+
+    public boolean isCreator(Item item) {
+        return (this.getAuthenticatedUser() == item.getUser());
     }
     public List<Item> findAll() {
        return itemRepository.findAll();
@@ -54,21 +74,17 @@ public class ItemService {
         //SET fields
         item.setTitle(itemDto.getTitle());
         item.setDescription(itemDto.getDescription());
-        item.setPrice(Double.valueOf( itemDto.getPrice() ) );//TODO ANI MUST BE ACCEPT ONLY NUMBERS
+        item.setPrice(Double.valueOf( itemDto.getPrice() ) );
 
         Category category = categoryService.findById(itemDto.getCategoryId());
         item.setCategory(category);
 
-        User user = null;
         try {
-            user = userService.getAuthenticatedUser();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User)auth.getPrincipal();
-//        User user = userRepository.findByEmail(springUser.getUsername());
+            User  user = userService.getAuthenticatedUser();
+
+//
         item.setUser(user);
+        userRepository.save(user);
         itemRepository.save(item);
         int images_count = 0;
         /**
@@ -83,6 +99,9 @@ public class ItemService {
                 }
             }
         itemRepository.save(item);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return item;
 
     }
@@ -111,13 +130,16 @@ public class ItemService {
         if (user == item.getUser()
                 || user.getRoleName().equals("ADMIN")) {
 
-            imageService.deleteAllImages(item);
-            itemRepository.save(item);
-            itemRepository.delete(item);
+            deletedImagesPathService.saveDeletedImagesPathFromImageList(item.getImageList());
+           item.getImageList().forEach(img -> {
+                            imageRepository.delete(img);
+                                 });
+           itemRepository.delete(item);
+
         }
 
     }
-
+    @Deprecated
     public void deleteItem(Item item) {
         imageService.deleteAllImages(item);
 //        itemRepository.save(item);
@@ -165,4 +187,7 @@ public class ItemService {
         }
     }
 
+    public List<Item> getAllItems() {
+        return itemRepository.findAll();
+    }
 }

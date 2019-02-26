@@ -2,6 +2,7 @@ package project.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 import project.dto.CategoryDto;
@@ -9,12 +10,23 @@ import project.exception.ResourceNotFoundException;
 import project.model.Category;
 import project.model.CategoryGroup;
 import project.repository.CategoryRepository;
+import project.repository.ImageRepository;
+import project.repository.ItemRepository;
+
+import java.util.List;
+
 @Service
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final UserService userService;
     @Autowired
     private  ItemService itemService;
+    @Autowired
+    DeletedImagesPathService deletedImagesPathService;
+    @Autowired
+    ImageRepository imageRepository;
+    @Autowired
+    ItemRepository itemRepository;
 
     private final CategoryGroupService categoryGroupService;
 
@@ -37,14 +49,17 @@ public class CategoryService {
 
         return new Category(categoryDto.getName(), categoryGroup);
     }
-    @Transactional
+    @Transactional()
     public void deleteCategory(Integer categoryId) {
-//        if (userService.getAuthenticatedUser().getRoleName().equals("ADMIN")) {
-//            Category category = categoryRepository.findById(categoryId)
-//                    .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));
-//            category.getItemList().forEach(itemService::deleteItem);
-//            categoryRepository.delete(category);
-//        }
+        Category category = this.findById(categoryId);
+        category.getItemList()
+                .forEach(item -> {
+                    deletedImagesPathService.saveDeletedImagesPathFromImageList(item.getImageList());
+                    item.getImageList().forEach(imageRepository::delete);
+                    });
+
+        categoryRepository.delete(category);
+
     }
 
     public ModelAndView getCategoriesWithTheirGroups(ModelAndView view) {
@@ -66,6 +81,9 @@ public class CategoryService {
     public Long getCountofCategories() {
 
         return categoryRepository.count();
+    }
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
     }
 
 

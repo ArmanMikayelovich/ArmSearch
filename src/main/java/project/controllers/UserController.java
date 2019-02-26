@@ -12,6 +12,7 @@ import project.dto.UserDto;
 import project.exception.ResourceNotFoundException;
 import project.model.User;
 import project.repository.UserRepository;
+import project.service.ItemService;
 import project.service.UserService;
 
 import javax.jws.WebParam;
@@ -29,7 +30,8 @@ public class UserController {
     UserRepository userRepository;
     @Autowired
     UserService userService;
-
+    @Autowired
+    ItemService itemService;
     // Get All Users
     @GetMapping("/users")
     public ModelAndView getAllUsers() {
@@ -55,6 +57,9 @@ public class UserController {
         User user = userService.getUserById(id);
         modelAndView.addObject("user", user);
         modelAndView.addObject("items", user.getItemList());
+        modelAndView.addObject("isCreator",
+                user.getItemList().isEmpty() ? false : itemService.isCreator(user.getItemList().get(0)));
+
         return modelAndView;
     }
 
