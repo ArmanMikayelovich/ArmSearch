@@ -54,31 +54,8 @@
                     errConfirmPwd.innerHTML = "Re-type the password"
                     errConfirmPwd.style.color = "red";
                 }
-                else if(pwd!=confirmPwd){
+                else if(pwd!=confirmPwd) {
                     errConfirmPwd.innerHTML = "Password don't match";
-                }
-            }
-            
-            function genderValidator(){
-                var errGender = document.getElementById("errGender");
-                var genderGroup = document.regForm.optGender;
-                //var male = document.regform.optGender[0].checked;
-                //var female = document.regForm.optGender[1].checked;
-                /*if((document.form.optGender[0].checked==false) && (document.form.optGender[1].checked==false)){
-                    errGender.innerHTML = "Please select one of the options";
-                }*/
-                /*if(male==false && female==false){
-                    errGender.innerHTML = "Please select one of the options";
-                    errGender.style.color="red";
-                }*/
-                for(var i=0; i<genderGroup.length; i++){
-                    if(genderGroup[i].checked){
-                        break;
-                    }
-                }
-                if(i==genderGroup.length){
-                    return errGender.innerHTML = "Please select one of the options";
-                    errGender.innerHTML = "You selected: ";
                 }
             }
               
@@ -120,7 +97,7 @@ body {
 </head>
 
 <body class="container">
-<a href="Home.html"><img src="https://st.depositphotos.com/1364916/4294/v/950/depositphotos_42942807-stock-illustration-house-and-waves-logo-vector.jpg" height="70" width="70"></a>
+<a href="Home1.html"><img src="https://st.depositphotos.com/1364916/4294/v/950/depositphotos_42942807-stock-illustration-house-and-waves-logo-vector.jpg" height="70" width="70"></a>
 <table width="716" height="414" border="0" align="center" cellpadding="3" cellspacing="3" bgcolor="#fdf1ec" class="wrapper">
 		<tr>
         <td width="147">&nbsp;</td>
@@ -130,34 +107,28 @@ body {
       <tr>
         <td>&nbsp;</td>
         <td>
-        <form role="form" action="" class=" form-horizontal container jumbotron" name="regForm">
+        <form method="post" role="form" action="/updateUser" class=" form-horizontal container jumbotron" name="regForm">
             <div class="form-group">
-                <label for="name" class="control-label col-sm-2">Full Name:</label>
+                <label for="name" class="control-label col-sm-2">First Name:</label>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" name="fullName" maxlength="10" placeholder="Enter name" />
+                  <input type="text" class="form-control" name="firstName" maxlength="10" placeholder="Enter name" />
                 </div>
                 <span class="col-sm-4" ><p id="errFName" ></p></span>
              </div>    
            
             <div class="form-group">
-                <label for="userName" class="control-label col-sm-2">User Name:</label>
+                <label for="userName" class="control-label col-sm-2">Last Name:</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" name="userName" maxlength="7" placeholder="Enter user name">
+                    <input type="text" class="form-control" name="lastName" maxlength="7" placeholder="Enter user name">
                 </div>
                  <span class="col-sm-6"><p id="errUName"> </p></span>
             </div>
             
-            <div class="form-group">
-                <label for="email" class="control-label col-sm-2">E-Mail:</label>
-                <div class="col-sm-4">
-                    <input type="email" class="form-control" name="email" placeholder="someone@example.com">
-                </div>
-                 <span class="col-sm-6" ><p id="errEmail"> </p></span>
-            </div>
+
             <div class="form-group">
                 <label for="phone" class="control-label col-sm-2">Phone No.:</label>
                 <div class="col-sm-4">
-                     <input type="tel" class="form-control" name="phone" placeholder="+91xxxxxxxxxx">
+                     <input type="tel" class="form-control" name="phoneNumber" placeholder="+374xxxxxxxxx">
                 </div>
                 <span class="col-sm-6" ><p id="errPhone"> </p></span>
             </div>

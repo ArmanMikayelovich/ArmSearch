@@ -5,9 +5,6 @@
 package project.model;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,13 +15,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
 import javax.persistence.CascadeType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
-@Setter
-@Getter
-@NoArgsConstructor
+@Data
 public class CategoryGroup {
 
     @Id
@@ -35,5 +31,6 @@ public class CategoryGroup {
     private String name;
 
     @OneToMany(mappedBy = "categoryGroup", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Category> categories;
+    private List<Category> categories = new ArrayList<>();
+
 }

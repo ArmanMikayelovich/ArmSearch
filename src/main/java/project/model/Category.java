@@ -5,9 +5,7 @@
 package project.model;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -22,8 +20,7 @@ import javax.persistence.CascadeType;
 
 import java.util.List;
 
-@Setter
-@Getter
+@Data
 @Entity
 @NoArgsConstructor
 public class Category {
@@ -39,10 +36,9 @@ public class Category {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.ALL) //TODO Check with Vahe's help ManyToMany
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Item> itemList;
 
     @ManyToOne
-    @JoinColumn(name = "categoryGroup_id")
     private CategoryGroup categoryGroup;
 }

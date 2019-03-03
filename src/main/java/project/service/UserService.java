@@ -1,16 +1,22 @@
 package project.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import project.dto.UserDto;
 import project.exception.ResourceNotFoundException;
 import project.model.User;
+import project.repository.ImageRepository;
+import project.repository.ItemRepository;
 import project.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -18,26 +24,54 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
+
+
+
 @Service
 public class UserService  {
 
     private final UserRepository userRepository;
-    private final ItemService itemService;
+    private final ItemRepository itemRepository;
+    private final ImageRepository imageRepository;
+    private final DeletedImagesPathService deletedImagesPathService;
+    @Autowired
+    private  ItemService itemService;
 
     private PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
 
     }
-    public UserService(UserRepository userRepository, ItemService itemService) {
+
+//    public UserService(UserRepository userRepository, ItemService itemService) {
+//
+//        this.userRepository = userRepository;
+//        this.itemService = itemService;
+//    }
+
+    public UserService(UserRepository userRepository, ItemRepository itemRepository, ImageRepository imageRepository, DeletedImagesPathService deletedImagesPathService) {
 
         this.userRepository = userRepository;
-        this.itemService = itemService;
+        this.itemRepository = itemRepository;
+        this.imageRepository = imageRepository;
+        this.deletedImagesPathService = deletedImagesPathService;
     }
 
-    public User getAuthenticatedUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
-        return userRepository.findByEmail(springUser.getUsername());
+
+    public User getAuthenticatedUser() throws Exception{
+
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        org.springframework.security.core.userdetails.User springUser
+//                = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            String username = ((UserDetails) principal).getUsername();
+           User user = userRepository.findByEmail(username);
+
+
+        return userRepository.findByEmail(username);
+
+
     }
     @Transactional
     public void saveUser(User user) {
@@ -59,19 +93,28 @@ public class UserService  {
 
     }
     @Transactional
-    public void updateUser(User userDetails) {
 
-        User user = getAuthenticatedUser();
+    public void updateUser(UserDto userDetails) {
+
+
+        User user = null;
+        try {
+            user = getAuthenticatedUser();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (userDetails.getFirstName() != null) {
             user.setFirstName(userDetails.getFirstName());
         }
         if (userDetails.getLastName() != null) {
             user.setLastName(userDetails.getLastName());
         }
+
         if (userDetails.getEmail() != null) {
             user.setEmail(userDetails.getEmail());
 
         }
+
         if (userDetails.getPhoneNumber() != null) {
             user.setPhoneNumber(userDetails.getPhoneNumber());
 
@@ -81,10 +124,21 @@ public class UserService  {
 
     @Transactional
     public void deleteUser(String password) {
-        User user = getAuthenticatedUser();
+        User user = null;
+        try {
+            user = getAuthenticatedUser();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (passwordEncoder().matches(password, user.getPassword())) {
-            user.getItemList().forEach(itemService::deleteItem);
+            user.getItemList()
+                    .forEach(item -> {
+                        deletedImagesPathService.saveDeletedImagesPathFromImageList(item.getImageList());
+                        item.getImageList().forEach(img -> {
+                            imageRepository.delete(img);
+                        });
+                    });
             userRepository.delete(user);
         }
     }
@@ -109,8 +163,14 @@ public class UserService  {
     }
     @Transactional
     public boolean changePassword(String oldPassword, String newPassword) {
-        User user = getAuthenticatedUser();
+        User user = null;
+        try {
+            user = getAuthenticatedUser();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (passwordEncoder().matches(oldPassword, user.getPassword())) {
+
             user.setPassword(passwordEncoder().encode(newPassword));
             userRepository.save(user);
 
@@ -119,12 +179,28 @@ public class UserService  {
 
     }
 
+    @Transactional
     public void deleteUserFromAdminPanel(int  id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
         user.getItemList()
-                .forEach(itemService::deleteItem);
-
+                .forEach(item -> {
+                    deletedImagesPathService.saveDeletedImagesPathFromImageList(item.getImageList());
+                    item.getImageList().forEach(img -> {
+                        imageRepository.delete(img);
+                    });
+                });
+//        userRepository.deleteById(id);
         userRepository.delete(user);
     }
+    public Long getCountOfUsers() {
+        return userRepository.count();
+
+    }
+
+    public List<User> getAllUsers() {
+       return userRepository.findAll();
+    }
+
+
 }

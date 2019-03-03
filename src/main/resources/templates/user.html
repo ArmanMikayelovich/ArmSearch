@@ -45,20 +45,22 @@
 <div class="alerts-block" align="center"><h2>Classifieds</h2></div>
 <table>
     <tr>
-        <td class="container" th:each="item : ${items}">
-                <div class="list">
-                    <form >
+        <td class="container" th:each="item : ${items}"  >
+                <div class="list"  >
+                    <form  >
                         <article class="list--item">
-                            <figure>
-                                <img th:src="@{/items/itemImages(image=${item.imageList.get(0).getFilePath()})}" />
+                            <figure th:if="${!item.getImageList().isEmpty()}">
+                                <img th:src="@{/items/itemImages(image=${item.imageList.get(0).getFilePath()})}" width="320" height="240"/>
                                     <header>
                                         <div th:utext="${item.price}"></div>
                                     </header>
                                     <figcaption th:utext="${item.title}"></br>
-                                         <a class="da-TBButton" th:href="@{/editItem/currentItemId}" target="_blank"><input type="submit" id="edit_post" name="edit_post" value="    Edit    "></input></a>
                                          <a class="da-TBButton" th:href="@{/editItem/currentUserId}" target="_blank"><input type="submit" id="update_post" name="update_post" value=" Update "></input></a>
                                          <a class="da-TBButton" th:href="@{/editItem/currentUserId}" target="_blank"><input type="submit" id="remove_post" name="remove_post" value=" Remove "></input></a>
                                     </figcaption>
+                                <div th:if="${isCreator}">
+                                    <a th:href="'/deleteItem/' + ${item.getId()}" th:utext="Delete"/>
+                                </div>
                             </figure>
                         </article>
                     </form>

@@ -27,6 +27,5 @@ public class Image {
     private String filePath;
 
     @ManyToOne
-    @JoinColumn(name = "item_id")
     private Item item;
 }

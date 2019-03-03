@@ -1,11 +1,12 @@
 package project.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import project.dto.ItemDto;
@@ -14,35 +15,52 @@ import project.model.Category;
 import project.model.Image;
 import project.model.Item;
 import project.model.User;
+import project.repository.ImageRepository;
 import project.repository.ItemRepository;
 import project.repository.UserRepository;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.nio.file.Files;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
-
 @Service
 public class ItemService {
     private final ItemRepository itemRepository;
-    private final CategoryService categoryService;
+    @Autowired
+    private  CategoryService categoryService;
     private final UserRepository userRepository;
+//    private final UserService userService;
     private final ImageService imageService;
+    private final UserService userService;
+    @Autowired
+    DeletedImagesPathService deletedImagesPathService;
+    @Autowired
+    private ImageRepository imageRepository;
 
-    public ItemService(ItemRepository itemRepository, CategoryService categoryService,
-                       UserRepository userRepository, ImageService imageService) {
+
+    public ItemService(ItemRepository itemRepository,
+                       UserRepository userRepository, ImageService imageService, UserService userService) {
         this.itemRepository = itemRepository;
-        this.categoryService = categoryService;
+
         this.userRepository = userRepository;
+//        this.userService = userService;
         this.imageService = imageService;
+        this.userService = userService;
     }
     public Item findById(Long id) {
-       return itemRepository.findById(id)
+
+       Item item= itemRepository.findById(id)
                .orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
+
+       Long countOfViews = item.getCountOfViews();
+       countOfViews++;
+        item.setCountOfViews(countOfViews);
+        this.save(item);
+
+        return item;
+    }
+
+    public boolean isCreator(Item item) {
+        return (this.getAuthenticatedUser() == item.getUser());
     }
     public List<Item> findAll() {
        return itemRepository.findAll();
@@ -56,13 +74,17 @@ public class ItemService {
         //SET fields
         item.setTitle(itemDto.getTitle());
         item.setDescription(itemDto.getDescription());
-        item.setPrice(Double.valueOf( itemDto.getPrice() ) );//TODO ANI MUST BE ACCEPT ONLY NUMBERS
+        item.setPrice(Double.valueOf( itemDto.getPrice() ) );
+
         Category category = categoryService.findById(itemDto.getCategoryId());
         item.setCategory(category);
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
-        User user = userRepository.findByEmail(springUser.getUsername());
+
+        try {
+            User  user = userService.getAuthenticatedUser();
+
+//
         item.setUser(user);
+        userRepository.save(user);
         itemRepository.save(item);
         int images_count = 0;
         /**
@@ -77,6 +99,9 @@ public class ItemService {
                 }
             }
         itemRepository.save(item);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return item;
 
     }
@@ -90,45 +115,79 @@ public class ItemService {
         item.setPrice(itemDetails.getPrice());
         item.setCategory(categoryService.findById(itemDetails.getCategoryId()));
 
-//        item.setUser(itemDetails.getUser());//TODO ARMAN get user with security....
-        //todo item's image delete method
+
         Item updatedItem = itemRepository.save(item);
         return updatedItem;
     }
+
     @Transactional
-    public void deleteItem(Long id) {
+    public void deleteItem(Long id) /*throws Exception*/ {
+        User user = this.getAuthenticatedUser();
+
         Item item = itemRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
-        imageService.deleteAllImages(item);
-        itemRepository.delete(item);
+        //Check, is this logined user created or is admin
+        if (user == item.getUser()
+                || user.getRoleName().equals("ADMIN")) {
+
+            deletedImagesPathService.saveDeletedImagesPathFromImageList(item.getImageList());
+           item.getImageList().forEach(img -> {
+                            imageRepository.delete(img);
+                                 });
+           itemRepository.delete(item);
+
+        }
+
     }
+    @Deprecated
     public void deleteItem(Item item) {
         imageService.deleteAllImages(item);
+//        itemRepository.save(item);
         itemRepository.delete(item);
-    }
-
-    public List<Item> getRamdomItems(int countOfItems) {
-
-
-        List<Item> list = itemRepository.findAll();
-        return list;
 
     }
+
+    public List<Item> getRandomItems(){
+        return itemRepository.getRandomItems();
+    }
+
+
+    public Long getCountOfItems() {
+        return itemRepository.count();
+    }
+
 
 
     public Page<Item> findAllByTitleOrDescription(String titleOrDescription, Pageable pageable){
 
-        Set<Item> allByTitleOrDescription = itemRepository.findAllByTitleOrDescription(titleOrDescription);
-        System.out.println(allByTitleOrDescription);
-        List<Item> items = new ArrayList<>();
-        items.addAll(allByTitleOrDescription);
-        //Set<Item> itemList = Stream.concat(allByTitleOrDescription.stream().distinct().collect(Collectors.toList()));
-       /* List<Item> items = StreamSupport.stream(allByTitleOrDescription.spliterator(), false)
+        Page<Item> allByTitleOrDescription = itemRepository.findAllByTitleOrDescription(titleOrDescription, pageable);
+        /* List<Item> items = StreamSupport.stream(allByTitleOrDescription.spliterator(), false)
                 .distinct()
-                .collect(Collectors.toList());
-*/
-        return new PageImpl<Item>(items, pageable, items.size());
+                .collect(Collectors.toList());*/
+        return  allByTitleOrDescription;
     }
 
 
+
+    public void save(Item item){
+        itemRepository.save(item);
+    }
+
+    /*RAFAEL*/
+    public Page<Item> findAllByCategory(Integer catId, Pageable pageable){
+        Category category = categoryService.findById(catId);
+        return itemRepository.findAllByCategory(category, pageable);
+    }
+
+    private User getAuthenticatedUser() {
+        try {
+            return userService.getAuthenticatedUser();
+        } catch (Exception e) {
+            throw new IllegalStateException("No logged in user");
+        }
+    }
+
+    public List<Item> getAllItems() {
+        return itemRepository.findAll();
+    }
 }

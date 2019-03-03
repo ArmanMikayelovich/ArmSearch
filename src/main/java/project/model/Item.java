@@ -8,9 +8,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -41,9 +38,7 @@ import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Setter
-@Getter
-@NoArgsConstructor
+@Data
 @Table(name = "items", indexes = { @Index(
         name = "IDX_title", columnList = "title"),
         @Index(name = "IDX_description",columnList = "description") })
@@ -63,6 +58,9 @@ public class Item {
     @Column(name = "price", nullable = false)
     private Double price;
 
+    @Column(name = "count_of_views",columnDefinition = "bigint default 0")
+    private Long countOfViews= 0L;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreatedDate
@@ -74,14 +72,14 @@ public class Item {
     private Date updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
+    @JoinColumn(name = "category_id")
     private Category category;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "item",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "item",fetch = FetchType.EAGER)
     private List<Image> imageList = new ArrayList<>();
-    //TODO ARO user ջնջելու հետ նաև ջնջել բոլոր նկարները fileSYstemի
+
 }

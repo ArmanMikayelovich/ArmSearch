@@ -80,9 +80,16 @@ public class ImageService {
         }
         return bytesArray;
     }
-    @Transactional
+
     public void deleteAllImages(Item item) {
         deletedImagesPathService.saveDeletedImagesPathFromImageList(item.getImageList());
         item.getImageList().forEach(imageRepository::delete);
+        imageRepository.flush();
+
+    }
+
+    public Long getCountOfImages() {
+
+        return imageRepository.count();
     }
 }
