@@ -9,6 +9,8 @@ import project.dto.CategoryDto;
 import project.exception.ResourceNotFoundException;
 import project.model.Category;
 import project.model.CategoryGroup;
+import project.model.Image;
+import project.model.Item;
 import project.repository.CategoryRepository;
 import project.repository.ImageRepository;
 import project.repository.ItemRepository;
@@ -49,15 +51,16 @@ public class CategoryService {
 
         return new Category(categoryDto.getName(), categoryGroup);
     }
-    @Transactional()
+
     public void deleteCategory(Integer categoryId) {
         Category category = this.findById(categoryId);
-        category.getItemList()
-                .forEach(item -> {
-                    deletedImagesPathService.saveDeletedImagesPathFromImageList(item.getImageList());
-                    item.getImageList().forEach(imageRepository::delete);
-                    });
-
+        for (Item item : category.getItemList()) {
+            deletedImagesPathService.saveDeletedImagesPathFromImageList(item.getImageList());
+            for (Image img : item.getImageList()) {
+                imageRepository.delete(img);
+            }
+            itemRepository.delete(item);
+        }
         categoryRepository.delete(category);
 
     }
