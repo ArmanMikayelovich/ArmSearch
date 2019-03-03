@@ -67,6 +67,7 @@ public class ItemController {
     public void createItem(ItemDto itemDto, MultipartFile[] filesToUpload, HttpServletResponse response) {
                Item item =  itemService.addItem(itemDto,filesToUpload);
         try {
+
             String url = "/items/" + item.getId().toString();
              response.sendRedirect(url);
         } catch (IOException e) {
@@ -111,7 +112,7 @@ public class ItemController {
             response.sendRedirect("/admin/items/");
         }
        else response.sendRedirect("/users/" + u.getId());
-    }
+        }
 
 
 

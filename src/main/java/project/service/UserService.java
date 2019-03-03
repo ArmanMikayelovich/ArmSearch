@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import project.dto.UserDto;
 import project.exception.ResourceNotFoundException;
+import project.model.Image;
+import project.model.Item;
 import project.model.User;
 import project.repository.ImageRepository;
 import project.repository.ItemRepository;
@@ -80,16 +82,7 @@ public class UserService  {
         System.out.println(user.getPassword());
         user.setItemList(new ArrayList<>());
         userRepository.save(user);
-        SecurityContextHolder.getContext().setAuthentication(
-                new UsernamePasswordAuthenticationToken(
-                        user.getEmail(),
-                       user.getPassword(),
-                        new HashSet<GrantedAuthority>() {
-                            {
-                                new SimpleGrantedAuthority(user.getRoleName());
-                            }
-                        }
-                ));
+
 
     }
     @Transactional
@@ -178,18 +171,25 @@ public class UserService  {
         } else return false;
 
     }
-
     @Transactional
     public void deleteUserFromAdminPanel(int  id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
-        user.getItemList()
-                .forEach(item -> {
-                    deletedImagesPathService.saveDeletedImagesPathFromImageList(item.getImageList());
-                    item.getImageList().forEach(img -> {
-                        imageRepository.delete(img);
-                    });
-                });
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+//        user.getItemList()
+//                .forEach(item -> {
+//                    deletedImagesPathService.saveDeletedImagesPathFromImageList(item.getImageList());
+//                    item.getImageList().forEach(imageRepository::delete);
+//                    itemRepository.delete(item);
+//                });
+        for (Item item : user.getItemList()) {
+            deletedImagesPathService.saveDeletedImagesPathFromImageList(item.getImageList());
+            for (Image img : item.getImageList()) {
+                imageRepository.delete(img);
+            }
+            itemRepository.delete(item);
+        }
+        user.setItemList(null);
+
 //        userRepository.deleteById(id);
         userRepository.delete(user);
     }
