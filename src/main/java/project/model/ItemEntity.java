@@ -4,35 +4,14 @@
 
 package project.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import lombok.Data;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.data.annotation.LastModifiedDate;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.stereotype.Indexed;
-import project.dto.ItemDto;
-import project.service.CategoryService;
 
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.FetchType;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Index;
-
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,11 +19,13 @@ import java.util.List;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "items", indexes = { @Index(
         name = "IDX_title", columnList = "title"),
         @Index(name = "IDX_description",columnList = "description") })
-public class Item {
+public class ItemEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,7 +42,7 @@ public class Item {
     private Double price;
 
     @Column(name = "count_of_views",columnDefinition = "bigint default 0")
-    private Long countOfViews= 0L;
+    private Long countOfViews = 0L;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -75,13 +56,12 @@ public class Item {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private Category category;
+    private SubCategoryEntity subCategoryEntity;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity userEntity;
 
-    @OneToMany(mappedBy = "item",fetch = FetchType.EAGER)
-    private List<Image> imageList = new ArrayList<>();
-
+    @OneToMany(mappedBy = "itemEntity",fetch = FetchType.EAGER)
+    private List<ImageEntity> imageEntityList = new ArrayList<>();
 }

@@ -19,7 +19,7 @@ img {
 new Vue({
   el: '#app',
   data: {
-    image: '',
+    imageEntity: '',
     items: [1, 2, 3, 4, 5],
   },
   methods: {
@@ -30,17 +30,17 @@ new Vue({
       this.createImage(files[0]);
     },
     createImage(file) {
-      var image = new Image();
+      var imageEntity = new Image();
       var reader = new FileReader();
       var vm = this;
 
       reader.onload = (e) => {
-        vm.image = e.target.result;
+        vm.imageEntity = e.target.result;
       };
       reader.readAsDataURL(file);
     },
     removeImage: function (e) {
-      this.image = '';
+      this.imageEntity = '';
     }
   }
 })
@@ -148,18 +148,18 @@ function addNew4() {
     </tr>
     <tr>
       <td>&nbsp;</td>
-      <td><textarea id="textarea" name="textarea" rows="5" cols="60" placeholder="Detailed description of your item or offering..."></textarea></td>
+      <td><textarea id="textarea" name="textarea" rows="5" cols="60" placeholder="Detailed description of your itemEntity or offering..."></textarea></td>
     </tr>
     <tr>
       <td>&nbsp;</td>
       <td><div id="app">
-        <div v-for="item in items">
-          <div v-if="!image">
-            <input type="file" @change="onFileChange" value="Select an image">
+        <div v-for="itemEntity in items">
+          <div v-if="!imageEntity">
+            <input type="file" @change="onFileChange" value="Select an imageEntity">
             </div>
           <div v-else>
-            <img :src="image"/>
-            <button @click="removeImage">Remove image</button>
+            <img :src="imageEntity"/>
+            <button @click="removeImage">Remove imageEntity</button>
             </div>
           </div>
   </div>
@@ -168,13 +168,13 @@ function addNew4() {
     <tr>
       <td>&nbsp;</td>
       <td><div id="app">
-        <div v-for="item in items">
-          <div v-if="!image">
-            <input type="file" @change="onFileChange" value="Select an image">
+        <div v-for="itemEntity in items">
+          <div v-if="!imageEntity">
+            <input type="file" @change="onFileChange" value="Select an imageEntity">
             </div>
           <div v-else>
-            <img :src="image"/>
-            <button @click="removeImage">Remove image</button>
+            <img :src="imageEntity"/>
+            <button @click="removeImage">Remove imageEntity</button>
             </div>
           </div>
   </div></td>
@@ -183,13 +183,13 @@ function addNew4() {
     <tr>
       <td>&nbsp;</td>
       <td><div id="app">
-        <div v-for="item in items">
-          <div v-if="!image">
-            <input type="file" @change="onFileChange" value="Select an image">
+        <div v-for="itemEntity in items">
+          <div v-if="!imageEntity">
+            <input type="file" @change="onFileChange" value="Select an imageEntity">
             </div>
           <div v-else>
-            <img :src="image"/>
-            <button @click="removeImage">Remove image</button>
+            <img :src="imageEntity"/>
+            <button @click="removeImage">Remove imageEntity</button>
             </div>
           </div>
   </div></td>

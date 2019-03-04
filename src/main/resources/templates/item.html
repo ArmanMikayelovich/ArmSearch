@@ -44,7 +44,7 @@
 			flex-wrap: wrap;
 		}
 
-		.list--item {
+		.list--itemEntity {
 			width: 25%;
 			float: left;
 			padding: 10px;
@@ -78,22 +78,22 @@
 			.container { text-align:center;
 				width:100%;
 			}
-			.list--item {
+			.list--itemEntity {
 				width:20%;
 			}
 		}
 		@media screen and (max-width: 768px) {
-			.list--item {
+			.list--itemEntity {
 				width:33%;
 			}
 		}
 		@media screen and (max-width: 620px) {
-			.list--item {
+			.list--itemEntity {
 				width:50%;
 			}
 		}
 		@media screen and (max-width: 480px) {
-			.list--item {
+			.list--itemEntity {
 				width:100%;
 			}
 		}
@@ -185,7 +185,7 @@
 			<!--<div align="left">-->
 				<!--<ul align="left" class="d-flex flex-row align-items-start justify-content-start">-->
 					<!--<div sec:authorize="isAuthenticated()">-->
-						<!--<li class="block" style="float:left;"><a th:href="@{'/users/'+ ${user.id} }">My Account</a></li>-->
+						<!--<li class="block" style="float:left;"><a th:href="@{'/users/'+ ${userEntity.id} }">My Account</a></li>-->
 						<!--<li class="block" style="float:left;"><a th:href="@{/addItem}">+ Post to Classifieds</a></li>-->
 						<!--<li class="block" style="float:left;"><a th:href="@{'/logout'}">Log Out</a></li>-->
 					<!--</div>-->
@@ -206,8 +206,8 @@
 						<button class="header_search_button"><img th:src="@{/images/search.png}" alt=""></button>
 					</form>
 				</div>
-				<!-- User -->
-				<!--<div class="user"><a href="#"><div><img th:th:src="@{/@{/../static/images/user.svg" alt="https://www.flaticon.com/authors/freepik"><div>1</div></div></a></div>-->
+				<!-- UserEntity -->
+				<!--<div class="userEntity"><a href="#"><div><img th:th:src="@{/@{/../static/images/userEntity.svg" alt="https://www.flaticon.com/authors/freepik"><div>1</div></div></a></div>-->
 				<!-- Cart -->
 				<!--<div class="cart"><a href="cart.html"><div><img class="svg" th:th:src="@{/@{/../static/images/cart.svg" alt="https://www.flaticon.com/authors/freepik"></div></a></div>-->
 				<!-- Phone -->
@@ -233,8 +233,8 @@
 										<!--<li class="drop-menu">-->
 											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Electronics<span class="caret"></span></a>-->
 											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${electronicsGroup.categories}">-->
-													<!--<label th:utext="${category.getName()}">...</label>-->
+												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${electronicsGroup.categories}">-->
+													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 												<!--</a>-->
 											<!--</div>-->
 										<!--</li>-->
@@ -245,8 +245,8 @@
 										<!--<li class="drop-menu">-->
 											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Real Estate<span class="caret"></span> </a>-->
 											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${realEstateGroup.categories}">-->
-													<!--<label th:utext="${category.getName()}">...</label>-->
+												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${realEstateGroup.categories}">-->
+													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 												<!--</a>-->
 											<!--</div>-->
 										<!--</li>-->
@@ -257,8 +257,8 @@
 										<!--<li class="drop-menu">-->
 											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Vehicles<span class="caret"></span> </a>-->
 											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${vehiclesGroup.categories}">-->
-													<!--<label th:utext="${category.getName()}">...</label>-->
+												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${vehiclesGroup.categories}">-->
+													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 												<!--</a>-->
 											<!--</div>-->
 										<!--</li>-->
@@ -269,8 +269,8 @@
 										<!--<li class="drop-menu">-->
 											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Services<span class="caret"></span> </a>-->
 											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${servicesGroup.categories}">-->
-													<!--<label th:utext="${category.getName()}">...</label>-->
+												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${servicesGroup.categories}">-->
+													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 												<!--</a>-->
 											<!--</div>-->
 										<!--</li>-->
@@ -281,8 +281,8 @@
 										<!--<li class="drop-menu">-->
 											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Jobs<span class="caret"></span> </a>-->
 											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${jobsGroup.categories}">-->
-													<!--<label th:utext="${category.getName()}">...</label>-->
+												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${jobsGroup.categories}">-->
+													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 												<!--</a>-->
 											<!--</div>-->
 										<!--</li>-->
@@ -293,8 +293,8 @@
 										<!--<li class="drop-menu">-->
 											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Fashion<span class="caret"></span> </a>-->
 											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${fashionGroup.categories}">-->
-													<!--<label th:utext="${category.getName()}">...</label>-->
+												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${fashionGroup.categories}">-->
+													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 												<!--</a>-->
 											<!--</div>-->
 										<!--</li>-->
@@ -306,8 +306,8 @@
 											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Tools and Materials<span class="caret"></span> </a>-->
 											<!--<div class="dropdown-content">-->
 
-												<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${toolsAndMaterialsGroup.categories}">-->
-													<!--<label th:utext="${category.getName()}">...</label>-->
+												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${toolsAndMaterialsGroup.categories}">-->
+													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 												<!--</a>-->
 											<!--</div>-->
 										<!--</li>-->
@@ -318,8 +318,8 @@
 										<!--<li class="drop-menu">-->
 											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Household<span class="caret"></span> </a>-->
 											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${householdGroup.categories}">-->
-													<!--<label th:utext="${category.getName()}">...</label>-->
+												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${householdGroup.categories}">-->
+													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 												<!--</a>-->
 											<!--</div>-->
 										<!--</li>-->
@@ -330,8 +330,8 @@
 										<!--<li class="drop-menu">-->
 											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">For Kids<span class="caret"></span> </a>-->
 											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${forKidsGroup.categories}">-->
-													<!--<label th:utext="${category.getName()}">...</label>-->
+												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${forKidsGroup.categories}">-->
+													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 												<!--</a>-->
 											<!--</div>-->
 										<!--</li>-->
@@ -342,8 +342,8 @@
 										<!--<li class="drop-menu">-->
 											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Culture and Hobby<span class="caret"></span> </a>-->
 											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${cultureAndHobbyGroup.categories}">-->
-													<!--<label th:utext="${category.getName()}">...</label>-->
+												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${cultureAndHobbyGroup.categories}">-->
+													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 												<!--</a>-->
 											<!--</div>-->
 										<!--</li>-->
@@ -354,8 +354,8 @@
 										<!--<li class="drop-menu">-->
 											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Appliances<span class="caret"></span> </a>-->
 											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${appliancesGroup.categories}">-->
-													<!--<label th:utext="${category.getName()}">...</label>-->
+												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${appliancesGroup.categories}">-->
+													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 												<!--</a>-->
 											<!--</div>-->
 										<!--</li>-->
@@ -366,8 +366,8 @@
 										<!--<li class="drop-menu">-->
 											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Everythink Else<span class="caret"></span> </a>-->
 											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${everythinkElseGroup.categories}">-->
-													<!--<label th:utext="${category.getName()}">...</label>-->
+												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${everythinkElseGroup.categories}">-->
+													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 												<!--</a>-->
 											<!--</div>-->
 										<!--</li>-->
@@ -387,13 +387,13 @@
 			<div class="container">
 				<div class="row">
 
-					<!-- Product Image -->
+					<!-- Product ImageEntity -->
 					<div class="col-lg-6">
 						<div class="product_image_slider_container">
 							<div id="slider" class="flexslider">
 								<ul class="slides"  >
-									<li th:each = "image : ${item.getImageList()}">
-										<div><img th:src="@{/items/itemImages(image=${image.getFilePath()})}" /></div>
+									<li th:each = "imageEntity : ${itemEntity.getImageList()}">
+										<div><img th:src="@{/items/itemImages(imageEntity=${imageEntity.getFilePath()})}" /></div>
 									</li>
 
 
@@ -402,8 +402,8 @@
 							<div class="carousel_container">
 								<div id="carousel" class="flexslider">
 									<ul class="slides"  >
-										<li th:each = "image : ${item.getImageList()}">
-											<div><img th:src="@{/items/itemImages(image=${image.getFilePath()})}" /></div>
+										<li th:each = "imageEntity : ${itemEntity.getImageList()}">
+											<div><img th:src="@{/items/itemImages(imageEntity=${imageEntity.getFilePath()})}" /></div>
 										</li>
 
 
@@ -418,14 +418,14 @@
 					<!-- Product Info -->
 					<div class="col-lg-6 product_col">
 						<div class="product_info">
-							<div class="product_name" th:utext ="${item.title}"></div>
-							<!--<div class="product_category">In <a href="category.html">Category</a></div>-->
+							<div class="product_name" th:utext ="${itemEntity.title}"></div>
+							<!--<div class="product_category">In <a href="subCategoryEntity.html">SubCategoryEntity</a></div>-->
 							<!--<div class="product_rating_container d-flex flex-row align-items-center justify-content-start">-->
 								<!--<div class="rating_r rating_r_4 product_rating"><i></i><i></i><i></i><i></i><i></i></div>-->
 								<!--<div class="product_reviews">4.7 out of (3514)</div>-->
 								<!--<div class="product_reviews_link"><a href="#">Reviews</a></div>-->
 							<!--</div>-->
-							<div class="product_price" th:utext="${item.price} + '$'"><span></span></div>
+							<div class="product_price" th:utext="${itemEntity.price} + '$'"><span></span></div>
 							<!--<div class="product_size">-->
 								<!--<div class="product_size_title">Select Size</div>-->
 								<!--<ul class="d-flex flex-row align-items-start justify-content-start">-->
@@ -455,21 +455,21 @@
 									<!--</li>-->
 								<!--</ul>-->
 							<!--</div>-->
-							<div class="product_text" th:utext="${item.description}">
+							<div class="product_text" th:utext="${itemEntity.description}">
 							</div>
-							<div class="product_text" th:utext="'Count of views: ' + ${item.countOfViews}">
+							<div class="product_text" th:utext="'Count of views: ' + ${itemEntity.countOfViews}">
 							</div></br>
 							<div class="product-text">Contacts:</br>
-								<a th:href="@{'/users/'+ ${item.user.id.toString()}}" th:utext="${item.getUser().getFirstName()} + ' ' + ${item.getUser().getLastName()}" ></a><br/>
-								E-mail:<a th:href="'mailto:' + ${item.getUser().getEmail()}+'?Subject='+${item.title}" th:utext="${item.getUser().getEmail()}" ></a></br>
-								Phone No.: <label th:utext="${item.getUser().getPhoneNumber()}"> User's phone number</label>
+								<a th:href="@{'/users/'+ ${itemEntity.userEntity.id.toString()}}" th:utext="${itemEntity.getUserEntity().getFirstName()} + ' ' + ${itemEntity.getUserEntity().getLastName()}" ></a><br/>
+								E-mail:<a th:href="'mailto:' + ${itemEntity.getUserEntity().getEmail()}+'?Subject='+${itemEntity.title}" th:utext="${itemEntity.getUserEntity().getEmail()}" ></a></br>
+								Phone No.: <label th:utext="${itemEntity.getUserEntity().getPhoneNumber()}"> User's phone number</label>
 							</div>
 							<!--<div class="product_buttons">-->
 								<!--<div class="text-right d-flex flex-row align-items-start justify-content-start">-->
-									<!--<a th:href="@{'/editItem/'+ ${item.getId()}}"><div class="product_button product_fav text-center d-flex flex-column align-items-center justify-content-center">-->
+									<!--<a th:href="@{'/editItem/'+ ${itemEntity.getId()}}"><div class="product_button product_fav text-center d-flex flex-column align-items-center justify-content-center">-->
 										<!--<div><div><img th:src="@{/images/edit.svg}" class="svg" alt=""><div>+</div></div></div>-->
 									<!--</div></a>-->
-									<!--<a th:href="@{'/editItem/'+ ${item.getId()}}"><div class="product_button product_cart text-center d-flex flex-column align-items-center justify-content-center">-->
+									<!--<a th:href="@{'/editItem/'+ ${itemEntity.getId()}}"><div class="product_button product_cart text-center d-flex flex-column align-items-center justify-content-center">-->
 										<!--<div><div><img th:src="@{/images/delete.svg}" class="svg" alt=""><div>+</div></div></div>-->
 									<!--</div></a>-->
 								<!--</div>-->

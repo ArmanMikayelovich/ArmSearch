@@ -1,3 +1,8 @@
+/**
+ * Just a custom exception
+ * in order to make common exceptions more readable
+ */
+
 package project.exception;
 
 import lombok.Getter;

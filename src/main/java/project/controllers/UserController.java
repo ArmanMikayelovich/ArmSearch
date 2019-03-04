@@ -1,26 +1,20 @@
 package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
 
 import project.dto.UserDto;
-import project.exception.ResourceNotFoundException;
-import project.model.User;
+import project.model.UserEntity;
 import project.repository.UserRepository;
 import project.service.ItemService;
 import project.service.UserService;
 
-import javax.jws.WebParam;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.io.IOException;
-import java.security.Principal;
 
 @RestController
 @RequestMapping()
@@ -54,11 +48,11 @@ public class UserController {
     @GetMapping("/users/{id}")
     public ModelAndView getUserPage(@PathVariable("id") Integer id) {
         ModelAndView modelAndView = new ModelAndView("user");
-        User user = userService.getUserById(id);
-        modelAndView.addObject("user", user);
-        modelAndView.addObject("items", user.getItemList());
+        UserEntity userEntity = userService.getUserById(id);
+        modelAndView.addObject("user", userEntity);
+        modelAndView.addObject("items", userEntity.getItemEntityList());
         modelAndView.addObject("isCreator",
-                user.getItemList().isEmpty() ? false : itemService.isCreator(user.getItemList().get(0)));
+                userEntity.getItemEntityList().isEmpty() ? false : itemService.isCreator(userEntity.getItemEntityList().get(0)));
 
         return modelAndView;
     }
@@ -66,8 +60,8 @@ public class UserController {
 
 
     @PostMapping("/registration")
-    void addNewUser(User user,HttpServletResponse response) {
-        userService.saveUser(user);
+    void addNewUser(UserEntity userEntity, HttpServletResponse response) {
+        userService.saveUser(userEntity);
 
         try {
               response.sendRedirect("/");
@@ -111,11 +105,11 @@ public class UserController {
         }
     }
 
-    // Delete a User
+    // Delete a UserEntity
     @PostMapping("/deleteUser")
     public void deleteUser(String password,HttpServletResponse response)  {
         try {
-            User user = userService.getAuthenticatedUser();
+            UserEntity userEntity = userService.getAuthenticatedUser();
             userService.deleteUser(password);
             response.sendRedirect("/logout");
         } catch (Exception e) {
@@ -125,7 +119,7 @@ public class UserController {
 
     @PostMapping("/deleteUserFromAdminPanel")
     public void deleteUserFromAdminPanel(Integer id,HttpServletResponse response) throws Exception {
-        User admin = userService.getAuthenticatedUser();
+        UserEntity admin = userService.getAuthenticatedUser();
         if (admin.getRoleName().equals("ADMIN")) {
             userService.deleteUserFromAdminPanel(id);
             try {

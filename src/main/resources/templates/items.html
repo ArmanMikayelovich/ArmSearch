@@ -50,9 +50,9 @@
 
 <div>
   <ul>
-    <!--/*@thymesVar id="items" type="project.model.Item"*/-->
-    <li th:each="item : ${items}">
-      <div th:text="${item.title}" ></div>
+      <!--/*@thymesVar id="items" type="project.model.ItemEntity"*/-->
+    <li th:each="itemEntity : ${items}">
+      <div th:text="${itemEntity.title}" ></div>
     </li>
   </ul>
 </div>

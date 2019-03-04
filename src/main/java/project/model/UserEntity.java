@@ -1,19 +1,28 @@
+/**
+ * The User is an autorized visitor of the site
+ * and can have announcements change and delete them
+ */
+
 
 package project.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+
 import java.util.List;
 
 @Entity
-@Table(name = "users")
 @Getter
 @Setter
-public class User {
+@NoArgsConstructor
+@Table(name = "users")
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,10 +44,9 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.REMOVE)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<Item> itemList;
+    private List<ItemEntity> itemEntityList;
 
     @Column(nullable = false, length = 32)
     private String roleName = "USER";

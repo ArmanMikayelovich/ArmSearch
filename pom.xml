@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>am.aca</groupId>
-    <artifactId>ArmSearch</artifactId>
+    <artifactId>armDesk</artifactId>
     <version>1.0</version>
 
     <packaging>jar</packaging>

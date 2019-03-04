@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 
-import project.exception.ResourceNotFoundException;
-import project.model.CategoryGroup;
-import project.repository.CategoryGroupRepository;
-import project.service.CategoryGroupService;
+import project.model.CategoryEntity;
+import project.repository.CategoryRepository;
+import project.service.CategoryService;
 
 // TODO tes CategoryController classi TODO-n
 
@@ -22,42 +21,42 @@ import project.service.CategoryGroupService;
 @RequestMapping
 public class CategoryGroupController {
 
-   private final CategoryGroupRepository categoryGroupRepository;
+   private final CategoryRepository categoryRepository;
 
-    private final CategoryGroupService categoryGroupService;
+    private final CategoryService categoryService;
 
-    public CategoryGroupController(CategoryGroupRepository categoryGroupRepository, CategoryGroupService categoryGroupService) {
-        this.categoryGroupRepository = categoryGroupRepository;
-        this.categoryGroupService = categoryGroupService;
+    public CategoryGroupController(CategoryRepository categoryRepository, CategoryService categoryService) {
+        this.categoryRepository = categoryRepository;
+        this.categoryService = categoryService;
     }
 
     // Get All CategoryGroups
     @GetMapping("/categoryGroups")
     public ModelAndView getAllCategoryGroups() {
         ModelAndView modelAndView = new ModelAndView("addCategoryGroup");
-             modelAndView.addObject("groups", categoryGroupRepository.findAll());
+             modelAndView.addObject("groups", categoryRepository.findAll());
         return modelAndView;
     }
 
-    // Create a new CategoryGroup //TODO this must be accesible only for admins and delete
+    // Create a new CategoryEntity //TODO this must be accesible only for admins and delete
     @PostMapping("addCategoryGroup")
-    public CategoryGroup createCategoryGroup(CategoryGroup categoryGroup) {
-        categoryGroupService.createCategoryGroup(categoryGroup);
+    public CategoryEntity createCategoryGroup(CategoryEntity categoryEntity) {
+        categoryService.createCategory(categoryEntity);
 
-        return categoryGroupRepository.save(categoryGroup);
+        return categoryRepository.save(categoryEntity);
     }
 
-//    // Get a Single categoryGroup//TODO or get all categories of this group
+//    // Get a Single categoryEntity//TODO or get all categories of this group
 //    @GetMapping("/categoryGroups/{id}")
-//    public CategoryGroup getCategoryGroupById(@PathVariable(value = "id") Integer categoryGroupId) {
+//    public CategoryEntity getCategoryGroupById(@PathVariable(value = "id") Integer categoryGroupId) {
 //        return categoryGroupService.findById(categoryGroupId);
 //
 //    }
 
-    // Delete a CategoryGroup
+    // Delete a CategoryEntity
     @DeleteMapping("/categoryGroups/delete/{id}")
     public ResponseEntity<?> deleteCategoryGroup(@PathVariable(value = "id") Integer categoryGroupId) {
-       categoryGroupService.deleteCategoryGroup(categoryGroupId);
+       categoryService.deleteCategory(categoryGroupId);
         return ResponseEntity.ok().build();
     }
 }

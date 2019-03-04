@@ -5,13 +5,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import project.model.Item;
-import project.model.User;
-import project.service.CategoryGroupService;
+import project.model.ItemEntity;
+import project.model.UserEntity;
 import project.service.CategoryService;
+import project.service.SubCategoryService;
 import project.service.ItemService;
 import project.service.UserService;
 
@@ -23,16 +22,16 @@ import java.util.stream.IntStream;
 @RestController
 @RequestMapping
 public class HomePageController {
+    private final SubCategoryService subCategoryService;
     private final CategoryService categoryService;
-    private final CategoryGroupService categoryGroupService;
     private final ItemService itemService;
 
     private final UserService userService;
 
-    public HomePageController(CategoryService categoryService, CategoryGroupService categoryGroupService,
+    public HomePageController(SubCategoryService subCategoryService, CategoryService categoryService,
                               ItemService itemService, UserService userService) {
+        this.subCategoryService = subCategoryService;
         this.categoryService = categoryService;
-        this.categoryGroupService = categoryGroupService;
         this.itemService = itemService;
         this.userService = userService;
     }
@@ -42,19 +41,19 @@ public class HomePageController {
                                     @RequestParam(required = false) String n,
                                     @PageableDefault(sort = {"updatedAt"}, direction = Sort.Direction.DESC, size = 9) Pageable page) {
         ModelAndView view = new ModelAndView("Home");
-        view = categoryService.getCategoriesWithTheirGroups(view);
+        view = subCategoryService.getCategoriesWithTheirGroups(view);
          view= getAllHomePageFunctions(view, catId,n, page);
          return view;
     }
 
     public ModelAndView getAllHomePageFunctions(ModelAndView view,Integer catId,String n,Pageable page) {
-        view = categoryService.getCategoriesWithTheirGroups(view);
+        view = subCategoryService.getCategoriesWithTheirGroups(view);
 
         if(n==null && catId==null) {
             view.addObject("randomItemList", itemService.getRandomItems());
 
         }else if (catId != null) {
-            Page<Item> items = itemService.findAllByTitleOrDescription(n, page);
+            Page<ItemEntity> items = itemService.findAllByTitleOrDescription(n, page);
             int totalPages = items.getTotalPages();
             if(totalPages>1){
                 List<Integer> pageNumbers = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
@@ -62,9 +61,9 @@ public class HomePageController {
                 view.addObject("page", "categories");
                 view.addObject("catId", catId);
             }
-            view.addObject("randomItemList", itemService.findAllByCategory(catId, page));
+            view.addObject("randomItemList", itemService.findAllBySubCategory(catId, page));
         }else if(n!=null){
-            Page<Item> items = itemService.findAllByTitleOrDescription(n, page);
+            Page<ItemEntity> items = itemService.findAllByTitleOrDescription(n, page);
             int totalPages = items.getTotalPages();
             if(totalPages>1){
                 List<Integer> pageNumbers = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
@@ -78,12 +77,12 @@ public class HomePageController {
 
         try{
 
-            User auth = userService.getAuthenticatedUser();
+            UserEntity auth = userService.getAuthenticatedUser();
             view.addObject("user", auth);
 
         } catch (Exception e) {
-            User user = new User(); user.setId(1);
-            view.addObject("user", user);
+            UserEntity userEntity = new UserEntity(); userEntity.setId(1);
+            view.addObject("userEntity", userEntity);
 
         }
         try {

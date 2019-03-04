@@ -1,16 +1,15 @@
+/**
+ * this scheduler is for deleting useless images
+ * from filesystem every 24 hours
+ */
+
 package project.service;
 
-import jdk.nashorn.internal.objects.annotations.Setter;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import project.model.DeletedImagesPath;
+import project.model.DeletedImagesPathEntity;
 
 import java.io.File;
 import java.util.List;
@@ -29,9 +28,9 @@ public class Scheduler {
     @Scheduled(fixedRate = 24 * 60 * 60 * 1000)
     public void startScheduler() {
         if(!(deletedImagesPathService.findAllDeletedImagesPaths().isEmpty())) {
-            List<DeletedImagesPath> dIPs = deletedImagesPathService.findAllDeletedImagesPaths();
+            List<DeletedImagesPathEntity> dIPs = deletedImagesPathService.findAllDeletedImagesPaths();
 
-            for (DeletedImagesPath dPs : dIPs) {
+            for (DeletedImagesPathEntity dPs : dIPs) {
 
                 File file = new File(dPs.getFilePath());
                 file.delete();

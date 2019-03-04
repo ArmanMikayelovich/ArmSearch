@@ -1,34 +1,35 @@
+/**
+ * this class calls the methods of ItemRepository interface
+ * in its own methods which are used in the controller layer.
+ * This helps to divide the code into logical peaces
+ */
+
 package project.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import project.dto.ItemDto;
 import project.exception.ResourceNotFoundException;
-import project.model.Category;
-import project.model.Image;
-import project.model.Item;
-import project.model.User;
+import project.model.ImageEntity;
+import project.model.ItemEntity;
+import project.model.SubCategoryEntity;
+import project.model.UserEntity;
 import project.repository.ImageRepository;
 import project.repository.ItemRepository;
 import project.repository.UserRepository;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
 @Service
 public class ItemService {
     private final ItemRepository itemRepository;
     @Autowired
-    private  CategoryService categoryService;
+    private SubCategoryService subCategoryService;
     private final UserRepository userRepository;
-//    private final UserService userService;
     private final ImageService imageService;
     private final UserService userService;
     @Autowired
@@ -42,152 +43,148 @@ public class ItemService {
         this.itemRepository = itemRepository;
 
         this.userRepository = userRepository;
-//        this.userService = userService;
         this.imageService = imageService;
         this.userService = userService;
     }
-    public Item findById(Long id) {
+    public ItemEntity findById(Long id) {
 
-       Item item= itemRepository.findById(id)
-               .orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
+       ItemEntity itemEntity = itemRepository.findById(id)
+               .orElseThrow(() -> new ResourceNotFoundException("ItemEntity", "id", id));
 
-       Long countOfViews = item.getCountOfViews();
+       Long countOfViews = itemEntity.getCountOfViews();
        countOfViews++;
-        item.setCountOfViews(countOfViews);
-        this.save(item);
+        itemEntity.setCountOfViews(countOfViews);
+        this.save(itemEntity);
 
-        return item;
+        return itemEntity;
     }
 
-    public boolean isCreator(Item item) {
-        return (this.getAuthenticatedUser() == item.getUser());
+    public boolean isCreator(ItemEntity itemEntity) {
+        return (this.getAuthenticatedUser() == itemEntity.getUserEntity());
     }
-    public List<Item> findAll() {
+    public List<ItemEntity> findAll() {
        return itemRepository.findAll();
     }
 
     @Transactional
-    public Item addItem(ItemDto itemDto, MultipartFile[] images) {
+    public ItemEntity addItem(ItemDto itemDto, MultipartFile[] images) {
         System.out.println(itemDto.toString());
-        Item item = new Item();
+        ItemEntity itemEntity = new ItemEntity();
 
-        //SET fields
-        item.setTitle(itemDto.getTitle());
-        item.setDescription(itemDto.getDescription());
-        item.setPrice(Double.valueOf( itemDto.getPrice() ) );
+        itemEntity.setTitle(itemDto.getTitle());
+        itemEntity.setDescription(itemDto.getDescription());
+        itemEntity.setPrice(Double.valueOf( itemDto.getPrice() ) );
 
-        Category category = categoryService.findById(itemDto.getCategoryId());
-        item.setCategory(category);
+        SubCategoryEntity subCategoryEntity = subCategoryService.findById(itemDto.getCategoryId());
+        itemEntity.setSubCategoryEntity(subCategoryEntity);
 
         try {
-            User  user = userService.getAuthenticatedUser();
+            UserEntity userEntity = userService.getAuthenticatedUser();
 
 //
-        item.setUser(user);
-        userRepository.save(user);
-        itemRepository.save(item);
+        itemEntity.setUserEntity(userEntity);
+        userRepository.save(userEntity);
+        itemRepository.save(itemEntity);
         int images_count = 0;
-        /**
-         * adding images to File System && Database
-         */
+
             for (MultipartFile file: images ) {
                 try {
-                   Image image =  imageService.addImage(item,file,images_count++);
-                    item.getImageList().add(image);
+                   ImageEntity imageEntity =  imageService.addImage(itemEntity,file,images_count++);
+                    itemEntity.getImageEntityList().add(imageEntity);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-        itemRepository.save(item);
+        itemRepository.save(itemEntity);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return item;
+        return itemEntity;
 
     }
     @Transactional
-    public Item changeItem(Long itemId,ItemDto itemDetails) {
-        Item item = itemRepository.findById(itemId)
-                .orElseThrow(() -> new ResourceNotFoundException("Item", "id", itemId));
+    public ItemEntity changeItem(Long itemId, ItemDto itemDetails) {
+        ItemEntity itemEntity = itemRepository.findById(itemId)
+                .orElseThrow(() -> new ResourceNotFoundException("ItemEntity", "id", itemId));
 
-        item.setTitle(itemDetails.getTitle());
-        item.setDescription(itemDetails.getDescription());
-        item.setPrice(itemDetails.getPrice());
-        item.setCategory(categoryService.findById(itemDetails.getCategoryId()));
+        itemEntity.setTitle(itemDetails.getTitle());
+        itemEntity.setDescription(itemDetails.getDescription());
+        itemEntity.setPrice(itemDetails.getPrice());
+        itemEntity.setSubCategoryEntity(subCategoryService.findById(itemDetails.getCategoryId()));
 
 
-        Item updatedItem = itemRepository.save(item);
-        return updatedItem;
+        ItemEntity updatedItemEntity = itemRepository.save(itemEntity);
+        return updatedItemEntity;
     }
 
     @Transactional
-    public void deleteItem(Long id) /*throws Exception*/ {
-        User user = this.getAuthenticatedUser();
+    public void deleteItem(Long id)  {
+        UserEntity userEntity = this.getAuthenticatedUser();
 
-        Item item = itemRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Item", "id", id));
-        //Check, is this logined user created or is admin
-        if (user == item.getUser()
-                || user.getRoleName().equals("ADMIN")) {
+        ItemEntity itemEntity = itemRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("ItemEntity", "id", id));
 
-            deletedImagesPathService.saveDeletedImagesPathFromImageList(item.getImageList());
-           item.getImageList().forEach(img -> {
+        if (userEntity == itemEntity.getUserEntity()
+                || userEntity.getRoleName().equals("ADMIN")) {
+
+            deletedImagesPathService.saveDeletedImagesPathFromImageList(itemEntity.getImageEntityList());
+           itemEntity.getImageEntityList().forEach(img -> {
                             imageRepository.delete(img);
                                  });
-           itemRepository.delete(item);
+           itemRepository.delete(itemEntity);
 
         }
 
     }
     @Deprecated
-    public void deleteItem(Item item) {
-        imageService.deleteAllImages(item);
-//        itemRepository.save(item);
-        itemRepository.delete(item);
+    public void deleteItem(ItemEntity itemEntity) {
+        imageService.deleteAllImages(itemEntity);
+        itemRepository.delete(itemEntity);
 
     }
 
-    public List<Item> getRandomItems(){
+    public List<ItemEntity> getRandomItems(){
+
         return itemRepository.getRandomItems();
     }
 
 
     public Long getCountOfItems() {
+
         return itemRepository.count();
     }
 
 
 
-    public Page<Item> findAllByTitleOrDescription(String titleOrDescription, Pageable pageable){
+    public Page<ItemEntity> findAllByTitleOrDescription(String titleOrDescription, Pageable pageable){
 
-        Page<Item> allByTitleOrDescription = itemRepository.findAllByTitleOrDescription(titleOrDescription, pageable);
-        /* List<Item> items = StreamSupport.stream(allByTitleOrDescription.spliterator(), false)
-                .distinct()
-                .collect(Collectors.toList());*/
+        Page<ItemEntity> allByTitleOrDescription = itemRepository.findAllByTitleOrDescription(
+                titleOrDescription, pageable);
+
         return  allByTitleOrDescription;
     }
 
 
 
-    public void save(Item item){
-        itemRepository.save(item);
+    public void save(ItemEntity itemEntity){
+
+        itemRepository.save(itemEntity);
     }
 
-    /*RAFAEL*/
-    public Page<Item> findAllByCategory(Integer catId, Pageable pageable){
-        Category category = categoryService.findById(catId);
-        return itemRepository.findAllByCategory(category, pageable);
+    public Page<ItemEntity> findAllBySubCategory(Integer catId, Pageable pageable){
+        SubCategoryEntity subCategoryEntity = subCategoryService.findById(catId);
+        return itemRepository.findAllBySubCategoryEntity(subCategoryEntity, pageable);
     }
 
-    private User getAuthenticatedUser() {
+    private UserEntity getAuthenticatedUser() {
         try {
             return userService.getAuthenticatedUser();
         } catch (Exception e) {
-            throw new IllegalStateException("No logged in user");
+            throw new IllegalStateException("No logged in userEntity");
         }
     }
 
-    public List<Item> getAllItems() {
+    public List<ItemEntity> getAllItems() {
         return itemRepository.findAll();
     }
 }

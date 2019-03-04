@@ -5,7 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.exception.ResourceNotFoundException;
-import project.model.Image;
+import project.model.ImageEntity;
 import project.repository.ImageRepository;
 import project.service.ImageService;
 
@@ -39,13 +39,13 @@ public class ImageController {
     }
 
 
-    // Delete an Image
+    // Delete an ImageEntity
     @DeleteMapping("/static/images/{id}")
     public ResponseEntity<?> deleteImage(@PathVariable(value = "id") Long imageId) {
-        Image image = imageRepository.findById(imageId)
-                .orElseThrow(() -> new ResourceNotFoundException("Image", "id", imageId));
-        File file = new File(image.getFilePath());//
-        imageRepository.delete(image);            // TODO Arman check
+        ImageEntity imageEntity = imageRepository.findById(imageId)
+                .orElseThrow(() -> new ResourceNotFoundException("ImageEntity", "id", imageId));
+        File file = new File(imageEntity.getFilePath());//
+        imageRepository.delete(imageEntity);            // TODO Arman check
         file.delete();                            //
         return ResponseEntity.ok().build();
     }

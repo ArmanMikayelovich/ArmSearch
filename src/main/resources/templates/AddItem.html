@@ -16,7 +16,7 @@
         <table width="92%" height=24% border="0" align="center">
                   <td width="16%" height="69" align="left"><span style='padding-left:100px;'></span></td>
                 <td height="69" align="center" colspan="2">
-                    <a th:href="@{/user}">
+                    <a th:href="@{/userEntity}">
                         <input type="submit" name="name" value="My Account" width="100" class="text1"/>
                     </a>
                 </td>
@@ -42,7 +42,7 @@
                   <li class="drop-menu">
                       <a th:href="@{/home/categoryGroupId}" class="dropbtn">Electronics<span class="caret"></span></a>
                         <div class="dropdown-content">
-                            <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${electronicsGroup.categories}"></a>
+                            <a th:href="@{/home/categoryGroupId/categoryId}" th:each="subCategoryEntity : ${electronicsGroup.categories}"></a>
                         </div>
                   </li>
             	</ul>
@@ -52,7 +52,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">Real Estate<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${realEstateGroup.categories}"></a>
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="subCategoryEntity : ${realEstateGroup.categories}"></a>
                       </div>
                   </li>
             	</ul>
@@ -62,7 +62,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">Vehicles<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${vehiclesGroup.categories}"></a>
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="subCategoryEntity : ${vehiclesGroup.categories}"></a>
                       </div>
                   </li>
             	</ul>
@@ -72,7 +72,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">Services<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${servicesGroup.categories}"></a>
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="subCategoryEntity : ${servicesGroup.categories}"></a>
                       </div>
                   </li>
             	</ul>
@@ -82,7 +82,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">Jobs<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${jobsGroup.categories}"></a>
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="subCategoryEntity : ${jobsGroup.categories}"></a>
                       </div>
                   </li>
             	</ul>
@@ -92,7 +92,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">Fashion<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${fashionGroup.categories}"></a>
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="subCategoryEntity : ${fashionGroup.categories}"></a>
                       </div>
                   </li>
             	</ul>
@@ -102,7 +102,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">Tools and Materials<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${toolsAndMaterialsGroup.categories}"></a>
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="subCategoryEntity : ${toolsAndMaterialsGroup.categories}"></a>
                       </div>
                   </li>
             	</ul>
@@ -112,7 +112,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">Household<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${householdGroup.categories}"></a>
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="subCategoryEntity : ${householdGroup.categories}"></a>
                       </div>
                   </li>
             	</ul>
@@ -122,7 +122,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">For Kids<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${forKidsGroup.categories}"></a>
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="subCategoryEntity : ${forKidsGroup.categories}"></a>
                       </div>
                   </li>
             	</ul>
@@ -132,7 +132,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">Culture and Hobby<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${cultureAndHobbyGroup.categories}"></a>
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="subCategoryEntity : ${cultureAndHobbyGroup.categories}"></a>
                       </div>
                   </li>
             	</ul>
@@ -142,7 +142,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">Appliances<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${appliancesGroup.categories}"></a>
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="subCategoryEntity : ${appliancesGroup.categories}"></a>
                       </div>
                   </li>
             	</ul>
@@ -152,7 +152,7 @@
                   <li class="drop-menu">
                   <a th:href="@{/home/categoryGroupId}" class="dropbtn">Everythink Else<span class="caret"></span> </a>
                       <div class="dropdown-content">
-                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="category : ${everythinkElseGroup.categories}"></a>
+                          <a th:href="@{/home/categoryGroupId/categoryId}" th:each="subCategoryEntity : ${everythinkElseGroup.categories}"></a>
                       </div>
                   </li>
             	</ul>
@@ -164,16 +164,16 @@
     
     <div class="container">
         <div class="list">
-           <form th:each="item : ${randomItemList}">
-                <article class="list--item">
+           <form th:each="itemEntity : ${randomItemList}">
+                <article class="list--itemEntity">
                   <figure>
-                    <img src="item.imageList.get(0).getFilePath()">
+                    <img src="itemEntity.imageEntityList.get(0).getFilePath()">
                     <header>
-                     <div th:utext="${item.price}"></div>
+                     <div th:utext="${itemEntity.price}"></div>
 
                     </header>
-                    <figcaption th:utext="${item.title}">
-                      <a class="da-TBButton" th:href="@{'/item/'+ ${item.getId()}}" target="_blank">Learn More</a>
+                    <figcaption th:utext="${itemEntity.title}">
+                      <a class="da-TBButton" th:href="@{'/itemEntity/'+ ${itemEntity.getId()}}" target="_blank">Learn More</a>
                     </figcaption>
                   </figure>
                 </article>

@@ -1,3 +1,9 @@
+/**
+ * this class calls the methods of ImageRepository interface
+ * in its own methods which are used in the controller layer.
+ * This helps to divide the code into logical peaces
+ */
+
 package project.service;
 
 import org.apache.commons.io.FilenameUtils;
@@ -8,9 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import project.exception.ResourceNotFoundException;
-import project.model.DeletedImagesPath;
-import project.model.Image;
-import project.model.Item;
+import project.model.ImageEntity;
+import project.model.ItemEntity;
 import project.repository.ImageRepository;
 
 import java.io.*;
@@ -27,12 +32,12 @@ public class ImageService {
     }
 
     @Transactional
-    public Image addImage(Item item, MultipartFile imgFile,int id) throws IOException {
-        Image image = new Image();
-        image.setItem(item);
+    public ImageEntity addImage(ItemEntity itemEntity, MultipartFile imgFile, int id) throws IOException {
+        ImageEntity imageEntity = new ImageEntity();
+        imageEntity.setItemEntity(itemEntity);
 
         String fileExtension = FilenameUtils.getExtension(imgFile.getOriginalFilename());
-        String fileName = "itemImages/"+ item.getId() + "_" + id + "." + fileExtension;
+        String fileName = "itemImages/"+ itemEntity.getId() + "_" + id + "." + fileExtension;
         try {
 
             byte[] bytes = imgFile.getBytes();
@@ -40,19 +45,19 @@ public class ImageService {
                     new BufferedOutputStream(new FileOutputStream(new File(fileName)));
             stream.write(bytes);
             stream.close();
-            image.setFilePath(fileName);
+            imageEntity.setFilePath(fileName);
         } catch (Exception e) {
             throw new IOException();
         }
-        imageRepository.save(image);
-        return image;
+        imageRepository.save(imageEntity);
+        return imageEntity;
     }
     @Transactional
     public void deleteImage (Long imageId){
-        Image image = imageRepository.findById(imageId)
-                .orElseThrow(() -> new ResourceNotFoundException("Image", "id", imageId));
-        File file = new File(image.getFilePath());
-        imageRepository.delete(image);
+        ImageEntity imageEntity = imageRepository.findById(imageId)
+                .orElseThrow(() -> new ResourceNotFoundException("ImageEntity", "id", imageId));
+        File file = new File(imageEntity.getFilePath());
+        imageRepository.delete(imageEntity);
         file.delete();
     }
 
@@ -81,9 +86,9 @@ public class ImageService {
         return bytesArray;
     }
 
-    public void deleteAllImages(Item item) {
-        deletedImagesPathService.saveDeletedImagesPathFromImageList(item.getImageList());
-        item.getImageList().forEach(imageRepository::delete);
+    public void deleteAllImages(ItemEntity itemEntity) {
+        deletedImagesPathService.saveDeletedImagesPathFromImageList(itemEntity.getImageEntityList());
+        itemEntity.getImageEntityList().forEach(imageRepository::delete);
         imageRepository.flush();
 
     }

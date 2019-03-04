@@ -1,9 +1,15 @@
+/**
+ * this class calls the methods of DeletedImagePathRepository interface
+ * in its own methods which are used in the controller layer.
+ * This helps to divide the code into logical peaces
+ */
+
 package project.service;
 
 import lombok.Data;
 import org.springframework.stereotype.Service;
-import project.model.DeletedImagesPath;
-import project.model.Image;
+import project.model.DeletedImagesPathEntity;
+import project.model.ImageEntity;
 import project.repository.DeletedImagesPathRepository;
 
 import java.util.List;
@@ -14,18 +20,18 @@ public class DeletedImagesPathService {
 
     private  final DeletedImagesPathRepository deletedImagesPathRepository;
 
-    public void saveDeletedImagesPathFromImageList(List<Image> imageList){
+    public void saveDeletedImagesPathFromImageList(List<ImageEntity> imageEntityList){
 
-        for (Image img: imageList) {
+        for (ImageEntity img: imageEntityList) {
 
-            DeletedImagesPath DIP = new DeletedImagesPath();
+            DeletedImagesPathEntity DIP = new DeletedImagesPathEntity();
             DIP.setFilePath(img.getFilePath());
             deletedImagesPathRepository.save(DIP);
         }
     }
 
 
-    public List<DeletedImagesPath> findAllDeletedImagesPaths() {
+    public List<DeletedImagesPathEntity> findAllDeletedImagesPaths() {
         return deletedImagesPathRepository.findAll();
 
     }

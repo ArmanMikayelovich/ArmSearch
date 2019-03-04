@@ -90,7 +90,7 @@
 			<!--<div align="left">-->
 			<!--<ul align="left" class="d-flex flex-row align-items-start justify-content-start">-->
 			<!--<div sec:authorize="isAuthenticated()">-->
-			<!--<li class="block" style="float:left;"><a th:href="@{'/users/'+ ${user.id} }">My Account</a></li>-->
+			<!--<li class="block" style="float:left;"><a th:href="@{'/users/'+ ${userEntity.id} }">My Account</a></li>-->
 			<!--<li class="block" style="float:left;"><a th:href="@{/addItem}">+ Post to Classifieds</a></li>-->
 			<!--<li class="block" style="float:left;"><a th:href="@{'/logout'}">Log Out</a></li>-->
 			<!--</div>-->
@@ -111,8 +111,8 @@
 						<button class="header_search_button"><img th:src="@{/images/search.png}" alt=""></button>
 					</form>
 				</div>
-				<!-- User -->
-				<!--<div class="user"><a href="#"><div><img th:th:src="@{/@{/../static/images/user.svg" alt="https://www.flaticon.com/authors/freepik"><div>1</div></div></a></div>-->
+				<!-- UserEntity -->
+				<!--<div class="userEntity"><a href="#"><div><img th:th:src="@{/@{/../static/images/userEntity.svg" alt="https://www.flaticon.com/authors/freepik"><div>1</div></div></a></div>-->
 				<!-- Cart -->
 				<!--<div class="cart"><a href="cart.html"><div><img class="svg" th:th:src="@{/@{/../static/images/cart.svg" alt="https://www.flaticon.com/authors/freepik"></div></a></div>-->
 				<!-- Phone -->
@@ -141,8 +141,8 @@
 		<!--<li class="drop-menu">-->
 		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Electronics<span class="caret"></span></a>-->
 		<!--<div class="dropdown-content">-->
-		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${electronicsGroup.categories}">-->
-		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${electronicsGroup.categories}">-->
+		<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 		<!--</a>-->
 		<!--</div>-->
 		<!--</li>-->
@@ -153,8 +153,8 @@
 		<!--<li class="drop-menu">-->
 		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Real Estate<span class="caret"></span> </a>-->
 		<!--<div class="dropdown-content">-->
-		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${realEstateGroup.categories}">-->
-		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${realEstateGroup.categories}">-->
+		<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 		<!--</a>-->
 		<!--</div>-->
 		<!--</li>-->
@@ -165,8 +165,8 @@
 		<!--<li class="drop-menu">-->
 		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Vehicles<span class="caret"></span> </a>-->
 		<!--<div class="dropdown-content">-->
-		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${vehiclesGroup.categories}">-->
-		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${vehiclesGroup.categories}">-->
+		<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 		<!--</a>-->
 		<!--</div>-->
 		<!--</li>-->
@@ -177,8 +177,8 @@
 		<!--<li class="drop-menu">-->
 		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Services<span class="caret"></span> </a>-->
 		<!--<div class="dropdown-content">-->
-		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${servicesGroup.categories}">-->
-		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${servicesGroup.categories}">-->
+		<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 		<!--</a>-->
 		<!--</div>-->
 		<!--</li>-->
@@ -189,8 +189,8 @@
 		<!--<li class="drop-menu">-->
 		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Jobs<span class="caret"></span> </a>-->
 		<!--<div class="dropdown-content">-->
-		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${jobsGroup.categories}">-->
-		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${jobsGroup.categories}">-->
+		<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 		<!--</a>-->
 		<!--</div>-->
 		<!--</li>-->
@@ -201,8 +201,8 @@
 		<!--<li class="drop-menu">-->
 		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Fashion<span class="caret"></span> </a>-->
 		<!--<div class="dropdown-content">-->
-		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${fashionGroup.categories}">-->
-		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${fashionGroup.categories}">-->
+		<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 		<!--</a>-->
 		<!--</div>-->
 		<!--</li>-->
@@ -214,8 +214,8 @@
 		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Tools and Materials<span class="caret"></span> </a>-->
 		<!--<div class="dropdown-content">-->
 
-		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${toolsAndMaterialsGroup.categories}">-->
-		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${toolsAndMaterialsGroup.categories}">-->
+		<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 		<!--</a>-->
 		<!--</div>-->
 		<!--</li>-->
@@ -226,8 +226,8 @@
 		<!--<li class="drop-menu">-->
 		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Household<span class="caret"></span> </a>-->
 		<!--<div class="dropdown-content">-->
-		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${householdGroup.categories}">-->
-		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${householdGroup.categories}">-->
+		<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 		<!--</a>-->
 		<!--</div>-->
 		<!--</li>-->
@@ -238,8 +238,8 @@
 		<!--<li class="drop-menu">-->
 		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">For Kids<span class="caret"></span> </a>-->
 		<!--<div class="dropdown-content">-->
-		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${forKidsGroup.categories}">-->
-		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${forKidsGroup.categories}">-->
+		<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 		<!--</a>-->
 		<!--</div>-->
 		<!--</li>-->
@@ -250,8 +250,8 @@
 		<!--<li class="drop-menu">-->
 		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Culture and Hobby<span class="caret"></span> </a>-->
 		<!--<div class="dropdown-content">-->
-		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${cultureAndHobbyGroup.categories}">-->
-		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${cultureAndHobbyGroup.categories}">-->
+		<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 		<!--</a>-->
 		<!--</div>-->
 		<!--</li>-->
@@ -262,8 +262,8 @@
 		<!--<li class="drop-menu">-->
 		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Appliances<span class="caret"></span> </a>-->
 		<!--<div class="dropdown-content">-->
-		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${appliancesGroup.categories}">-->
-		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${appliancesGroup.categories}">-->
+		<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 		<!--</a>-->
 		<!--</div>-->
 		<!--</li>-->
@@ -274,8 +274,8 @@
 		<!--<li class="drop-menu">-->
 		<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Everythink Else<span class="caret"></span> </a>-->
 		<!--<div class="dropdown-content">-->
-		<!--<a th:href="@{'categories/'+${category.getId()} }" th:each="category : ${everythinkElseGroup.categories}">-->
-		<!--<label th:utext="${category.getName()}">...</label>-->
+		<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${everythinkElseGroup.categories}">-->
+		<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
 		<!--</a>-->
 		<!--</div>-->
 		<!--</li>-->

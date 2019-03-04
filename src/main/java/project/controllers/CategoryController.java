@@ -3,19 +3,18 @@ package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
 import project.dto.CategoryDto;
-import project.model.Category;
-import project.model.CategoryGroup;
-import project.model.User;
-import project.repository.CategoryGroupRepository;
-
+import project.model.CategoryEntity;
+import project.model.SubCategoryEntity;
+import project.model.UserEntity;
 import project.repository.CategoryRepository;
-import project.service.CategoryGroupService;
+
+import project.repository.SubCategoryRepository;
 import project.service.CategoryService;
+import project.service.SubCategoryService;
 import project.service.UserService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -26,64 +25,64 @@ import java.util.List;
 @RequestMapping
 public class CategoryController {
     @Autowired
-    CategoryRepository categoryRepository;
+    SubCategoryRepository subCategoryRepository;
     @Autowired
-    CategoryGroupRepository categoryGroupRepository;
+    CategoryRepository categoryRepository;
 
-    private final CategoryService categoryService;
+    private final SubCategoryService subCategoryService;
     private final UserService userService;
 
-    private final CategoryGroupService categoryGroupService;
- public CategoryController(CategoryService categoryService, UserService userService, CategoryGroupService categoryGroupService) {
-        this.categoryService = categoryService;
+    private final CategoryService categoryService;
+ public CategoryController(SubCategoryService subCategoryService, UserService userService, CategoryService categoryService) {
+        this.subCategoryService = subCategoryService;
         this.userService = userService;
-        this.categoryGroupService = categoryGroupService;
+        this.categoryService = categoryService;
     }
 
     // Get All Categories
     @GetMapping("/addCategory")
     public ModelAndView getAllCategories() {
         ModelAndView modelAndView = new ModelAndView("addCategory");
-        modelAndView.addObject("groups", categoryGroupRepository.findAll());
+        modelAndView.addObject("groups", categoryRepository.findAll());
 
         return modelAndView;
     }
 
-    // Create a new Category //TODO this must be accesible only for admins and delete
+    // Create a new SubCategoryEntity //TODO this must be accesible only for admins and delete
     @PostMapping(value = "/addCategory")
 
-    public Category createCategory(CategoryDto categoryDto) {
+    public SubCategoryEntity createCategory(CategoryDto categoryDto) {
 
-        Category category;
-        category = categoryService.createCategory(categoryDto);
+        SubCategoryEntity subCategoryEntity;
+        subCategoryEntity = subCategoryService.createCategory(categoryDto);
 
-        return categoryRepository.save(category);
+        return subCategoryRepository.save(subCategoryEntity);
     }
 
-    // Get a Single category
+    // Get a Single subCategoryEntity
     @GetMapping("/categories/{id}")
     public ModelAndView getCategoryById(@PathVariable(value = "id") Integer categoryId) {
         ModelAndView view = new ModelAndView("Category");
-        categoryService.getCategoriesWithTheirGroups(view);
-        view.addObject("itemList", categoryService.findById(categoryId).getItemList());
+        subCategoryService.getCategoriesWithTheirGroups(view);
+        view.addObject("itemList", subCategoryService.findById(categoryId).getItemEntityList());
         try {
-            User auth = userService.getAuthenticatedUser();
+            UserEntity auth = userService.getAuthenticatedUser();
             view.addObject("user", auth);
 
         } catch (Exception e) {
-            User adminpage = userService.getUserById(1);
-            view.addObject("user", adminpage);
+            UserEntity adminpage = userService.getUserById(1);
+            view.addObject("userEntity", adminpage);
 
         }
         return view;
     }
 
 
-    // Delete a Category //TODO @PostMapping or @GetMapping for easy deleting from front-end...
+    // Delete a SubCategoryEntity //TODO @PostMapping or @GetMapping for easy deleting from front-end...
     @PostMapping("/deleteCategory/{id}")
     public void deleteCategory(@PathVariable(value = "id") Integer categoryId, HttpServletResponse response) {
 
-        categoryService.deleteCategory(categoryId);
+        subCategoryService.deleteCategory(categoryId);
         try {
             response.sendRedirect("/admin/categories");
         } catch (IOException e) {
@@ -92,9 +91,9 @@ public class CategoryController {
     }
 
     @GetMapping("/getCategoryList")
-    public List<Category> getCategoryList(@RequestParam(value = "id") Integer id) {
-        CategoryGroup group = categoryGroupRepository.findById(id).get();
-        return group.getCategories();
+    public List<SubCategoryEntity> getCategoryList(@RequestParam(value = "id") Integer id) {
+        CategoryEntity group = categoryRepository.findById(id).get();
+        return group.getSubCategoryEntities();
     }
 
 }

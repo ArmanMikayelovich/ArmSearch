@@ -10,14 +10,14 @@ jQuery(function ($) {
 	$(document).ready(function () {
     
     
-     $('.wnd-product-categories').on('click','.wnd-add-new-category', function(e) {
+     $('.wnd-product-categories').on('click','.wnd-add-new-subCategoryEntity', function(e) {
            $(this).addClass('hide');
-           $('.wnd-form-item.edit-new-category').removeClass('hide').find('input[type="text"]').focus();
+           $('.wnd-form-itemEntity.edit-new-subCategoryEntity').removeClass('hide').find('input[type="text"]').focus();
      });
     
-    $('.wnd-product-categories').on('click','.wnd-form-item.edit-new-category .wnd-ctrl-type-close', function(e) {
-           $('.wnd-product-categories .wnd-add-new-category').removeClass('hide');
-           $('.wnd-form-item.edit-new-category').addClass('hide');
+    $('.wnd-product-categories').on('click','.wnd-form-itemEntity.edit-new-subCategoryEntity .wnd-ctrl-type-close', function(e) {
+           $('.wnd-product-categories .wnd-add-new-subCategoryEntity').removeClass('hide');
+           $('.wnd-form-itemEntity.edit-new-subCategoryEntity').addClass('hide');
     });
     
     $('form').on('submit',function(e) {
@@ -28,12 +28,12 @@ jQuery(function ($) {
         var newCategoryName = $('input[type="text"]').val();
         var randomId = (Math.random() + 1).toString(36).substring(7);
         $('.wnd-product-categories').find('.wnd-form-checkbox:last').after('<div class="wnd-form-checkbox hide"> \
-							<input type="checkbox" id="wnd-popup-product_category_' + randomId + '" name="category-' + randomId + '4"> \
+							<input type="checkbox" id="wnd-popup-product_category_' + randomId + '" name="subCategoryEntity-' + randomId + '4"> \
 							<label for="wnd-popup-product_category_' + randomId + '">' + newCategoryName + '</label> \
 						</div>');
         $('input[type="text"]').val('').blur();
-        $('.wnd-form-item.edit-new-category').addClass('hide');
-        $('.wnd-product-categories .wnd-add-new-category').removeClass('hide');
+        $('.wnd-form-itemEntity.edit-new-subCategoryEntity').addClass('hide');
+        $('.wnd-product-categories .wnd-add-new-subCategoryEntity').removeClass('hide');
         $('.wnd-product-categories').find('.wnd-form-checkbox:last').removeClass('hide');
 			}
      
@@ -45,29 +45,29 @@ jQuery(function ($) {
   <style>
  
 
-	.wnd-product-edit .wnd-form-item.edit-new-category {
+	.wnd-product-edit .wnd-form-itemEntity.edit-new-subCategoryEntity {
 		margin: 0;
 		display: inline-block;
 		min-height: 0;
 	}
 
 
-		.wnd-product-edit .wnd-form-item.edit-new-category.hide {
+		.wnd-product-edit .wnd-form-itemEntity.edit-new-subCategoryEntity.hide {
 			display: none;
 		}
 
-		.wnd-product-edit .wnd-form-item.edit-new-category .wnd-form-short-text {
+		.wnd-product-edit .wnd-form-itemEntity.edit-new-subCategoryEntity .wnd-form-short-text {
 			padding: 0;
 		}
 
-		.wnd-product-edit .wnd-form-item.edit-new-category input[type="text"] {
+		.wnd-product-edit .wnd-form-itemEntity.edit-new-subCategoryEntity input[type="text"] {
 			padding-right: 30px;
 			margin-top: 0;
 		}
-.wnd-product-edit .wnd-form-item.edit-new-category {
+.wnd-product-edit .wnd-form-itemEntity.edit-new-subCategoryEntity {
   position: relative;
 }
-		.wnd-product-edit .wnd-form-item.edit-new-category b.wnd-ctrl-type-close {
+		.wnd-product-edit .wnd-form-itemEntity.edit-new-subCategoryEntity b.wnd-ctrl-type-close {
 			color: #dde4ea;
 			border: none;
 			padding: 3px;
@@ -80,13 +80,13 @@ jQuery(function ($) {
       cursor: pointer;
 		}
 
-			.wnd-product-edit .wnd-form-item.edit-new-category b.wnd-ctrl-type-close:hover {
+			.wnd-product-edit .wnd-form-itemEntity.edit-new-subCategoryEntity b.wnd-ctrl-type-close:hover {
 				color: #a2caee;
 				background-color: transparent;
 			}
 
 
-.wnd-product-edit .wnd-form-item input[type="text"] {
+.wnd-product-edit .wnd-form-itemEntity input[type="text"] {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	-ms-appearance: none;
@@ -104,11 +104,11 @@ jQuery(function ($) {
 		color: #54606e;
 	}
 
-		.wnd-product-edit .wnd-form-item-active .wnd-form-short-text input,
+		.wnd-product-edit .wnd-form-itemEntity-active .wnd-form-short-text input,
 		.wnd-product-edit .wnd-form-short-text input:focus,
-		.wnd-product-edit .wnd-form-item-active .wnd-form-long-text textarea,
+		.wnd-product-edit .wnd-form-itemEntity-active .wnd-form-long-text textarea,
 		.wnd-product-edit .wnd-form-long-text textarea:focus,
-		.wnd-product-edit .wnd-form-item-active .wnd-form-wysiwyg .wnd-touchwysiwyg,
+		.wnd-product-edit .wnd-form-itemEntity-active .wnd-form-wysiwyg .wnd-touchwysiwyg,
 		.wnd-product-edit .wnd-form-wysiwyg .wnd-touchwysiwyg[contenteditable]:focus,
 		.wnd-product-edit .wnd-form-wysiwyg .wnd-touchwysiwyg[contenteditable="true"]:focus{
 			border-color: #a2caee;
@@ -152,7 +152,7 @@ jQuery(function ($) {
       line-height: 1;
 		}
 
-	.wnd-product-categories .wnd-add-new-category {
+	.wnd-product-categories .wnd-add-new-subCategoryEntity {
 		display: inline-block;
 		white-space: nowrap;
 		color: #4593e2;
@@ -160,15 +160,15 @@ jQuery(function ($) {
 		line-height: 2.25;
 	}
 
-		.wnd-product-categories .wnd-add-new-category.hide {
+		.wnd-product-categories .wnd-add-new-subCategoryEntity.hide {
 			display: none;
 		}
 
-		.wnd-product-categories .wnd-add-new-category:hover {
+		.wnd-product-categories .wnd-add-new-subCategoryEntity:hover {
 			color: #007aff;
 		}
 
-		.wnd-product-categories .wnd-add-new-category::before {
+		.wnd-product-categories .wnd-add-new-subCategoryEntity::before {
 			display: inline-block;
 			width: 14px;
 			height: 14px;
@@ -204,7 +204,7 @@ body {
 
 				<div>
 					<div>
-						<input type="text" name="name"  placeholder="Enter category name…" size="20" maxlength="50"> <div class="wnd-add-new-category"> Add new category </div>
+						<input type="text" name="name"  placeholder="Enter subCategoryEntity name…" size="20" maxlength="50"> <div class="wnd-add-new-subCategoryEntity"> Add new subCategoryEntity </div>
 					</div>
 				</div>
 

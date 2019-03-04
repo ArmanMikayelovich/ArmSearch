@@ -448,15 +448,15 @@
     <main class="admin__main">
         <h2>Items Page</h2>
         <table>
-            <tr th:each="item : ${itemList}">
-                <td th:utext="'ID: ' + ${item.getId()}">...</td>
-                <td th:utext="'|| Title:  ' + ${item.getTitle()}">...</td>
-                <td <a th:utext="' || User :  ' + ${item.getUser().getFirstName()} + ' ' + ${item.getUser().getLastName()}"
-                       th:href="@{'/users/'+ ${item.getUser().getId()}}">.</a>...</td>
-                <td th:utext="'  || count of views:' +  ${item.getCountOfViews()}">...</td>
+            <tr th:each="itemEntity : ${itemEntityList}">
+                <td th:utext="'ID: ' + ${itemEntity.getId()}">...</td>
+                <td th:utext="'|| Title:  ' + ${itemEntity.getTitle()}">...</td>
+                <td <a th:utext="' || User :  ' + ${itemEntity.getUserEntity().getFirstName()} + ' ' + ${itemEntity.getUserEntity().getLastName()}"
+                       th:href="@{'/users/'+ ${itemEntity.getUserEntity().getId()}}">.</a>...</td>
+                <td th:utext="'  || count of views:' +  ${itemEntity.getCountOfViews()}">...</td>
                 <td>
-                    <form method="post" th:action="@{'/deleteItem/' + ${item.getId()}} ">
-                        <button class="fa fa-close"   title="delete item" value="delete item" type="submit"></button>
+                    <form method="post" th:action="@{'/deleteItem/' + ${itemEntity.getId()}} ">
+                        <button class="fa fa-close"   title="delete itemEntity" value="delete itemEntity" type="submit"></button>
                     </form>
                 </td>
             </tr>

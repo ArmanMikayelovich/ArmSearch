@@ -148,7 +148,7 @@ $(document).ready(function()
     	if($('.grid').length)
     	{
     		var grid = $('.grid').isotope({
-	  			itemSelector: '.grid-item',
+	  			itemSelector: '.grid-itemEntity',
 	  			percentPosition: true,
 	  			masonry:
 	  			{

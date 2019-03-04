@@ -452,16 +452,16 @@
     <main class="admin__main">
         <h2>Categories Page</h2>
         <table>
-            <tr th:each="category : ${categoryList}">
-                <td th:utext="'ID: ' + ${category.getId()}">...</td>
-                <td th:utext="' || Name:  '+ ${category.getName()}">...</td>
-                <td th:utext="'  || count of items:' +  ${category.getItemList().size()}">...</td>
-                <td>  <a th:utext="'Go to category page'" th:href="'/?catId='+${category.getId()}">...</a></td>
+            <tr th:each="subCategoryEntity : ${categoryList}">
+                <td th:utext="'ID: ' + ${subCategoryEntity.getId()}">...</td>
+                <td th:utext="' || Name:  '+ ${subCategoryEntity.getName()}">...</td>
+                <td th:utext="'  || count of items:' +  ${subCategoryEntity.getItemEntityList().size()}">...</td>
+                <td>  <a th:utext="'Go to subCategoryEntity page'" th:href="'/?catId='+${subCategoryEntity.getId()}">...</a></td>
 
                 <td>
 
-                    <form method="post" th:action="@{'/deleteCategory/' + ${category.getId()}}">
-                        <button class="fa fa-close"   title="delete category" value="delete category" type="submit"></button>
+                    <form method="post" th:action="@{'/deleteCategory/' + ${subCategoryEntity.getId()}}">
+                        <button class="fa fa-close"   title="delete subCategoryEntity" value="delete subCategoryEntity" type="submit"></button>
                     </form>
                 </td>
             </tr>

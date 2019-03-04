@@ -209,7 +209,7 @@
 		rtlClass: 'owl-rtl',
 		responsiveClass: 'owl-responsive',
 		dragClass: 'owl-drag',
-		itemClass: 'owl-item',
+		itemClass: 'owl-itemEntity',
 		stageClass: 'owl-stage',
 		stageOuterClass: 'owl-stage-outer',
 		grabClass: 'owl-grab'
@@ -532,10 +532,10 @@
 	};
 
 	/**
-	 * Prepares an item before add.
-	 * @todo Rename event parameter `content` to `item`.
+	 * Prepares an itemEntity before add.
+	 * @todo Rename event parameter `content` to `itemEntity`.
 	 * @protected
-	 * @returns {jQuery|HTMLElement} - The item container.
+	 * @returns {jQuery|HTMLElement} - The itemEntity container.
 	 */
 	Owl.prototype.prepare = function(item) {
 		var event = this.trigger('prepare', { content: item });
@@ -815,12 +815,12 @@
 	};
 
 	/**
-	 * Gets absolute position of the closest item for a coordinate.
+	 * Gets absolute position of the closest itemEntity for a coordinate.
 	 * @todo Setting `freeDrag` makes `closest` not reusable. See #165.
 	 * @protected
 	 * @param {Number} coordinate - The coordinate in pixel.
-	 * @param {String} direction - The direction to check for the closest item. Ether `left` or `right`.
-	 * @return {Number} - The absolute position of the closest item.
+	 * @param {String} direction - The direction to check for the closest itemEntity. Ether `left` or `right`.
+	 * @return {Number} - The absolute position of the closest itemEntity.
 	 */
 	Owl.prototype.closest = function(coordinate, direction) {
 		var position = -1,
@@ -829,7 +829,7 @@
 			coordinates = this.coordinates();
 
 		if (!this.settings.freeDrag) {
-			// check closest item
+			// check closest itemEntity
 			$.each(coordinates, $.proxy(function(index, value) {
 				// on a left pull, check on current index
 				if (direction === 'left' && coordinate > value - pull && coordinate < value + pull) {
@@ -900,10 +900,10 @@
 	};
 
 	/**
-	 * Sets the absolute position of the current item.
+	 * Sets the absolute position of the current itemEntity.
 	 * @public
 	 * @param {Number} [position] - The new absolute position or nothing to leave it unchanged.
-	 * @returns {Number} - The absolute position of the current item.
+	 * @returns {Number} - The absolute position of the current itemEntity.
 	 */
 	Owl.prototype.current = function(position) {
 		if (position === undefined) {
@@ -947,9 +947,9 @@
 	};
 
 	/**
-	 * Resets the absolute position of the current item.
+	 * Resets the absolute position of the current itemEntity.
 	 * @public
-	 * @param {Number} position - The absolute position of the new item.
+	 * @param {Number} position - The absolute position of the new itemEntity.
 	 */
 	Owl.prototype.reset = function(position) {
 		position = this.normalize(position);
@@ -969,7 +969,7 @@
 	};
 
 	/**
-	 * Normalizes an absolute or a relative position of an item.
+	 * Normalizes an absolute or a relative position of an itemEntity.
 	 * @public
 	 * @param {Number} position - The absolute or relative position to normalize.
 	 * @param {Boolean} [relative=false] - Whether the given position is relative or not.
@@ -989,7 +989,7 @@
 	};
 
 	/**
-	 * Converts an absolute position of an item into a relative one.
+	 * Converts an absolute position of an itemEntity into a relative one.
 	 * @public
 	 * @param {Number} position - The absolute position to convert.
 	 * @returns {Number} - The converted position.
@@ -1000,7 +1000,7 @@
 	};
 
 	/**
-	 * Gets the maximum position for the current item.
+	 * Gets the maximum position for the current itemEntity.
 	 * @public
 	 * @param {Boolean} [relative=false] - Whether to return an absolute position or a relative position.
 	 * @returns {Number}
@@ -1039,7 +1039,7 @@
 	};
 
 	/**
-	 * Gets the minimum position for the current item.
+	 * Gets the minimum position for the current itemEntity.
 	 * @public
 	 * @param {Boolean} [relative=false] - Whether to return an absolute position or a relative position.
 	 * @returns {Number}
@@ -1049,10 +1049,10 @@
 	};
 
 	/**
-	 * Gets an item at the specified relative position.
+	 * Gets an itemEntity at the specified relative position.
 	 * @public
-	 * @param {Number} [position] - The relative position of the item.
-	 * @return {jQuery|Array.<jQuery>} - The item at the given position or all items if no position was given.
+	 * @param {Number} [position] - The relative position of the itemEntity.
+	 * @return {jQuery|Array.<jQuery>} - The itemEntity at the given position or all items if no position was given.
 	 */
 	Owl.prototype.items = function(position) {
 		if (position === undefined) {
@@ -1064,10 +1064,10 @@
 	};
 
 	/**
-	 * Gets an item at the specified relative position.
+	 * Gets an itemEntity at the specified relative position.
 	 * @public
-	 * @param {Number} [position] - The relative position of the item.
-	 * @return {jQuery|Array.<jQuery>} - The item at the given position or all items if no position was given.
+	 * @param {Number} [position] - The relative position of the itemEntity.
+	 * @return {jQuery|Array.<jQuery>} - The itemEntity at the given position or all items if no position was given.
 	 */
 	Owl.prototype.mergers = function(position) {
 		if (position === undefined) {
@@ -1079,10 +1079,10 @@
 	};
 
 	/**
-	 * Gets the absolute positions of clones for an item.
+	 * Gets the absolute positions of clones for an itemEntity.
 	 * @public
-	 * @param {Number} [position] - The relative position of the item.
-	 * @returns {Array.<Number>} - The absolute positions of clones for the item or all if no position was given.
+	 * @param {Number} [position] - The relative position of the itemEntity.
+	 * @returns {Array.<Number>} - The absolute positions of clones for the itemEntity or all if no position was given.
 	 */
 	Owl.prototype.clones = function(position) {
 		var odd = this._clones.length / 2,
@@ -1111,11 +1111,11 @@
 	};
 
 	/**
-	 * Gets the coordinate of an item.
+	 * Gets the coordinate of an itemEntity.
 	 * @todo The name of this method is missleanding.
 	 * @public
-	 * @param {Number} position - The absolute position of the item within `minimum()` and `maximum()`.
-	 * @returns {Number|Array.<Number>} - The coordinate of the item in pixel or all coordinates.
+	 * @param {Number} position - The absolute position of the itemEntity within `minimum()` and `maximum()`.
+	 * @returns {Number|Array.<Number>} - The coordinate of the itemEntity in pixel or all coordinates.
 	 */
 	Owl.prototype.coordinates = function(position) {
 		var multiplier = 1,
@@ -1148,8 +1148,8 @@
 	/**
 	 * Calculates the speed for a translation.
 	 * @protected
-	 * @param {Number} from - The absolute position of the start item.
-	 * @param {Number} to - The absolute position of the target item.
+	 * @param {Number} from - The absolute position of the start itemEntity.
+	 * @param {Number} to - The absolute position of the target itemEntity.
 	 * @param {Number} [factor=undefined] - The time factor in milliseconds.
 	 * @returns {Number} - The time in milliseconds for the translation.
 	 */
@@ -1162,9 +1162,9 @@
 	};
 
 	/**
-	 * Slides to the specified item.
+	 * Slides to the specified itemEntity.
 	 * @public
-	 * @param {Number} position - The position of the item.
+	 * @param {Number} position - The position of the itemEntity.
 	 * @param {Number} [speed] - The time in milliseconds for the transition.
 	 */
 	Owl.prototype.to = function(position, speed) {
@@ -1205,7 +1205,7 @@
 	};
 
 	/**
-	 * Slides to the next item.
+	 * Slides to the next itemEntity.
 	 * @public
 	 * @param {Number} [speed] - The time in milliseconds for the transition.
 	 */
@@ -1215,7 +1215,7 @@
 	};
 
 	/**
-	 * Slides to the previous item.
+	 * Slides to the previous itemEntity.
 	 * @public
 	 * @param {Number} [speed] - The time in milliseconds for the transition.
 	 */
@@ -1296,11 +1296,11 @@
 	};
 
 	/**
-	 * Adds an item.
-	 * @todo Use `item` instead of `content` for the event arguments.
+	 * Adds an itemEntity.
+	 * @todo Use `itemEntity` instead of `content` for the event arguments.
 	 * @public
-	 * @param {HTMLElement|jQuery|String} content - The item content to add.
-	 * @param {Number} [position] - The relative position at which to insert the item otherwise the item will be added to the end.
+	 * @param {HTMLElement|jQuery|String} content - The itemEntity content to add.
+	 * @param {Number} [position] - The relative position at which to insert the itemEntity otherwise the itemEntity will be added to the end.
 	 */
 	Owl.prototype.add = function(content, position) {
 		var current = this.relative(this._current);
@@ -1331,10 +1331,10 @@
 	};
 
 	/**
-	 * Removes an item by its position.
-	 * @todo Use `item` instead of `content` for the event arguments.
+	 * Removes an itemEntity by its position.
+	 * @todo Use `itemEntity` instead of `content` for the event arguments.
 	 * @public
-	 * @param {Number} position - The relative position of the item to remove.
+	 * @param {Number} position - The relative position of the itemEntity to remove.
 	 */
 	Owl.prototype.remove = function(position) {
 		position = this.normalize(position, true);
@@ -1869,8 +1869,8 @@
 	};
 
 	/**
-	 * Loads all resources of an item at the specified position.
-	 * @param {Number} position - The absolute position of the item.
+	 * Loads all resources of an itemEntity at the specified position.
+	 * @param {Number} position - The absolute position of the itemEntity.
 	 * @protected
 	 */
 	Lazy.prototype.load = function(position) {
@@ -2055,7 +2055,7 @@
 		this._videos = {};
 
 		/**
-		 * Current playing item.
+		 * Current playing itemEntity.
 		 * @protected
 		 * @type {jQuery}
 		 */
@@ -2127,7 +2127,7 @@
 	 * Gets the video ID and the type (YouTube/Vimeo/vzaar only).
 	 * @protected
 	 * @param {jQuery} target - The target containing the video data.
-	 * @param {jQuery} item - The item containing the video.
+	 * @param {jQuery} item - The itemEntity containing the video.
 	 */
 	Video.prototype.fetch = function(target, item) {
 			var type = (function() {
@@ -2705,7 +2705,7 @@
 		this._pages = [];
 
 		/**
-		 * All DOM elements of the user interface.
+		 * All DOM elements of the userEntity interface.
 		 * @protected
 		 * @type {Object}
 		 */
@@ -2923,7 +2923,7 @@
 	};
 
 	/**
-	 * Draws the user interface.
+	 * Draws the userEntity interface.
 	 * @todo The option `dotsData` wont work.
 	 * @protected
 	 */
@@ -3011,7 +3011,7 @@
 	};
 
 	/**
-	 * Slides to the next item or page.
+	 * Slides to the next itemEntity or page.
 	 * @public
 	 * @param {Number} [speed=false] - The time in milliseconds for the transition.
 	 */
@@ -3020,7 +3020,7 @@
 	};
 
 	/**
-	 * Slides to the previous item or page.
+	 * Slides to the previous itemEntity or page.
 	 * @public
 	 * @param {Number} [speed=false] - The time in milliseconds for the transition.
 	 */
@@ -3029,9 +3029,9 @@
 	};
 
 	/**
-	 * Slides to the specified item or page.
+	 * Slides to the specified itemEntity or page.
 	 * @public
-	 * @param {Number} position - The position of the item or page.
+	 * @param {Number} position - The position of the itemEntity or page.
 	 * @param {Number} [speed] - The time in milliseconds for the transition.
 	 * @param {Boolean} [standard=false] - Whether to use the standard behaviour or not.
 	 */

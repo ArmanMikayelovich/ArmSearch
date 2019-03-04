@@ -452,18 +452,18 @@
     <main class="admin__main">
         <h2>Users Page</h2>
         <table>
-            <tr th:each="user : ${userList}">
-                <td th:utext="'ID: ' + ${user.getId()}">...</td>
-                <td th:utext="'|| E-mail:  ' + ${user.getEmail()}">...</td>
-                <td th:utext="' || Name:  '+ ${user.getFirstName()} + ' '+ ${user.getLastName()}">...
-                <td th:utext="'  || count of items:' +  ${user.getItemList().size()}">...</td>
-                <td>  <a th:utext="'Go to user page'" th:href="'/users/'+${user.getId()}">...</a></td>
+            <tr th:each="userEntity : ${userList}">
+                <td th:utext="'ID: ' + ${userEntity.getId()}">...</td>
+                <td th:utext="'|| E-mail:  ' + ${userEntity.getEmail()}">...</td>
+                <td th:utext="' || Name:  '+ ${userEntity.getFirstName()} + ' '+ ${userEntity.getLastName()}">...
+                <td th:utext="'  || count of items:' +  ${userEntity.getItemEntityList().size()}">...</td>
+                <td>  <a th:utext="'Go to userEntity page'" th:href="'/users/'+${userEntity.getId()}">...</a></td>
 
                 <td>
 
                     <form method="post" th:action="@{/deleteUserFromAdminPanel}">
-                            <input type="hidden" name="id" th:value="${user.getId()}">
-                        <button class="fa fa-close"   title="delete user" value="delete user" type="submit"></button>
+                            <input type="hidden" name="id" th:value="${userEntity.getId()}">
+                        <button class="fa fa-close"   title="delete userEntity" value="delete userEntity" type="submit"></button>
                     </form>
                 </td>
             </tr>

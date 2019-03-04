@@ -7,25 +7,19 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import project.dto.ItemDto;
-import project.exception.ResourceNotFoundException;
-import project.model.Category;
-import project.model.Image;
-import project.model.Item;
-import project.model.User;
-import project.repository.CategoryRepository;
+import project.model.ItemEntity;
+import project.model.UserEntity;
+import project.repository.SubCategoryRepository;
 import project.repository.ImageRepository;
 import project.repository.ItemRepository;
 import project.repository.UserRepository;
 import project.service.ImageService;
 import project.service.ItemService;
 import project.service.UserService;
-import project.service.CategoryGroupService;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.*;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.security.Principal;
 
 @RestController
@@ -34,7 +28,7 @@ public class ItemController {
     @Autowired
     ItemRepository itemRepository;
     @Autowired
-    CategoryRepository categoryRepository;
+    SubCategoryRepository subCategoryRepository;
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -55,7 +49,7 @@ public class ItemController {
     @GetMapping("/addItem")
     public ModelAndView getAllProducts() {
         ModelAndView modelAndView = new ModelAndView("addItem");
-        modelAndView.addObject("categories", categoryRepository.findAll());
+        modelAndView.addObject("categories", subCategoryRepository.findAll());
         modelAndView.addObject("groups", itemService.findAll());
 
         return modelAndView;
@@ -65,10 +59,10 @@ public class ItemController {
 
     @PostMapping(value = "/addItem", consumes = "multipart/form-data")
     public void createItem(ItemDto itemDto, MultipartFile[] filesToUpload, HttpServletResponse response) {
-               Item item =  itemService.addItem(itemDto,filesToUpload);
+               ItemEntity itemEntity =  itemService.addItem(itemDto,filesToUpload);
         try {
 
-            String url = "/items/" + item.getId().toString();
+            String url = "/items/" + itemEntity.getId().toString();
              response.sendRedirect(url);
         } catch (IOException e) {
             e.printStackTrace();
@@ -82,28 +76,28 @@ public class ItemController {
     @GetMapping("/items/{id}")
     public ModelAndView getItemById(@PathVariable(value = "id") Long itemId, Principal principal) {
 
-        Item item=itemService.findById(itemId);
+        ItemEntity itemEntity =itemService.findById(itemId);
 
 
         ModelAndView modelAndView = new ModelAndView("item");
         modelAndView.addObject("item", itemService.findById(itemId));
-        modelAndView.addObject("dir", System.getProperty("user.dir"));
+        modelAndView.addObject("dir", System.getProperty("userEntity.dir"));
         return modelAndView;
     }
 
     // Update a Product
     @PostMapping("/updateItem")
-    public Item updateItem(@PathVariable(value = "id") Long itemId,
-                              @Valid  ItemDto itemDetails) {
+    public ItemEntity updateItem(@PathVariable(value = "id") Long itemId,
+                                 @Valid  ItemDto itemDetails) {
 
        return itemService.changeItem(itemId, itemDetails);
     }
 
-    // Delete a Item
+    // Delete a ItemEntity
     @PostMapping("/deleteItem/{id}")
     public void deleteItem(@PathVariable(value = "id") Long itemId, HttpServletResponse response) throws Exception {
-        User u = itemRepository.findById(itemId).get().getUser();
-        if (userService.getAuthenticatedUser() == itemRepository.findById(itemId).get().getUser() ||
+        UserEntity u = itemRepository.findById(itemId).get().getUserEntity();
+        if (userService.getAuthenticatedUser() == itemRepository.findById(itemId).get().getUserEntity() ||
                 userService.getAuthenticatedUser().getRoleName().equals("ADMIN")) {
 
             itemService.deleteItem(itemId);
@@ -116,7 +110,7 @@ public class ItemController {
 
 
 
-    // Delete an Image
+    // Delete an ImageEntity
     @DeleteMapping("/images/{id}")
     public ResponseEntity<?> deleteImage(@PathVariable(value = "id") Long imageId) {
         imageService.deleteImage(imageId);

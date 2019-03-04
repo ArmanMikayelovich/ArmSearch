@@ -3,8 +3,8 @@ package project.dto;
 import lombok.Data;
 
 import lombok.NoArgsConstructor;
-import project.model.Image;
-import project.model.Item;
+import project.model.ImageEntity;
+import project.model.ItemEntity;
 
 import java.util.List;
 
@@ -19,37 +19,37 @@ public class    ItemDto {
     private String description;
     private Double price;
 
-    private List<Image> imageList; // TODO Arman jshtel esi petqa te che?
+    private List<ImageEntity> imageEntityList; // TODO Arman jshtel esi petqa te che?
     private List<String> imagepath;
 
     //TODO Ani u Arman sranic nerqev bacatrel anhrajeshtutyun@
 
-    public ItemDto(String email, String name, String title, String description, Item item) {
+    public ItemDto(String email, String name, String title, String description, ItemEntity itemEntity) {
         this.title = this.title;
         this.category = category;
         this.description = this.description;
         this.price = price;
-        for (Image images : imageList) {
+        for (ImageEntity images : imageEntityList) {
             imagepath.add(images.getFilePath());
         }
     }
 
-    public ItemDto(String title, Integer categoryId, String description, Double price, List<Image> imageList) {
+    public ItemDto(String title, Integer categoryId, String description, Double price, List<ImageEntity> imageEntityList) {
         this.title = title;
         this.categoryId = categoryId;
         this.description = description;
         this.price = price;
-        this.imageList = imageList;
+        this.imageEntityList = imageEntityList;
     }
 
-    public ItemDto(Item item) {
-        this.id = (Integer.valueOf(item.getId().toString()));
-        this.title = item.getTitle();
-        this.category = item.getCategory().getName();
-        this.categoryId = item.getCategory().getId();
-        this.description = item.getDescription();
-        this.price = item.getPrice();
-        for (Image images : item.getImageList()) {
+    public ItemDto(ItemEntity itemEntity) {
+        this.id = (Integer.valueOf(itemEntity.getId().toString()));
+        this.title = itemEntity.getTitle();
+        this.category = itemEntity.getSubCategoryEntity().getName();
+        this.categoryId = itemEntity.getSubCategoryEntity().getId();
+        this.description = itemEntity.getDescription();
+        this.price = itemEntity.getPrice();
+        for (ImageEntity images : itemEntity.getImageEntityList()) {
             imagepath.add(images.getFilePath());
         }
     }

@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import project.service.CategoryService;
+import project.service.SubCategoryService;
 import project.service.ImageService;
 import project.service.ItemService;
 import project.service.UserService;
@@ -14,13 +14,13 @@ import project.service.UserService;
 public class AdminPanelController {
     private final UserService userService;
     private final ItemService itemService;
-    private final CategoryService categoryService;
+    private final SubCategoryService subCategoryService;
     private final ImageService imageService;
 
-    public AdminPanelController(UserService userService, ItemService itemService, CategoryService categoryService, ImageService imageService) {
+    public AdminPanelController(UserService userService, ItemService itemService, SubCategoryService subCategoryService, ImageService imageService) {
         this.userService = userService;
         this.itemService = itemService;
-        this.categoryService = categoryService;
+        this.subCategoryService = subCategoryService;
 
         this.imageService = imageService;
     }
@@ -32,7 +32,7 @@ public class AdminPanelController {
         ModelAndView modelAndView = new ModelAndView("Admin");
 
         modelAndView.addObject("usersCount", userService.getCountOfUsers());
-        modelAndView.addObject("categoriesCount", categoryService.getCountofCategories());
+        modelAndView.addObject("categoriesCount", subCategoryService.getCountofSubCategories());
         modelAndView.addObject("itemsCount", itemService.getCountOfItems());
         modelAndView.addObject("imgCount", imageService.getCountOfImages());
 
@@ -55,7 +55,7 @@ public class AdminPanelController {
     @GetMapping("/categories")
     public ModelAndView getCategoriesPanel() {
         ModelAndView modelAndView = new ModelAndView("Admin_Categories");
-        modelAndView.addObject("categoryList", categoryService.getAllCategories());
+        modelAndView.addObject("categoryList", subCategoryService.getAllSubCategories());
         return modelAndView;
     }
 
