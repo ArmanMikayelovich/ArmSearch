@@ -35,7 +35,6 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-//    @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Item> itemList;

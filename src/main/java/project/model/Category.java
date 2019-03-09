@@ -9,17 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GenerationType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.CascadeType;
-
+import javax.persistence.*;
 import java.util.List;
 
 @Data
@@ -40,7 +30,6 @@ public class Category {
 
     @OneToMany(mappedBy = "category", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
-
     private List<Item> itemList;
 
     @ManyToOne
