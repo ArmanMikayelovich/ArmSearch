@@ -451,6 +451,9 @@
     </nav>
     <main class="admin__main">
         <h2>Categories Page</h2>
+        <a href="/addCategory">
+            <button th:label="add SubCategory"/>
+        </a>
         <table>
             <tr th:each="subCategoryEntity : ${categoryList}">
                 <td th:utext="'ID: ' + ${subCategoryEntity.getId()}">...</td>

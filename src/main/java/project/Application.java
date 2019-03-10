@@ -24,16 +24,6 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-    @Autowired
-    private UserRepository userRepository;
 
-    @Bean
-    public CommandLineRunner commandLineRunner() {
-        return args -> {
-            System.out.println(userRepository.findAll());
-            System.out.println("asdf");
-            System.out.println("asdf");
-            System.out.println("asdf");
-        };
-    }
+
 }
