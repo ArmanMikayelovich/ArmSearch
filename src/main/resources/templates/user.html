@@ -1,0 +1,72 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>User</title>
+    <link rel="stylesheet" th:href="@{/userEntity.css}"/>
+</head>
+<body>
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet">
+<table width="100%"  bgcolor="#34495e">
+  <tr>
+    <td width="0%" height="97"></td>
+    <td width="74%">
+    <div class="profile_main">
+      <div class="container"> 
+        <div class="row">
+    	 <div class="about-userEntity">
+             <span class="name" th:text="${userEntity.firstName} + ' ' + ${userEntity.lastName}"></span><br/>
+             <span class="country" th:text="'E-mail: ' + ${userEntity.email}"></span><br/>
+             <span class="country" th:text="'Phone No.: ' + ${userEntity.phoneNumber}"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </td>
+    <td width="25%"> 
+        <div class="row">
+    	 <div class="about-userEntity">
+ 			<div class="about-userEntity">
+             <div align="right">
+                 <a th:href="@{/addItem}" class="post">
+                    <input type="submit" id="new_post" name="new_post" value="Post New Classifieds" class="text1"/>
+                 </a>
+                 <a th:href="@{/editUser/currentUserId}" class="post">
+                <input type="submit" id="edit_user" name="edit_user" value="Edit User" class="text1"/></a>
+                 </a>
+             </div>
+            </div>
+          </div>
+        </div>
+ </td>
+ <td width="1%"></td>
+  </tr>
+</table>
+
+<div class="alerts-block" align="center"><h2>Classifieds</h2></div>
+<table>
+    <tr>
+        <td class="container" th:each="itemEntity : ${items}"  >
+                <div class="list"  >
+                    <form  >
+                        <article class="list--itemEntity">
+                            <figure th:if="${!itemEntity.getImageEntityList().isEmpty()}">
+                                <img th:src="@{/items/itemImages(imageEntity=${itemEntity.imageEntityList.get(0).getFilePath()})}" width="320" height="240"/>
+                                    <header>
+                                        <div th:utext="${itemEntity.price}"></div>
+                                    </header>
+                                    <figcaption th:utext="${itemEntity.title}"></br>
+                                         <a class="da-TBButton" th:href="@{/editItem/currentUserId}" target="_blank"><input type="submit" id="update_post" name="update_post" value=" Update "></input></a>
+                                         <a class="da-TBButton" th:href="@{/editItem/currentUserId}" target="_blank"><input type="submit" id="remove_post" name="remove_post" value=" Remove "></input></a>
+                                    </figcaption>
+                                <div th:if="${isCreator}">
+                                    <a th:href="'/deleteItem/' + ${itemEntity.getId()}" th:utext="Delete"/>
+                                </div>
+                            </figure>
+                        </article>
+                    </form>
+                </div>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

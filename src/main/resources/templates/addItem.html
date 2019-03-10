@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Forms Exemple</title>
+<style>
+#app {
+  text-align: left;
+}
+img {
+  width: 30%;
+  margin: auto;
+  display: block;
+  margin-bottom: 10px;
+}
+</style>
+
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    imageEntity: '',
+    items: [1, 2, 3, 4, 5],
+  },
+  methods: {
+    onFileChange(e) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length)
+        return;
+      this.createImage(files[0]);
+    },
+    createImage(file) {
+      var imageEntity = new Image();
+      var reader = new FileReader();
+      var vm = this;
+
+      reader.onload = (e) => {
+        vm.imageEntity = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    },
+    removeImage: function (e) {
+      this.imageEntity = '';
+    }
+  }
+})
+
+
+
+// function addNew() {
+//   var newImage = document.createElement("img");
+//   newImage.src = "http://www.cathaypacific.com/content/dam/cx/about-us/new-livery/The_nose.jpg";
+//  document.getElementById("container").appendChild(newImage);
+// }
+// function addNew1() {
+//   var newImage = document.createElement("img");
+//   newImage.src = "https://c2.staticflickr.com/4/3365/5711691377_7866b104b7_b.jpg";
+//  document.getElementById("container").appendChild(newImage);
+// }
+// function addNew2() {
+//   var newImage = document.createElement("img");
+//   newImage.src = "https://c2.staticflickr.com/4/3365/5711691377_7866b104b7_b.jpg";
+//  document.getElementById("container").appendChild(newImage);
+// }
+// function addNew3() {
+//   var newImage = document.createElement("img");
+//   newImage.src = "https://c1.staticflickr.com/3/2523/4234866246_bd7810e71d_b.jpg";
+//  document.getElementById("container").appendChild(newImage);
+// }
+// function addNew4() {
+//   var newImage = document.createElement("img");
+//   newImage.src = "https://c2.staticflickr.com/4/3365/5711691377_7866b104b7_b.jpg";
+//  document.getElementById("container").appendChild(newImage);
+// }
+</script>
+</head>
+
+<body>
+    <form action="/addItem" method="post" enctype="multipart/form-data">
+    <p width="37%" height="69%" align="left"></p>
+    <table width="45%" height="30%" border="0" cellspacing="3" cellpadding="3" align="center" bgcolor="#34495e">
+          <tr>
+          <tr>
+            <td width="15%">&nbsp;</td>
+            <td width="70%"><h2 align="center">Post to Classifieds</h2></td>
+            <td width="15%">&nbsp;</td>
+          </tr>
+          <tr>
+            <td>  </td>
+            <td>Title</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td><textarea id="textarea3" name="title" placeholder="Add Title"></textarea></td>
+            <td>&nbsp;</td>
+          </tr>
+
+                <tr>
+            <td>&nbsp;</td>
+            <td>Category</td>
+            <td>&nbsp;</td>
+          </tr>
+                <tr>
+            <td>&nbsp;</td>
+            <td>           <select name="categoryId">
+                <!--<option value=""> &#45;&#45; </option>-->
+                <option th:each="subCategoryEntity : ${categories}"
+                        th:value="${subCategoryEntity.id}"
+                        th:utext="${subCategoryEntity.name}"/>
+            </select>
+            </td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>Description</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>
+                <textarea id="textarea"  name = "description" rows="5" cols="60" placeholder="Detailed description of your itemEntity or offering...">...</textarea>
+            </td>
+          </tr>
+
+          <tr>
+            <td>&nbsp;</td>
+            <td><div id="app">
+      <div v-for="itemEntity in items">
+        <div v-if="!imageEntity">
+            <input type="file" name="filesToUpload" id="filesToUpload" accept="imageEntity/*" multiple>
+        </div>
+        <div v-else>
+          <img :src="imageEntity"/>
+          <button @click="removeImage">Remove imageEntity</button>
+        </div>
+      </div>
+    </div></td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+
+          <tr>
+            <td>&nbsp;</td>
+            <td>Price
+            <input id="lastname" name="price" type="number" value=""/></td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td align="center"><h3><input type="submit" id="add" name="add" value="Post"/></h3></td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+          </tr>
+      </table>
+    </form>
+</body>
+</html>
