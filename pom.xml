@@ -24,7 +24,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>am.aca.ArmSearch.project.Application</mainClass>
+                            <mainClass>project.Application</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
