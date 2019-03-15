@@ -88,14 +88,14 @@ public class UserService  {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (userDetails.getFirstName() != null) {
+        if (userDetails.getFirstName() != null && !userDetails.getFirstName().equals("")) {
             userEntity.setFirstName(userDetails.getFirstName());
         }
-        if (userDetails.getLastName() != null) {
+        if (userDetails.getLastName() != null && !userDetails.getLastName().equals("")) {
             userEntity.setLastName(userDetails.getLastName());
         }
 
-        if (userDetails.getEmail() != null) {
+        if (userDetails.getEmail() != null && !userDetails.getEmail().equals("")) {
             userEntity.setEmail(userDetails.getEmail());
 
         }
@@ -147,7 +147,7 @@ public class UserService  {
 
     }
     @Transactional
-    public boolean changePassword(String oldPassword, String newPassword) {
+    public boolean  changePassword(String oldPassword, String newPassword) {
         UserEntity userEntity = null;
         try {
             userEntity = getAuthenticatedUser();

@@ -78,18 +78,14 @@ public class HomePageController {
         try{
 
             UserEntity auth = userService.getAuthenticatedUser();
-            view.addObject("user", auth);
+            view.addObject("userEntity", auth);
 
         } catch (Exception e) {
             UserEntity userEntity = new UserEntity(); userEntity.setId(1);
             view.addObject("userEntity", userEntity);
 
         }
-        try {
-            view.addObject("user", userService.getAuthenticatedUser());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         return view;
     }
 

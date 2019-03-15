@@ -62,7 +62,7 @@ public class CategoryController {
     // Get a Single subCategoryEntity
     @GetMapping("/categories/{id}")
     public ModelAndView getCategoryById(@PathVariable(value = "id") Integer categoryId) {
-        ModelAndView view = new ModelAndView("Category");
+        ModelAndView view = new ModelAndView("Home");
         subCategoryService.getCategoriesWithTheirGroups(view);
         view.addObject("itemList", subCategoryService.findById(categoryId).getItemEntityList());
         try {

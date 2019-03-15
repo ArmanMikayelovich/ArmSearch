@@ -193,15 +193,7 @@
 						<button class="header_search_button"><img th:src="@{/images/search.png}" alt=""></button>
 					</form>
 				</div>
-				<!-- UserEntity -->
-				<!--<div class="userEntity"><a href="#"><div><img src="../static/images/userEntity.svg" alt="https://www.flaticon.com/authors/freepik"><div>1</div></div></a></div>-->
-				<!-- Cart -->
-				<!--<div class="cart"><a href="cart.html"><div><img class="svg" src="../static/images/cart.svg" alt="https://www.flaticon.com/authors/freepik"></div></a></div>-->
-				<!-- Phone -->
-				<!--<div class="header_phone d-flex flex-row align-items-center justify-content-start">-->
-					<!--<div><div><img th:src="@{/images/phone.svg}" alt="https://www.flaticon.com/authors/freepik"></div></div>-->
-					<!--<div>+1 912-252-7350</div>-->
-				<!--</div>-->
+
 			</div>
 			<div align="right">
 				<ul align="right">
@@ -241,7 +233,7 @@
 										<li class="drop-menu">
 											<a href="#" class="dropbtn">Electronics<span class="caret"></span></a>
 											<div class="dropdown-content">
-												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${electronicsGroup.categories}">
+												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${electronicsGroup.getSubCategoryEntities()}">
 													<label th:utext="${subCategoryEntity.getName()}">...</label>
 												</a>
 											</div>
@@ -253,7 +245,7 @@
 										<li class="drop-menu">
 											<a href="#" class="dropbtn">Real Estate<span class="caret"></span> </a>
 											<div class="dropdown-content">
-												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${realEstateGroup.categories}">
+												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${realEstateGroup.getSubCategoryEntities()}">
 													<label th:utext="${subCategoryEntity.getName()}">...</label>
 												</a>
 											</div>
@@ -265,7 +257,7 @@
 										<li class="drop-menu">
 											<a href="#" class="dropbtn">Vehicles<span class="caret"></span> </a>
 											<div class="dropdown-content">
-												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${vehiclesGroup.categories}">
+												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${vehiclesGroup.getSubCategoryEntities()}">
 													<label th:utext="${subCategoryEntity.getName()}">...</label>
 												</a>
 											</div>
@@ -277,7 +269,7 @@
 										<li class="drop-menu">
 											<a href="#" class="dropbtn">Services<span class="caret"></span> </a>
 											<div class="dropdown-content">
-												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${servicesGroup.categories}">
+												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${servicesGroup.getSubCategoryEntities()}">
 													<label th:utext="${subCategoryEntity.getName()}">...</label>
 												</a>
 											</div>
@@ -289,7 +281,7 @@
 										<li class="drop-menu">
 											<a href="#" class="dropbtn">Jobs<span class="caret"></span> </a>
 											<div class="dropdown-content">
-												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${jobsGroup.categories}">
+												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${jobsGroup.getSubCategoryEntities()}">
 													<label th:utext="${subCategoryEntity.getName()}">...</label>
 												</a>
 											</div>
@@ -301,7 +293,7 @@
 										<li class="drop-menu">
 											<a href="#" class="dropbtn">Fashion<span class="caret"></span> </a>
 											<div class="dropdown-content">
-												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${fashionGroup.categories}">
+												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${fashionGroup.getSubCategoryEntities()}">
 													<label th:utext="${subCategoryEntity.getName()}">...</label>
 												</a>
 											</div>
@@ -314,7 +306,7 @@
 											<a href="#" class="dropbtn">Tools and Materials<span class="caret"></span> </a>
 											<div class="dropdown-content">
 
-												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${toolsAndMaterialsGroup.categories}">
+												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${toolsAndMaterialsGroup.getSubCategoryEntities()}">
 													<label th:utext="${subCategoryEntity.getName()}">...</label>
 												</a>
 											</div>
@@ -326,7 +318,7 @@
 										<li class="drop-menu">
 											<a href="#" class="dropbtn">Household<span class="caret"></span> </a>
 											<div class="dropdown-content">
-												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${householdGroup.categories}">
+												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${householdGroup.getSubCategoryEntities()}">
 													<label th:utext="${subCategoryEntity.getName()}">...</label>
 												</a>
 											</div>
@@ -338,7 +330,7 @@
 										<li class="drop-menu">
 											<a href="#" class="dropbtn">For Kids<span class="caret"></span> </a>
 											<div class="dropdown-content">
-												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${forKidsGroup.categories}">
+												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${forKidsGroup.getSubCategoryEntities()}">
 													<label th:utext="${subCategoryEntity.getName()}">...</label>
 												</a>
 											</div>
@@ -350,7 +342,7 @@
 										<li class="drop-menu">
 											<a href="#" class="dropbtn">Culture and Hobby<span class="caret"></span> </a>
 											<div class="dropdown-content">
-												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${cultureAndHobbyGroup.categories}">
+												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${cultureAndHobbyGroup.getSubCategoryEntities()}">
 													<label th:utext="${subCategoryEntity.getName()}">...</label>
 												</a>
 											</div>
@@ -362,7 +354,7 @@
 										<li class="drop-menu">
 											<a href="#" class="dropbtn">Appliances<span class="caret"></span> </a>
 											<div class="dropdown-content">
-												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${appliancesGroup.categories}">
+												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${appliancesGroup.getSubCategoryEntities()}">
 													<label th:utext="${subCategoryEntity.getName()}">...</label>
 												</a>
 											</div>
@@ -374,7 +366,7 @@
 										<li class="drop-menu">
 											<a href="#" class="dropbtn">Everythink Else<span class="caret"></span> </a>
 											<div class="dropdown-content">
-												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${everythinkElseGroup.categories}">
+												<a th:href="@{'/?catId='+${subCategoryEntity.getId()}}" th:each="subCategoryEntity : ${everythinkElseGroup.getSubCategoryEntities()}">
 													<label th:utext="${subCategoryEntity.getName()}">...</label>
 												</a>
 											</div>

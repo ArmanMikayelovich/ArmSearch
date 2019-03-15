@@ -2,6 +2,7 @@ package project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
@@ -38,7 +39,11 @@ public class UserController {
     public ModelAndView getRegistrationPage(Authentication authentication){
         ModelAndView modelAndView = new ModelAndView("registration");
         if (authentication!=null) {
-//            return new ModelAndView("redirect:/users/"+userService.getAuthenticatedUser().getId());
+            try {
+                return new ModelAndView("redirect:/users/"+userService.getAuthenticatedUser().getId());
+            } catch (Exception e) {
+                return new ModelAndView("redirect://home");
+            }
         }
         return modelAndView;
     }
@@ -49,7 +54,7 @@ public class UserController {
     public ModelAndView getUserPage(@PathVariable("id") Integer id) {
         ModelAndView modelAndView = new ModelAndView("user");
         UserEntity userEntity = userService.getUserById(id);
-        modelAndView.addObject("user", userEntity);
+        modelAndView.addObject("userEntity", userEntity);
         modelAndView.addObject("items", userEntity.getItemEntityList());
         modelAndView.addObject("isCreator",
                 userEntity.getItemEntityList().isEmpty() ? false : itemService.isCreator(userEntity.getItemEntityList().get(0)));
@@ -77,7 +82,7 @@ public class UserController {
 
     @GetMapping("/updateUser")
     public ModelAndView getUpdateUserPage() {
-        ModelAndView modelAndView = new ModelAndView("EditUser");
+        ModelAndView modelAndView = new ModelAndView("UpdateUser");
         return modelAndView;
     }
 
@@ -96,13 +101,21 @@ public class UserController {
     }
 
     @PostMapping("/changePassword")
-    public void changePassword(String oldPassword, String newPassword, HttpServletResponse response) {
-        userService.changePassword(oldPassword, newPassword);
-        try {
-            response.sendRedirect("/updateUser");
-        } catch (IOException e) {
-            e.printStackTrace();
+    public ModelAndView changePassword(String oldPassword, String newPassword, HttpServletResponse response) throws Exception {
+        if (userService.changePassword(oldPassword, newPassword)) {
+          return  new ModelAndView("RedirectPage")
+                    .addObject("redirectUrl",
+                            "/users/" + userService.getAuthenticatedUser().getId())
+                    .addObject("redirectMessage", "Your password successfully changed");
         }
+        else {
+          return  new ModelAndView("RedirectPage")
+                    .addObject("redirectUrl",
+                            "/users/" + userService.getAuthenticatedUser().getId())
+                    .addObject("redirectMessage", "An error has occurred. You will be redireced");
+        }
+
+
     }
 
     // Delete a UserEntity
