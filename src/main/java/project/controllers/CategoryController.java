@@ -39,24 +39,19 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    // Get All Categories
-    @GetMapping("/addCategory")
-    public ModelAndView getAllCategories() {
-        ModelAndView modelAndView = new ModelAndView("addCategory");
-        modelAndView.addObject("groups", categoryRepository.findAll());
-
-        return modelAndView;
-    }
 
     // Create a new SubCategoryEntity //TODO this must be accesible only for admins and delete
-    @PostMapping(value = "/addCategory")
+    @PostMapping(value = "/addSubCategory")
+    public void createCategory(CategoryDto categoryDto, HttpServletResponse response) {
 
-    public SubCategoryEntity createCategory(CategoryDto categoryDto) {
 
-        SubCategoryEntity subCategoryEntity;
-        subCategoryEntity = subCategoryService.createCategory(categoryDto);
+          subCategoryService.createCategory(categoryDto);
 
-        return subCategoryRepository.save(subCategoryEntity);
+        try {
+            response.sendRedirect("/admin/categories");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Get a Single subCategoryEntity
@@ -78,8 +73,7 @@ public class CategoryController {
     }
 
 
-    // Delete a SubCategoryEntity //TODO @PostMapping or @GetMapping for easy deleting from front-end...
-    @PostMapping("/deleteCategory/{id}")
+    @PostMapping("/deleteSubCategory/{id}")
     public void deleteCategory(@PathVariable(value = "id") Integer categoryId, HttpServletResponse response) {
 
         subCategoryService.deleteCategory(categoryId);
@@ -90,10 +84,5 @@ public class CategoryController {
         }
     }
 
-    @GetMapping("/getCategoryList")
-    public List<SubCategoryEntity> getCategoryList(@RequestParam(value = "id") Integer id) {
-        CategoryEntity group = categoryRepository.findById(id).get();
-        return group.getSubCategoryEntities();
-    }
 
 }

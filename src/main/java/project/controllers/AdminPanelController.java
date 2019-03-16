@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import project.repository.CategoryRepository;
 import project.service.SubCategoryService;
 import project.service.ImageService;
 import project.service.ItemService;
@@ -15,12 +16,15 @@ public class AdminPanelController {
     private final UserService userService;
     private final ItemService itemService;
     private final SubCategoryService subCategoryService;
+    private final CategoryRepository categoryRepository;
+
     private final ImageService imageService;
 
-    public AdminPanelController(UserService userService, ItemService itemService, SubCategoryService subCategoryService, ImageService imageService) {
+    public AdminPanelController(UserService userService, ItemService itemService, SubCategoryService subCategoryService, CategoryRepository categoryRepository, ImageService imageService) {
         this.userService = userService;
         this.itemService = itemService;
         this.subCategoryService = subCategoryService;
+        this.categoryRepository = categoryRepository;
 
         this.imageService = imageService;
     }
@@ -56,6 +60,8 @@ public class AdminPanelController {
     public ModelAndView getCategoriesPanel() {
         ModelAndView modelAndView = new ModelAndView("Admin_Categories");
         modelAndView.addObject("categoryList", subCategoryService.getAllSubCategories());
+        modelAndView.addObject("groups", categoryRepository.findAll());
+
         return modelAndView;
     }
 

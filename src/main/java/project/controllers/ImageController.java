@@ -32,7 +32,7 @@ public class ImageController {
             produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET
     )
     public @ResponseBody
-    ResponseEntity<byte[]> getImageWithMediaType(@RequestParam(value="image") String imagePath, HttpServletResponse response) throws IOException {
+    ResponseEntity<byte[]> getImageWithMediaType(@RequestParam(value="imageEntity") String imagePath, HttpServletResponse response) throws IOException {
 
 
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageService.getBytes(imagePath));

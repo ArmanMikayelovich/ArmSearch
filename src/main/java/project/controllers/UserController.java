@@ -42,7 +42,7 @@ public class UserController {
             try {
                 return new ModelAndView("redirect:/users/"+userService.getAuthenticatedUser().getId());
             } catch (Exception e) {
-                return new ModelAndView("redirect://home");
+                return new ModelAndView("redirect:/home");
             }
         }
         return modelAndView;
@@ -102,18 +102,26 @@ public class UserController {
 
     @PostMapping("/changePassword")
     public ModelAndView changePassword(String oldPassword, String newPassword, HttpServletResponse response) throws Exception {
-        if (userService.changePassword(oldPassword, newPassword)) {
-          return  new ModelAndView("RedirectPage")
-                    .addObject("redirectUrl",
-                            "/users/" + userService.getAuthenticatedUser().getId())
-                    .addObject("redirectMessage", "Your password successfully changed");
-        }
-        else {
-          return  new ModelAndView("RedirectPage")
+        try {
+            if (userService.changePassword(oldPassword, newPassword)) {
+
+                return new ModelAndView("RedirectPage")
+                        .addObject("redirectUrl",
+                                "/users/" + userService.getAuthenticatedUser().getId())
+                        .addObject("redirectMessage", "Your password successfully changed");
+            }
+                return new ModelAndView("RedirectPage")
+                        .addObject("redirectUrl",
+                                "/users/" + userService.getAuthenticatedUser().getId())
+                        .addObject("redirectMessage", "An error has occurred. You will be redireced");
+
+        } catch (Exception e) {
+            return new ModelAndView("RedirectPage")
                     .addObject("redirectUrl",
                             "/users/" + userService.getAuthenticatedUser().getId())
                     .addObject("redirectMessage", "An error has occurred. You will be redireced");
         }
+
 
 
     }

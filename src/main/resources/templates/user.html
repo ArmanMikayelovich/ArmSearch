@@ -55,8 +55,10 @@
                                         <div th:utext="${itemEntity.price}"></div>
                                     </header>
                                     <figcaption th:utext="${itemEntity.title}"></br>
+                                        <!--TODO CHANGE-->
                                          <a class="da-TBButton" th:href="@{/editItem/currentUserId}" target="_blank"><input type="submit" id="update_post" name="update_post" value=" Update "></input></a>
                                          <a class="da-TBButton" th:href="@{/editItem/currentUserId}" target="_blank"><input type="submit" id="remove_post" name="remove_post" value=" Remove "></input></a>
+                                        <!--TODO CHANGE-->
                                     </figcaption>
                                 <div th:if="${isCreator}">
                                     <a th:href="'/deleteItem/' + ${itemEntity.getId()}" th:utext="Delete"/>

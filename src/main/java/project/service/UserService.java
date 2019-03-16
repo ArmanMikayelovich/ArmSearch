@@ -100,7 +100,8 @@ public class UserService  {
 
         }
 
-        if (userDetails.getPhoneNumber() != null) {
+        if (userDetails.getPhoneNumber() != null
+                && !userDetails.getPhoneNumber().equals("")) {
             userEntity.setPhoneNumber(userDetails.getPhoneNumber());
 
         }

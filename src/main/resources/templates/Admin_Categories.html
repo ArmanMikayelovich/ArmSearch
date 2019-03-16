@@ -394,7 +394,16 @@
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
         .btn {
             display: inline-block;
             border-radius: 5em;
@@ -424,6 +433,22 @@
         }
 
     </style>
+    <script>
+        function checkTectBox() {
+          var  textBox = document.getElementById("textBox");
+            if(textBox.value==="" || textBox.value===null) {
+
+                document.getElementById("Button").disabled = true;
+            }
+        }
+
+        function enableSaveButton() {
+            var textBox = document.getElementById("textBox");
+            if(textBox.value!==""){
+                document.getElementById("Button").disabled = false;
+            }
+        }
+    </script>
 </head>
 <body><div class="admin">
     <header class="admin__header">
@@ -451,9 +476,31 @@
     </nav>
     <main class="admin__main">
         <h2>Categories Page</h2>
-        <a href="/addCategory">
-            <button th:label="add SubCategory"/>
-        </a>
+        <div>
+            <label>Add new subcategory</label>
+            <form action="/addSubCategory" method="post">
+                <div>
+                    <div>
+                        <input id="textBox"  type="text" onkeyup="enableSaveButton()" name="name"
+                               placeholder="Enter  name…" size="20" maxlength="50">
+
+                        <td>Select Group:
+
+                            <select name="groupId">
+                                <!--<option value=""> &#45;&#45; </option>-->
+                                <option th:each="group : ${groups}"
+                                        th:value="${group.id}"
+                                        th:utext="${group.name}"/>
+                            </select>
+
+                        </td>
+
+                        <input id="Button" type="submit" value="Save Category"  onmouseover="checkTectBox();" />
+                    </div>
+                </div>
+            </form>
+        </div>
+
         <table>
             <tr th:each="subCategoryEntity : ${categoryList}">
                 <td th:utext="'ID: ' + ${subCategoryEntity.getId()}">...</td>
@@ -463,7 +510,7 @@
 
                 <td>
 
-                    <form method="post" th:action="@{'/deleteCategory/' + ${subCategoryEntity.getId()}}">
+                    <form method="post" th:action="@{'/deleteSubCategory/' + ${subCategoryEntity.getId()}}">
                         <button class="fa fa-close"   title="delete subCategoryEntity" value="delete subCategoryEntity" type="submit"></button>
                     </form>
                 </td>

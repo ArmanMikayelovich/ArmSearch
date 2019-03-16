@@ -54,14 +54,14 @@ public class ItemEntity {
     @LastModifiedDate
     private Date updatedAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "category_id")
     private SubCategoryEntity subCategoryEntity;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
-    @OneToMany(mappedBy = "itemEntity",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "itemEntity",fetch = FetchType.EAGER,orphanRemoval = true)
     private List<ImageEntity> imageEntityList = new ArrayList<>();
 }

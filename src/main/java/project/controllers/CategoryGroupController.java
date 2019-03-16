@@ -39,19 +39,14 @@ public class CategoryGroupController {
     }
 
     // Create a new CategoryEntity //TODO this must be accesible only for admins and delete
-    @PostMapping("addCategoryGroup")
+    @PostMapping("/addCategoryGroup")
     public CategoryEntity createCategoryGroup(CategoryEntity categoryEntity) {
         categoryService.createCategory(categoryEntity);
 
         return categoryRepository.save(categoryEntity);
     }
 
-//    // Get a Single categoryEntity//TODO or get all categories of this group
-//    @GetMapping("/categoryGroups/{id}")
-//    public CategoryEntity getCategoryGroupById(@PathVariable(value = "id") Integer categoryGroupId) {
-//        return categoryGroupService.findById(categoryGroupId);
-//
-//    }
+
 
     // Delete a CategoryEntity
     @DeleteMapping("/categoryGroups/delete/{id}")

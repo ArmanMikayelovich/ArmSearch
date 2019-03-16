@@ -180,24 +180,8 @@
 					<div>+1 912-252-7350</div>
 				</div>
 	<header>
-		<!--<div class="header_overlay"></div>-->
 		<div class="header_content d-flex flex-row align-items-center justify-content-start">
-			<!--<div align="left">-->
-				<!--<ul align="left" class="d-flex flex-row align-items-start justify-content-start">-->
-					<!--<div sec:authorize="isAuthenticated()">-->
-						<!--<li class="block" style="float:left;"><a th:href="@{'/users/'+ ${userEntity.id} }">My Account</a></li>-->
-						<!--<li class="block" style="float:left;"><a th:href="@{/addItem}">+ Post to Classifieds</a></li>-->
-						<!--<li class="block" style="float:left;"><a th:href="@{'/logout'}">Log Out</a></li>-->
-					<!--</div>-->
-					<!--<div sec:authorize="!isAuthenticated()">-->
-						<!--<li class="block" style="float:left"><a th:href="@{'/login'}">Log In</a></li>-->
-					<!--</div>-->
-					<!--<div sec:authorize="hasRole('ADMIN')">-->
-						<!--<li class="block" style="float:left;"><a th:href="@{'/admin'}">Admin</a></li>-->
-					<!--</div>-->
 
-				<!--</ul>-->
-			<!--</div>-->
 			<div class="header_right d-flex flex-row align-items-center justify-content-start ml-auto">
 				<!-- Search -->
 				<div class="header_search">
@@ -206,11 +190,6 @@
 						<button class="header_search_button"><img th:src="@{/images/search.png}" alt=""></button>
 					</form>
 				</div>
-				<!-- UserEntity -->
-				<!--<div class="userEntity"><a href="#"><div><img th:th:src="@{/@{/../static/images/userEntity.svg" alt="https://www.flaticon.com/authors/freepik"><div>1</div></div></a></div>-->
-				<!-- Cart -->
-				<!--<div class="cart"><a href="cart.html"><div><img class="svg" th:th:src="@{/@{/../static/images/cart.svg" alt="https://www.flaticon.com/authors/freepik"></div></a></div>-->
-				<!-- Phone -->
 
 			</div>
 		</div>
@@ -219,242 +198,42 @@
 	<div class="super_container_inner">
 		<div class="super_overlay"></div>
 
-		<!-- Categories -->
 
-		<!--<div class="home">-->
-			<!--<div class="home_container d-flex flex-column align-items-center justify-content-end">-->
-				<!--<div class="home_content text-center">-->
-					<!--<div class="home_title">Categories</div>-->
-					<!--<div>-->
-						<!--<table width="100%" border="0" align="center"  class="container">-->
-							<!--<tr>-->
-								<!--<td >-->
-									<!--<ul>-->
-										<!--<li class="drop-menu">-->
-											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Electronics<span class="caret"></span></a>-->
-											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${electronicsGroup.categories}">-->
-													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
-												<!--</a>-->
-											<!--</div>-->
-										<!--</li>-->
-									<!--</ul>-->
-								<!--</td>-->
-								<!--<td >-->
-									<!--<ul>-->
-										<!--<li class="drop-menu">-->
-											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Real Estate<span class="caret"></span> </a>-->
-											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${realEstateGroup.categories}">-->
-													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
-												<!--</a>-->
-											<!--</div>-->
-										<!--</li>-->
-									<!--</ul>-->
-								<!--</td>-->
-								<!--<td >-->
-									<!--<ul>-->
-										<!--<li class="drop-menu">-->
-											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Vehicles<span class="caret"></span> </a>-->
-											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${vehiclesGroup.categories}">-->
-													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
-												<!--</a>-->
-											<!--</div>-->
-										<!--</li>-->
-									<!--</ul>-->
-								<!--</td>-->
-								<!--<td >-->
-									<!--<ul>-->
-										<!--<li class="drop-menu">-->
-											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Services<span class="caret"></span> </a>-->
-											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${servicesGroup.categories}">-->
-													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
-												<!--</a>-->
-											<!--</div>-->
-										<!--</li>-->
-									<!--</ul>-->
-								<!--</td>-->
-								<!--<td >-->
-									<!--<ul>-->
-										<!--<li class="drop-menu">-->
-											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Jobs<span class="caret"></span> </a>-->
-											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${jobsGroup.categories}">-->
-													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
-												<!--</a>-->
-											<!--</div>-->
-										<!--</li>-->
-									<!--</ul>-->
-								<!--</td>-->
-								<!--<td >-->
-									<!--<ul>-->
-										<!--<li class="drop-menu">-->
-											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Fashion<span class="caret"></span> </a>-->
-											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${fashionGroup.categories}">-->
-													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
-												<!--</a>-->
-											<!--</div>-->
-										<!--</li>-->
-									<!--</ul>-->
-								<!--</td>-->
-								<!--<td >-->
-									<!--<ul>-->
-										<!--<li class="drop-menu">-->
-											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Tools and Materials<span class="caret"></span> </a>-->
-											<!--<div class="dropdown-content">-->
-
-												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${toolsAndMaterialsGroup.categories}">-->
-													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
-												<!--</a>-->
-											<!--</div>-->
-										<!--</li>-->
-									<!--</ul>-->
-								<!--</td>-->
-								<!--<td >-->
-									<!--<ul>-->
-										<!--<li class="drop-menu">-->
-											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Household<span class="caret"></span> </a>-->
-											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${householdGroup.categories}">-->
-													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
-												<!--</a>-->
-											<!--</div>-->
-										<!--</li>-->
-									<!--</ul>-->
-								<!--</td>-->
-								<!--<td >-->
-									<!--<ul>-->
-										<!--<li class="drop-menu">-->
-											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">For Kids<span class="caret"></span> </a>-->
-											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${forKidsGroup.categories}">-->
-													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
-												<!--</a>-->
-											<!--</div>-->
-										<!--</li>-->
-									<!--</ul>-->
-								<!--</td>-->
-								<!--<td >-->
-									<!--<ul>-->
-										<!--<li class="drop-menu">-->
-											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Culture and Hobby<span class="caret"></span> </a>-->
-											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${cultureAndHobbyGroup.categories}">-->
-													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
-												<!--</a>-->
-											<!--</div>-->
-										<!--</li>-->
-									<!--</ul>-->
-								<!--</td>-->
-								<!--<td >-->
-									<!--<ul>-->
-										<!--<li class="drop-menu">-->
-											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Appliances<span class="caret"></span> </a>-->
-											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${appliancesGroup.categories}">-->
-													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
-												<!--</a>-->
-											<!--</div>-->
-										<!--</li>-->
-									<!--</ul>-->
-								<!--</td>-->
-								<!--<td >-->
-									<!--<ul>-->
-										<!--<li class="drop-menu">-->
-											<!--<a th:href="@{/home/categoryGroupId}" class="dropbtn">Everythink Else<span class="caret"></span> </a>-->
-											<!--<div class="dropdown-content">-->
-												<!--<a th:href="@{'categories/'+${subCategoryEntity.getId()} }" th:each="subCategoryEntity : ${everythinkElseGroup.categories}">-->
-													<!--<label th:utext="${subCategoryEntity.getName()}">...</label>-->
-												<!--</a>-->
-											<!--</div>-->
-										<!--</li>-->
-									<!--</ul>-->
-								<!--</td>-->
-
-							<!--</tr>-->
-						<!--</table>-->
-					<!--</div>-->
-				<!--</div>-->
-			<!--</div>-->
-		<!--</div>-->
-
-		<!-- Product -->
 
 		<div class="product">
 			<div class="container">
 				<div class="row">
 
-					<!-- Product ImageEntity -->
 					<div class="col-lg-6">
 						<div class="product_image_slider_container">
-							<div id="slider" class="flexslider">
-								<ul class="slides"  >
-									<li th:each = "imageEntity : ${itemEntity.getImageList()}">
-										<div><img th:src="@{/items/itemImages(imageEntity=${imageEntity.getFilePath()})}" /></div>
-									</li>
-
-
-								</ul>
-							</div>
-							<div class="carousel_container">
+							<div class="carousel_container" >
 								<div id="carousel" class="flexslider">
 									<ul class="slides"  >
-										<li th:each = "imageEntity : ${itemEntity.getImageList()}">
+										<li th:each = "imageEntity : ${itemEntity.getImageEntityList()}">
 											<div><img th:src="@{/items/itemImages(imageEntity=${imageEntity.getFilePath()})}" /></div>
 										</li>
-
-
 									</ul>
 								</div>
-								<div class="fs_prev fs_nav disabled"><i class="fa fa-chevron-up" aria-hidden="true"></i></div>
-								<div class="fs_next fs_nav"><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
 							</div>
+
+							<div id="slider" class="flexslider">
+								<ul class="slides"  >
+									<li th:each = "imageEntity : ${itemEntity.getImageEntityList()}">
+										<img th:src="@{/items/itemImages(imageEntity=${imageEntity.getFilePath()})}" />
+									</li>
+								</ul>
+							</div>
+
 						</div>
 					</div>
-
-					<!-- Product Info -->
+				</div>
+			</div>
 					<div class="col-lg-6 product_col">
 						<div class="product_info">
 							<div class="product_name" th:utext ="${itemEntity.title}"></div>
-							<!--<div class="product_category">In <a href="subCategoryEntity.html">SubCategoryEntity</a></div>-->
-							<!--<div class="product_rating_container d-flex flex-row align-items-center justify-content-start">-->
-								<!--<div class="rating_r rating_r_4 product_rating"><i></i><i></i><i></i><i></i><i></i></div>-->
-								<!--<div class="product_reviews">4.7 out of (3514)</div>-->
-								<!--<div class="product_reviews_link"><a href="#">Reviews</a></div>-->
-							<!--</div>-->
+
 							<div class="product_price" th:utext="${itemEntity.price} + '$'"><span></span></div>
-							<!--<div class="product_size">-->
-								<!--<div class="product_size_title">Select Size</div>-->
-								<!--<ul class="d-flex flex-row align-items-start justify-content-start">-->
-									<!--<li>-->
-										<!--<input type="radio" id="radio_1" disabled name="product_radio" class="regular_radio radio_1">-->
-										<!--<label for="radio_1">XS</label>-->
-									<!--</li>-->
-									<!--<li>-->
-										<!--<input type="radio" id="radio_2" name="product_radio" class="regular_radio radio_2" checked>-->
-										<!--<label for="radio_2">S</label>-->
-									<!--</li>-->
-									<!--<li>-->
-										<!--<input type="radio" id="radio_3" name="product_radio" class="regular_radio radio_3">-->
-										<!--<label for="radio_3">M</label>-->
-									<!--</li>-->
-									<!--<li>-->
-										<!--<input type="radio" id="radio_4" name="product_radio" class="regular_radio radio_4">-->
-										<!--<label for="radio_4">L</label>-->
-									<!--</li>-->
-									<!--<li>-->
-										<!--<input type="radio" id="radio_5" name="product_radio" class="regular_radio radio_5">-->
-										<!--<label for="radio_5">XL</label>-->
-									<!--</li>-->
-									<!--<li>-->
-										<!--<input type="radio" id="radio_6" disabled name="product_radio" class="regular_radio radio_6">-->
-										<!--<label for="radio_6">XXL</label>-->
-									<!--</li>-->
-								<!--</ul>-->
-							<!--</div>-->
+
 							<div class="product_text" th:utext="${itemEntity.description}">
 							</div>
 							<div class="product_text" th:utext="'Count of views: ' + ${itemEntity.countOfViews}">
@@ -464,16 +243,7 @@
 								E-mail:<a th:href="'mailto:' + ${itemEntity.getUserEntity().getEmail()}+'?Subject='+${itemEntity.title}" th:utext="${itemEntity.getUserEntity().getEmail()}" ></a></br>
 								Phone No.: <label th:utext="${itemEntity.getUserEntity().getPhoneNumber()}"> User's phone number</label>
 							</div>
-							<!--<div class="product_buttons">-->
-								<!--<div class="text-right d-flex flex-row align-items-start justify-content-start">-->
-									<!--<a th:href="@{'/editItem/'+ ${itemEntity.getId()}}"><div class="product_button product_fav text-center d-flex flex-column align-items-center justify-content-center">-->
-										<!--<div><div><img th:src="@{/images/edit.svg}" class="svg" alt=""><div>+</div></div></div>-->
-									<!--</div></a>-->
-									<!--<a th:href="@{'/editItem/'+ ${itemEntity.getId()}}"><div class="product_button product_cart text-center d-flex flex-column align-items-center justify-content-center">-->
-										<!--<div><div><img th:src="@{/images/delete.svg}" class="svg" alt=""><div>+</div></div></div>-->
-									<!--</div></a>-->
-								<!--</div>-->
-							<!--</div>-->
+
 						</div>
 					</div>
 				</div>

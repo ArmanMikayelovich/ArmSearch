@@ -2,9 +2,9 @@
 <html lang="en" xmlns:th = "http://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" th:attr="content=${'3; url='+${redirectUrl}}" />
+    <meta http-equiv="refresh" th:content="'3; url='+${redirectUrl}"/>
 
-    <title>Redirect Page</title>
+    <title>Redirecting...</title>
     <style>
         @import url(https://fonts.googleapis.com/css?family=Open+Sans:300);
         body {
@@ -13,14 +13,12 @@
         }
 
         h1 {
-            position: absolute;
+            position: fixed;
             font-family: 'Open Sans';
             font-weight: 600;
-            font-size: 12px;
-            text-transform: uppercase;
-            left: 50%;
+            font-size: 13px;
+            left: 40%;
             top: 58%;
-            margin-left: -20px;
         }
 
         .body {
@@ -280,6 +278,6 @@
     <span></span>
     <span></span>
 </div>
-<h1 th:utext="${redirectMessage}"></h1>
+<h1 th:utext="${redirectMessage}">Redirect Message</h1>
 
 </html>

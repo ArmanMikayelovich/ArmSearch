@@ -80,8 +80,7 @@ public class ItemController {
 
 
         ModelAndView modelAndView = new ModelAndView("item");
-        modelAndView.addObject("item", itemService.findById(itemId));
-        modelAndView.addObject("dir", System.getProperty("userEntity.dir"));
+        modelAndView.addObject("itemEntity",itemEntity);
         return modelAndView;
     }
 

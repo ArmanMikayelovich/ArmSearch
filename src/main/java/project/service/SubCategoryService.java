@@ -60,12 +60,15 @@ public class SubCategoryService {
                 .orElseThrow(() -> new ResourceNotFoundException("SubCategoryEntity", "id", id));
     }
     @Transactional
-    public SubCategoryEntity createCategory(CategoryDto categoryDto) {
+    public void createCategory(CategoryDto categoryDto) {
         CategoryEntity categoryEntity = categoryService.findById(categoryDto.getGroupId());
+        SubCategoryEntity subCategoryEntity = new SubCategoryEntity();
+        subCategoryEntity.setCategoryEntity(categoryEntity);
+        subCategoryEntity.setName(categoryDto.getName());
+        subCategoryRepository.save(subCategoryEntity) ;
 
-        return new SubCategoryEntity(categoryDto.getName(), categoryEntity);
     }
-
+    @Transactional
     public void deleteCategory(Integer categoryId) {
         SubCategoryEntity subCategoryEntity = this.findById(categoryId);
         for (ItemEntity itemEntity : subCategoryEntity.getItemEntityList()) {
@@ -75,7 +78,7 @@ public class SubCategoryService {
             }
             itemRepository.delete(itemEntity);
         }
-        subCategoryRepository.delete(subCategoryEntity);
+        subCategoryRepository.deleteById(categoryId);
 
     }
 
