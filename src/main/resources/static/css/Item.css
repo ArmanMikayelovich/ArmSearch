@@ -3,6 +3,12 @@ body {
     background-color: #fdf1ec;
 }
 
+.flex-container {
+    -webkit-align-items: stretch; /* Safari */
+
+    align-items: stretch;
+}
+
 .wrapper {
     height: 520px;
     width: 754px;

@@ -1,0 +1,4 @@
+.fade:not(.show) {
+    opacity: 100;
+}
+

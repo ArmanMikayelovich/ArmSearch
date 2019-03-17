@@ -7,15 +7,15 @@
 	<meta name="description" content="Little Closet template">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" th:href="@{/styles/bootstrap-4.1.2/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/bootstrap.changes.css}"/>
 	<link th:href="@{/plugins/font-awesome-4.7.0/css/font-awesome.min.css}" rel="stylesheet">
 	<link rel="stylesheet" th:href="@{/plugins/flexslider/flexslider.css}">
 	<link rel="stylesheet" th:href="@{/styles/product.css}">
-	<link rel="stylesheet" th:href="@{/styles/product_responsive.css}">
-	<!--<script>-->
-	<!--// function calc(){-->
-	<!--// 	document.getElementById("menu2").style.display = "block";-->
-	<!--// }-->
-	<!--</script>-->
+	<link rel="stylesheet" th:href="@{/styles/product_responsive.css}"/>
+    <!--Image sliding css && js-->
+    <link rel="stylesheet" th:href="@{/css/imgSlide.css}"/>
+	<script type="text/javascript" th:src="@{/js/imgSlide.js}"></script>
+
 
 	<style>
 
@@ -170,115 +170,73 @@
 	</style>
 
 </head>
-<body>
+<body onload="showSlides(1)">
 
-<div class="super_container">
+    <tr>
+        <td>
+            <header>
+                <div class="header_content d-flex flex-row align-items-center justify-content-start">
 
-	<!-- Header -->
-<div class="header_phone d-flex flex-row align-items-center justify-content-start">
-					<div><div><img th:src="@{/images/phone.svg}" alt="https://www.flaticon.com/authors/freepik"></div></div>
-					<div>+1 912-252-7350</div>
-				</div>
-	<header>
-		<div class="header_content d-flex flex-row align-items-center justify-content-start">
+                    <div class="header_right d-flex flex-row align-items-center justify-content-start ml-auto">
+                        <!-- Search -->
+                        <div class="header_search">
+                            <form action="#" id="header_search_form">
+                                <input type="text" class="search_input" placeholder="Search Item" required="required">
+                                <button class="header_search_button"><img th:src="@{/images/search.png}" alt=""></button>
+                            </form>
+                        </div>
 
-			<div class="header_right d-flex flex-row align-items-center justify-content-start ml-auto">
-				<!-- Search -->
-				<div class="header_search">
-					<form action="#" id="header_search_form">
-						<input type="text" class="search_input" placeholder="Search Item" required="required">
-						<button class="header_search_button"><img th:src="@{/images/search.png}" alt=""></button>
-					</form>
-				</div>
+                    </div>
+                </div>
+            </header>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="product_name" th:utext ="'Name: '+${itemEntity.title}"></div>
 
-			</div>
-		</div>
-	</header>
-
-	<div class="super_container_inner">
-		<div class="super_overlay"></div>
-
-
-
-		<div class="product">
-			<div class="container">
-				<div class="row">
-
+            <div class="super_container_inner" >
+            <div class="super_overlay"></div>
+					<!-- Slideshow container -->
 					<div class="col-lg-6">
 						<div class="product_image_slider_container">
-							<div class="carousel_container" >
-								<div id="carousel" class="flexslider">
-									<ul class="slides"  >
-										<li th:each = "imageEntity : ${itemEntity.getImageEntityList()}">
-											<div><img th:src="@{/items/itemImages(imageEntity=${imageEntity.getFilePath()})}" /></div>
-										</li>
-									</ul>
+							<div class="slideshow-container">
+								<!-- Full-width images with number and caption text -->
+								<div class="mySlides fade" th:each="imageEntity : ${itemEntity.getImageEntityList()}"
+									 	style=" opacity : 100%";>
+
+									<img th:src="@{/items/itemImages(imageEntity=${imageEntity.getFilePath()} ) }" />
 								</div>
+								<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+								<!-- Next and previous buttons -->
+								<a class="next" onclick="plusSlides(1)">&#10095;</a>
 							</div>
-
-							<div id="slider" class="flexslider">
-								<ul class="slides"  >
-									<li th:each = "imageEntity : ${itemEntity.getImageEntityList()}">
-										<img th:src="@{/items/itemImages(imageEntity=${imageEntity.getFilePath()})}" />
-									</li>
-								</ul>
-							</div>
-
 						</div>
 					</div>
-				</div>
-			</div>
-					<div class="col-lg-6 product_col">
-						<div class="product_info">
-							<div class="product_name" th:utext ="${itemEntity.title}"></div>
+                </div>
+        </td>
 
-							<div class="product_price" th:utext="${itemEntity.price} + '$'"><span></span></div>
+        <tr>
+    <div class="col-lg-6 product_col" >
+        <div class="product_info">
 
-							<div class="product_text" th:utext="${itemEntity.description}">
-							</div>
-							<div class="product_text" th:utext="'Count of views: ' + ${itemEntity.countOfViews}">
-							</div></br>
-							<div class="product-text">Contacts:</br>
-								<a th:href="@{'/users/'+ ${itemEntity.userEntity.id.toString()}}" th:utext="${itemEntity.getUserEntity().getFirstName()} + ' ' + ${itemEntity.getUserEntity().getLastName()}" ></a><br/>
-								E-mail:<a th:href="'mailto:' + ${itemEntity.getUserEntity().getEmail()}+'?Subject='+${itemEntity.title}" th:utext="${itemEntity.getUserEntity().getEmail()}" ></a></br>
-								Phone No.: <label th:utext="${itemEntity.getUserEntity().getPhoneNumber()}"> User's phone number</label>
-							</div>
+                <div class="product_price" th:utext="${itemEntity.price} + '$'"><span></span></div>
 
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+            <div class="product_text" th:utext="${itemEntity.description}">
+            </div>
+            <div class="product_text" th:utext="'Count of views: ' + ${itemEntity.countOfViews}">
+            </div></br>
+            <div class="product-text">Contacts:</br>
+                <a th:href="@{'/users/'+ ${itemEntity.userEntity.id.toString()}}" th:utext="${itemEntity.getUserEntity().getFirstName()} + ' ' + ${itemEntity.getUserEntity().getLastName()}" ></a><br/>
+                E-mail:<a th:href="'mailto:' + ${itemEntity.getUserEntity().getEmail()}+'?Subject='+${itemEntity.title}" th:utext="${itemEntity.getUserEntity().getEmail()}" ></a></br>
+                Phone No.: <label th:utext="${itemEntity.getUserEntity().getPhoneNumber()}"> User's phone number</label>
+            </div>
 
+            </div>
+        </div>
+        </tr>
+    </tr>
 
-		<!-- Boxes -->
-
-		<!--<div class="boxes">-->
-			<!--<div class="container">-->
-				<!--<div class="row">-->
-					<!--<div class="col-lg-6">-->
-						<!--<div class="box d-flex flex-row align-items-center justify-content-start">-->
-							<!--<div class="mt-auto"><div class="box_image"><img th:th:src="@{/@{/images/boxes_1.png}" alt=""></div></div>-->
-							<!--<div class="box_content">-->
-								<!--<div class="box_title">Size Guide</div>-->
-								<!--<div class="box_text">Phasellus sit amet nunc eros sed nec tellus.</div>-->
-							<!--</div>-->
-						<!--</div>-->
-					<!--</div>-->
-					<!--<div class="col-lg-6 box_col">-->
-						<!--<div class="box d-flex flex-row align-items-center justify-content-start">-->
-							<!--<div class="mt-auto"><div class="box_image"><img th:th:src="@{/@{/images/boxes_2.png}" alt=""></div></div>-->
-							<!--<div class="box_content">-->
-								<!--<div class="box_title">Shipping</div>-->
-								<!--<div class="box_text">Phasellus sit amet nunc eros sed nec tellus.</div>-->
-							<!--</div>-->
-						<!--</div>-->
-					<!--</div>-->
-				<!--</div>-->
-			<!--</div>-->
-		<!--</div>-->
-
-		<!-- Footer -->
 
 		<footer class="footer">
 			<div class="footer_content">
@@ -308,7 +266,7 @@
 	</div>
 
 </div>
-
+    </table>
 <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
 <script th:src="@{/styles/bootstrap-4.1.2/popper.js}"></script>
 <script th:src="@{/styles/bootstrap-4.1.2/bootstrap.min.js}"></script>
